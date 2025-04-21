@@ -8,6 +8,7 @@ using PBL3_HK4.Models;
 using PBL3_HK4.Service;
 namespace PBL3_HK4.Controllers
 {
+
     public class AdminController : Controller
     {
         private readonly ICustomerService _customerService;
@@ -15,10 +16,14 @@ namespace PBL3_HK4.Controllers
         private readonly IDiscountService _discountService;
         private readonly ICatalogService _catalogService;
         private readonly IAdminService _adminService;
+        private readonly IBillService _billService;
+        private readonly IBillDetailService _billDetailService;
 
 
-        public AdminController(ICustomerService customerService, IProductService productService, IDiscountService discountService, ICatalogService catalogService, IAdminService adminService)
+        public AdminController(IBillService billService, IBillDetailService billDetailService, ICustomerService customerService, IProductService productService, IDiscountService discountService, ICatalogService catalogService, IAdminService adminService)
         {
+            _billDetailService = billDetailService;
+            _billService = billService;
             _customerService = customerService;
             _productService = productService;
             _discountService = discountService;
@@ -199,9 +204,48 @@ namespace PBL3_HK4.Controllers
             return View("Customer", listCustomer);
         }
 
-        public IActionResult Order()
+        public async Task<IActionResult> Order()
         {
-            return View();
+            var bills = await _billService.GetAllBillsAsync();
+            var billDetails = await _billDetailService.GetAllBillDetailsAsync();
+            var customers = await _customerService.GetAllCustomerAsync();
+            var products = await _productService.GetAllProductsAsync();
+            OrderManagementViewModel orderManagementViewModel = new OrderManagementViewModel
+            {
+                Bills = bills,
+                BillDetails = billDetails,
+                Customers = customers,
+                Products = products
+            };
+            return View(orderManagementViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmOrder(Guid billId)
+        {
+            await _billService.UpdateBillConfirmedAsync(billId);
+            var bill = await _billService.GetBillByIdAsync(billId);
+            var customer = await _customerService.GetCustomerByIdAsync(bill.UserID ?? new Guid());
+            var billDetails = await _billDetailService.GetBillDetailsByBillIdAsync(billId);
+
+            foreach(BillDetail billDetail in billDetails)
+            {
+                var product = await _productService.GetProductByIdAsync(billDetail.ProductID);
+                product.StockQuantity -= billDetail.Quantity ?? 0;
+                await _productService.UpdateProductAsync(product); 
+            }
+
+            customer.EarnedPoint += (int)bill.TotalPrice / 100000;
+            await _customerService.UpdateCustomerAsync(customer);
+
+            return RedirectToAction("OrderManagement", "Admin");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CancelOrder(Guid billId, string reason)
+        {
+            await _billService.UpdateBillCanceledAsync(billId);
+            return RedirectToAction("OrderManagement", "Admin");
         }
 
         public IActionResult Revenue()

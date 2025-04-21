@@ -1,0 +1,218 @@
+﻿@{
+    ViewData["Title"] = "CompleteOrder - Organic Grocery";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: visible;
+        }
+
+        .header {
+            color: #2e7d32;
+            font-size: 24px;
+            margin-bottom: 20px;
+            margin-top: 60px;
+        }
+
+        .message {
+            font-size: 16px;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #7abf63;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+            .btn:hover {
+                background-color: #689f50;
+            }
+
+        .food-icons {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 60px;
+        }
+
+        .food-icon {
+            font-size: 30px;
+            position: relative;
+            animation: bounce calc(1.5s + var(--random) * 0.5s) ease-in-out infinite;
+        }
+
+            .food-icon:nth-child(1) {
+                --index: 0;
+                --random: 0.1;
+            }
+
+            .food-icon:nth-child(2) {
+                --index: 1;
+                --random: 0.4;
+            }
+
+            .food-icon:nth-child(3) {
+                --index: 2;
+                --random: 0.7;
+            }
+
+            .food-icon:nth-child(4) {
+                --index: 3;
+                --random: 0.2;
+            }
+
+            .food-icon:nth-child(5) {
+                --index: 4;
+                --random: 0.6;
+            }
+
+            .food-icon:nth-child(6) {
+                --index: 5;
+                --random: 0.3;
+            }
+
+            .food-icon:nth-child(7) {
+                --index: 6;
+                --random: 0.8;
+            }
+
+            .food-icon:nth-child(8) {
+                --index: 7;
+                --random: 0.5;
+            }
+        @@keyframes bounce {
+            0%, 100%
+
+        {
+            transform: translate(calc(-105px + var(--index) * 30px), 0);
+        }
+
+        50% {
+            transform: translate(calc(-105px + var(--index) * 30px), calc(-20px - var(--random) * 20px));
+        }
+
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 20px;
+            animation: fall linear forwards;
+            pointer-events: none;
+        }
+        @@keyframes fall {
+            0%
+
+        {
+            transform: translateY(-100vh) scale(1);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateY(100vh) scale(0.3);
+            opacity: 0;
+        }
+
+        }
+        @@media (max-width: 600px) {
+            .container
+
+        {
+            margin: 10px;
+            padding: 20px;
+        }
+
+        .header {
+            font-size: 20px;
+            margin-top: 50px;
+        }
+
+        .food-icon {
+            font-size: 25px;
+        }
+        @@keyframes bounce {
+            0%, 100%
+
+        {
+            transform: translate(calc(-70px + var(--index) * 20px), 0);
+        }
+
+        50% {
+            transform: translate(calc(-70px + var(--index) * 20px), calc(-15px - var(--random) * 15px));
+        }
+
+        }
+
+        .flower {
+            font-size: 15px;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="food-icons">
+            <span class="food-icon">🍎</span>
+            <span class="food-icon">🍅</span>
+            <span class="food-icon">🥭</span>
+            <span class="food-icon">🍖</span>
+            <span class="food-icon">🐟</span>
+            <span class="food-icon">🍬</span>
+            <span class="food-icon">🍰</span>
+            <span class="food-icon">🍊</span>
+        </div>
+        <div class="header">Thank You for Your Trust!</div>
+        <p class="message">Your order has been received and is awaiting admin approval for processing.</p>
+        <a asp-controller="Home" asp-action="Index" class="btn">Back to Store</a>
+    </div>
+    <script>
+        function createFlower() {
+            const flower = document.createElement('span');
+            flower.className = 'flower';
+            flower.innerHTML = '🌸';
+            flower.style.left = Math.random() * 100 + 'vw';
+            flower.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(flower);
+            setTimeout(() => flower.remove(), 5000);
+        }
+        setInterval(createFlower, 75);
+    </script>
+</body>
+</html>

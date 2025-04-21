@@ -8,6 +8,7 @@ using PBL3_HK4.Interface;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using PBL3_HK4.Models;
 
 namespace PBL3_HK4.Controllers
 {
@@ -15,8 +16,12 @@ namespace PBL3_HK4.Controllers
     {
         private readonly IBillService _billService;
         private readonly IProductService _productService;
-        public OrderController(IBillService billService, IProductService productService)
+        private readonly IBillDetailService _billDetailService;
+        private readonly ICustomerService _customerService;
+        public OrderController(IBillService billService, IProductService productService, IBillDetailService billDetailService, ICustomerService customerService)
         {
+            _billDetailService = billDetailService;
+            _customerService = customerService;
             _billService = billService;
             _productService = productService;
         }
@@ -63,14 +68,36 @@ namespace PBL3_HK4.Controllers
             return true;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-        public IActionResult Details()
-        {
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = await _customerService.GetCustomerByIdAsync(new Guid(userId));
+            var bills = await _billService.GetBillByUserIdAsync(new Guid(userId));
+            var billDetails = new List<BillDetail>();
+            var products = await _productService.GetAllProductsAsync();
+
+            foreach (var bill in bills)
+            {
+                var billDetail = await _billDetailService.GetBillDetailsByBillIdAsync(bill.BillID);
+                billDetails.AddRange(billDetail);
+            }
+
+            CustomerOrderModelView customerOrderModelView = new CustomerOrderModelView
+            {
+                Customer = customer,
+                Bills = bills,
+                BillDetails= billDetails,
+                Products = products
+            };
+
+            return View(customerOrderModelView);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CancelOrder(Guid billId, string reason)
+        {
+            await _billService.UpdateBillCanceledAsync(billId);
+            return RedirectToAction("Index", "Order");
+        }
     }
 }

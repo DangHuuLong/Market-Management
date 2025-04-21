@@ -19,6 +19,42 @@ namespace PBL3_HK4.Service
             _context = context;
         }
 
+        public async Task<IEnumerable<Bill>> GetBillByUserIdAsync(Guid userId)
+        {
+            // Kiểm tra nếu userId rỗng
+            if (userId == Guid.Empty)
+            {
+                throw new ArgumentException("User ID cannot be empty.", nameof(userId));
+            }
+
+            // Truy vấn tất cả bill của user với userId
+            var bills = await _context.Bills
+                .Where(b => b.UserID == userId)
+                .ToListAsync();
+
+            return bills;
+        }
+
+        public async Task<Bill> GetBillByIdAsync(Guid billId)
+        {
+            var bill = await _context.Bills.FirstOrDefaultAsync(b => b.BillID == billId);
+            if (bill == null)
+            {
+                throw new KeyNotFoundException($"Bill with ID {billId} not found.");
+            }
+            return bill;
+        }
+
+        public async Task<IEnumerable<Bill>> GetAllBillsAsync()
+        {
+            var listBilll = await _context.Bills.ToListAsync();
+            if (listBilll == null)
+            {
+                throw new KeyNotFoundException("No bills found.");
+            }
+            return listBilll;
+        }
+
         public async Task AddBillAsync(Bill bill)
         {
             var existingBill = await _context.Bills.FirstOrDefaultAsync(b => b.BillID == bill.BillID);
@@ -35,9 +71,9 @@ namespace PBL3_HK4.Service
             var bill = await _context.Bills.FindAsync(billid);
             if (bill != null)
             {
-                if (bill.Confirm == false)
+                if (bill.Status == BillStatus.Unconfirmed)
                 {
-                    bill.Confirm = true;
+                    bill.Status = BillStatus.Confirmed;
                 }
             }
         }
@@ -54,7 +90,7 @@ namespace PBL3_HK4.Service
 
         public async Task<Bill> GetConfirmedBillByIdAsync(Guid billId)
         {
-            var bill = await _context.Bills.FirstOrDefaultAsync(b => b.BillID == billId && b.Confirm == true);
+            var bill = await _context.Bills.FirstOrDefaultAsync(b => b.BillID == billId && b.Status == BillStatus.Confirmed);
             if (bill != null)
             {
                 return bill;
@@ -67,7 +103,7 @@ namespace PBL3_HK4.Service
 
         public async Task<IEnumerable<Bill>> GetConfirmedBillsAsync()
         {
-            var Bills = await _context.Bills.Where(b => b.Confirm == true).ToListAsync();
+            var Bills = await _context.Bills.Where(b => b.Status == BillStatus.Confirmed).ToListAsync();
             if (Bills == null)
             {
                 throw new InvalidOperationException("No confirmed bills found.");
@@ -77,7 +113,7 @@ namespace PBL3_HK4.Service
 
         public async Task<IEnumerable<Bill>> GetConfirmedBillsByCustomerIdAsync(Guid customerId)
         {
-            var bills = await _context.Bills.Where(b => b.UserID == customerId && b.Confirm == true).ToListAsync();
+            var bills = await _context.Bills.Where(b => b.UserID == customerId && b.Status == BillStatus.Confirmed).ToListAsync();
             if (bills == null)
             {
                 throw new KeyNotFoundException($"Customer: {customerId} has not had any confirmed bills");
@@ -87,7 +123,7 @@ namespace PBL3_HK4.Service
 
         public async Task<IEnumerable<Bill>> GetConfirmedBillsByDateAsync(DateTime date)
         {
-            var bills = await _context.Bills.Where(b => b.Date == date && b.Confirm == true).ToListAsync();
+            var bills = await _context.Bills.Where(b => b.Date == date && b.Status == BillStatus.Confirmed).ToListAsync();
             if (bills == null)
             {
                 throw new KeyNotFoundException($"No confirmed bills found in {date}");
@@ -97,7 +133,7 @@ namespace PBL3_HK4.Service
 
         public async Task<IEnumerable<Bill>> GetUnconfirmedBillAsync()
         {
-            var bills = await _context.Bills.Where(b => b.Confirm == false).ToListAsync();
+            var bills = await _context.Bills.Where(b => b.Status == BillStatus.Unconfirmed).ToListAsync();
             if (bills == null)
             {
                 throw new InvalidOperationException("No unconfirmed bills found.");
@@ -113,6 +149,28 @@ namespace PBL3_HK4.Service
                 throw new KeyNotFoundException($"Bill with ID {bill.BillID} not found.");
             }
             _context.Bills.Update(bill);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateBillConfirmedAsync(Guid billId)
+        {
+            var existingBill = await _context.Bills.FirstOrDefaultAsync(b => b.BillID == billId);
+            if (existingBill == null)
+            {
+                throw new KeyNotFoundException($"Bill with ID {billId} not found.");
+            }
+            existingBill.Status = BillStatus.Confirmed;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateBillCanceledAsync(Guid billId)
+        {
+            var existingBill = await _context.Bills.FirstOrDefaultAsync(b => b.BillID == billId);
+            if (existingBill == null)
+            {
+                throw new KeyNotFoundException($"Bill with ID {billId} not found.");
+            }
+            existingBill.Status = BillStatus.Cancelled;
             await _context.SaveChangesAsync();
         }
     }

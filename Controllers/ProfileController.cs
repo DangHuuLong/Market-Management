@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PBL3_HK4.Entity;
@@ -13,10 +14,12 @@ namespace PBL3_HK4.Controllers
 
         private readonly ICustomerService _customerService;
         private readonly IAdminService _adminService;
-        public ProfileController(ICustomerService customerService, IAdminService adminService)
+        private readonly IPasswordHasher _passwordHasher;
+        public ProfileController(ICustomerService customerService, IAdminService adminService, IPasswordHasher passwordHasher)
         {
             _customerService = customerService;
             _adminService = adminService;
+            _passwordHasher = passwordHasher;
         }
         public IActionResult Index()
         {
@@ -44,9 +47,12 @@ namespace PBL3_HK4.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProfile(Customer customer)
         {
-
+            var newpass = customer.NewPassWord;
+            var password = _passwordHasher.HashPassword(newpass);
+            customer.PassWord = password;
+            customer.NewPassWord = null;
             await _customerService.UpdateCustomerAsync(customer);
-            return View("Index");
+            return RedirectToAction("SignIn","Account");
         }
     }
 }

@@ -1,9 +1,8 @@
 ﻿@using PBL3_HK4.Entity
-@model Customer
-
 @{
     ViewData["Title"] = "View Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    Customer customer = Model as Customer;
 }
 
 <style>
@@ -297,7 +296,7 @@
                 </div>
                 <div class="col-md-1 d-none d-md-block"></div>
                 <div class="col-md-7 col-sm-12 user-info">
-                    <p class="user-points">You have earned <span style="color: #FFC107;">@Model.EarnedPoint ★</span> points!</p>
+                    <p class="user-points">You have earned <span style="color: #FFC107;">@customer.EarnedPoint ★</span> points!</p>
                     <div class="user-actions">
                         <a class="btn info-btn">
                             <i class="bi bi-info-circle"></i> How to earn points?
@@ -312,7 +311,7 @@
             <!-- Account information form - Bọc trong form tag -->
             <form id="profileForm" method="post" asp-controller="Profile" asp-action="UpdateProfile">
                 <!-- Thêm hidden field để lưu ID của customer -->
-                <input type="hidden" name="UserID" value="@Model.UserID" />
+                <input type="hidden" name="UserID" value="@customer.UserID" />
                 
                 <div class="account-container p-3" id="accountInfoContainer">
                     <p class="text-center account-title mb-4">Account Information</p>
@@ -323,7 +322,7 @@
                             <label>User Name:</label>
                         </div>
                         <div>
-                            <input value="@Model.UserName" id="username" name="UserName" type="text" class="w-100 form-field" readonly>
+                            <input value="@customer.UserName" id="username" name="UserName" type="text" class="w-100 form-field" readonly>
                         </div>
 
                         <!-- New Password (hidden initially) -->
@@ -363,7 +362,7 @@
                             <label>Name:</label>
                         </div>
                         <div>
-                            <input value="@Model.Name" id="name" name="Name" type="text" class="w-100 form-field" readonly>
+                            <input value="@customer.Name" id="name" name="Name" type="text" class="w-100 form-field" readonly>
                         </div>
 
                         <!-- Email -->
@@ -371,7 +370,7 @@
                             <label>Email:</label>
                         </div>
                         <div>
-                            <input value="@Model.Email" id="email" name="Email" type="email" class="w-100 form-field" readonly>
+                            <input value="@customer.Email" id="email" name="Email" type="email" class="w-100 form-field" readonly>
                         </div>
 
                         <!-- Gender -->
@@ -380,9 +379,9 @@
                         </div>
                         <div>
                             <select id="sex" name="Sex" class="w-100 form-field" style="background-color: #f5f5f5;" disabled>
-                                <option value="Male" @@(Model.Sex=="Male" ? "selected" : "")>Male</option>
-                                <option value="Female" @@(Model.Sex=="Female" ? "selected" : "")>Female</option>
-                                <option value="Other" @@(Model.Sex=="Other" ? "selected" : "")>Other</option>
+                                <option value="Male" @@(customer.Sex= ="Male" ? "selected" : "" )>Male</option>
+                                <option value="Female" @@(customer.Sex= ="Female" ? "selected" : "" )>Female</option>
+                                <option value="Other" @@(customer.Sex= ="Other" ? "selected" : "" )>Other</option>
                             </select>
                         </div>
 
@@ -391,7 +390,7 @@
                             <label>Phone:</label>
                         </div>
                         <div>
-                            <input value="@Model.Phone" id="phone" name="Phone" type="tel" class="w-100 form-field" readonly>
+                            <input value="@customer.Phone" id="phone" name="Phone" type="tel" class="w-100 form-field" readonly>
                         </div>
 
                         <!-- Date -->
@@ -399,7 +398,7 @@
                             <label>Date of Birth:</label>
                         </div>
                         <div>
-                            <input value="@Model.DateOfBirth.ToString("yyyy-MM-dd")" id="dateOfBirth" name="DateOfBirth" type="date" class="w-100 form-field" style="background-color: #f5f5f5;" readonly>
+                            <input value="@customer.DateOfBirth.ToString("yyyy-MM-dd")" id="dateOfBirth" name="DateOfBirth" type="date" class="w-100 form-field" style="background-color: #f5f5f5;" readonly>
                         </div>
 
                         <!-- Address -->
@@ -407,11 +406,11 @@
                             <label>Address:</label>
                         </div>
                         <div>
-                            <textarea id="address" name="Address" class="w-100 form-field" style="min-height: 60px; background-color: #f5f5f5;" readonly>@Model.Address</textarea>
+                            <textarea id="address" name="Address" class="w-100 form-field" style="min-height: 60px; background-color: #f5f5f5;" readonly>@customer.Address</textarea>
                         </div>
                         
                         <!-- EarnedPoint (hidden) -->
-                        <input type="hidden" name="EarnedPoint" value="@Model.EarnedPoint" />
+                        <input type="hidden" name="EarnedPoint" value="@customer.EarnedPoint" />
                     </div>
 
                     <div id="editButtonContainer">

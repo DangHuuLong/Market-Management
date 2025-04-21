@@ -20,6 +20,8 @@ namespace PBL3_HK4.Service
             _context = context;
         }
 
+
+
         public  async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
             var listProduct = await _context.Products.ToListAsync();

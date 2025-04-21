@@ -50,7 +50,7 @@ namespace PBL3_HK4.Controllers
                 await _accountService.RegisterAsync(customer.Name, customer.Email, customer.Sex, customer.DateOfBirth, customer.UserName, customer.Phone,
                   customer.PassWord, customer.Address);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SignIn", "Account");
             }
             catch (InvalidOperationException ex)
             {

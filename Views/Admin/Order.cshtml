@@ -1,6 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Order Management";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    OrderManagementViewModel orderManagementViewModel = Model as OrderManagementViewModel;
+    var bills = orderManagementViewModel.Bills;
+    var billDetails = orderManagementViewModel.BillDetails;
+    var customers = orderManagementViewModel.Customers;
+    var products = orderManagementViewModel.Products;
 }
 
 <div id="order-content" class="content-section active">
@@ -42,16 +47,16 @@
     }
 
     .page-item.active .page-link {
-        background-color: #2E8B57;
-        border-color: #2E8B57;
+        background-color: #4A90E2;
+        border-color: #4A90E2;
     }
 
     .page-link {
-        color: #2E8B57;
+        color: #4A90E2;
     }
 
         .page-link:hover {
-            color: #1e7d45;
+            color: #357ABD;
         }
 
     .full-screen-overlay {
@@ -60,267 +65,293 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: white;
+        background-color: rgba(0, 0, 0, 0.5);
         z-index: 1050;
-        overflow-y: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
     }
 
     .order-container {
-        border-radius: 20px;
-        overflow: hidden;
-        border: 1px solid #dee2e6;
-        margin: 0 auto;
-        max-width: 1200px;
-    }
-
-    .order-summary-header {
-        background-color: #F0F7F0;
-        border-bottom: 1px solid #dee2e6;
-    }
-
-    .order-status {
-        font-weight: bold;
-        color: white;
-        border-radius: 10px;
-        font-size: 12px;
-        text-align: center;
-        padding: 8px;
-    }
-
-    .list-group-item {
-        border: none;
-        padding: 15px;
-    }
-
-    .total-row {
-        background-color: #2E8B57;
-        color: white;
-        font-size: 24px;
-        padding: 10px 15px;
-    }
-
-    .btn-confirm, .btn-cancel, .btn-confirm-cancel, .btn-keep {
-        border-radius: 10px;
-        font-size: 18px;
-        font-weight: bold;
-        color: white;
-        padding: 10px;
-    }
-
-    .btn-confirm, .btn-keep {
-        background-color: #2E8B57;
-    }
-
-    .btn-cancel, .btn-confirm-cancel {
-        background-color: #E76F51;
-    }
-
-    .btn-close-modal {
-        background-color: transparent;
-        border: 2px solid #dc3545;
-        color: #dc3545;
-        border-radius: 10px;
-        font-size: 16px;
-        font-weight: bold;
-        padding: 8px 20px;
-    }
-
-        .btn-close-modal:hover {
-            background-color: #dc3545;
-            color: white;
-        }
-
-    .form-floating label {
-        color: #2E8B57;
-    }
-
-    .form-control:disabled {
-        background-color: #f8f9fa;
-    }
-
-    .list-group-flush {
-        border-radius: 10px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        width: 100%;
         overflow: hidden;
     }
 
-    .cancellation-form {
-        border: 1px solid #dee2e6;
-        border-radius: 10px;
-    }
-
-    /* Responsive styles */
-    @@media (max-width: 991.98px) {
-        #order-table th, #order-table td
-
-    {
-        padding: 0.5rem;
-    }
-
-    .order-container {
-        margin: 0.5rem;
-        max-width: calc(100% - 1rem);
-    }
-
-    .btn-close-modal {
-        font-size: 14px;
-        padding: 6px 15px;
-    }
-
-    }
-
-    @@media (max-width: 767.98px) {
-        h1
-
-    {
-        font-size: 1.75rem;
-    }
-
     .order-summary-header {
-        padding: 0.75rem !important;
+        background-color: #F5F7FA;
+        border-bottom: 1px solid #E5E7EB;
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
         .order-summary-header h3 {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333333;
+            margin: 0;
         }
 
     .btn-close-modal {
-        padding: 5px 10px;
-        font-size: 12px;
+        background-color: #E3342F;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
     }
 
-    .order-status {
-        font-size: 10px;
-        padding: 6px;
+        .btn-close-modal:hover {
+            background-color: #C53030;
+        }
+
+    .order-details {
+        padding: 2rem;
+        background-color: #fff;
     }
+
+        .order-details h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 1.5rem;
+        }
+
+        .order-details .detail-item {
+            margin-bottom: 1rem;
+        }
+
+            .order-details .detail-item label {
+                font-size: 0.9rem;
+                font-weight: 500;
+                color: #6B7280;
+                display: block;
+                margin-bottom: 0.25rem;
+            }
+
+            .order-details .detail-item p {
+                font-size: 1rem;
+                color: #333333;
+                margin: 0;
+            }
+
+        .order-details .items-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .order-details .items-list li {
+                padding: 1rem 0;
+                border-bottom: 1px solid #E5E7EB;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                .order-details .items-list li:last-child {
+                    border-bottom: none;
+                }
+
+            .order-details .items-list .item-name {
+                font-size: 1rem;
+                font-weight: 500;
+                color: #333333;
+            }
+
+            .order-details .items-list .item-quantity {
+                font-size: 0.9rem;
+                color: #6B7280;
+            }
+
+            .order-details .items-list .item-price {
+                font-size: 1rem;
+                font-weight: 600;
+                color: #38C172;
+            }
 
     .total-row {
-        font-size: 18px;
+        background-color: #F5F7FA;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333333;
+        border-radius: 8px;
+        margin-top: 1rem;
     }
 
     .btn-confirm, .btn-cancel, .btn-confirm-cancel, .btn-keep {
-        font-size: 14px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        color: white;
+        padding: 0.75rem;
+        transition: background-color 0.3s ease;
     }
 
-    /* Pagination for mobile */
-    .pagination .page-link {
-        padding: 0.375rem 0.5rem;
+    .btn-confirm, .btn-keep {
+        background-color: #38C172;
     }
 
-    .pagination .page-item:not(.active):not(:first-child):not(:last-child) {
-        display: none;
+        .btn-confirm:hover, .btn-keep:hover {
+            background-color: #2D995B;
+        }
+
+    .btn-cancel, .btn-confirm-cancel {
+        background-color: #E3342F;
     }
 
-    .pagination .page-item.active {
-        display: block;
+        .btn-cancel:hover, .btn-confirm-cancel:hover {
+            background-color: #C53030;
+        }
+
+    .cancellation-form {
+        border: 1px solid #E5E7EB;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1rem;
     }
 
+        .cancellation-form .form-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333333;
+        }
+
+        .cancellation-form .form-control {
+            border-radius: 8px;
+            border: 1px solid #E5E7EB;
+            resize: none;
+        }
+
+        .cancellation-form .text-danger {
+            font-size: 0.85rem;
+        }
+
+    /* Responsive styles */
+    @@media (max-width: 991.98px) {
+        .order-container {
+            max-width: calc(100% - 2rem);
+        }
+    }
+
+    @@media (max-width: 767.98px) {
+        h1 {
+            font-size: 1.75rem;
+        }
+
+        .order-summary-header {
+            padding: 1rem;
+        }
+
+            .order-summary-header h3 {
+                font-size: 1.25rem;
+            }
+
+        .order-details {
+            padding: 1rem;
+        }
+
+        .btn-close-modal {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .total-row {
+            font-size: 1rem;
+        }
+
+        .btn-confirm, .btn-cancel, .btn-confirm-cancel, .btn-keep {
+            font-size: 0.9rem;
+            padding: 0.5rem;
+        }
+
+        .pagination .page-link {
+            padding: 0.375rem 0.5rem;
+        }
+
+        .pagination .page-item:not(.active):not(:first-child):not(:last-child) {
+            display: none;
+        }
+
+        .pagination .page-item.active {
+            display: block;
+        }
     }
 
     @@media (max-width: 575.98px) {
-        .container
+        .full-screen-overlay {
+            padding: 0;
+        }
 
-    {
-        padding: 0;
-    }
-
-    .full-screen-overlay {
-        padding: 0;
-    }
-
-    .order-container {
-        border-radius: 0;
-        margin: 0;
-        max-width: 100%;
-        border-left: none;
-        border-right: none;
-    }
-
-    .row {
-        margin: 0 !important;
-    }
-
-    .col-md-6 {
-        padding: 0.75rem !important;
-    }
-
-    .form-floating {
-        margin-bottom: 0.75rem !important;
-    }
-
+        .order-container {
+            border-radius: 0;
+            max-width: 100%;
+            border: none;
+        }
     }
 </style>
 
 <script>
-    // Sample order data
+    // Format number with dots as thousand separators
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Dữ liệu thực tế từ ViewModel
     const orders = [
+    @foreach (var bill in bills)
+    {
+        var customer = customers.FirstOrDefault(c => c.UserID == bill.UserID);
+        var billDetailItems = billDetails.Where(bd => bd.BillID == bill.BillID).Select(bd => new
         {
-            id: 1,
-            customerName: "John Doe",
-            phoneNumber: "123-456-7890",
-            email: "john.doe@example.com",
-            status: "Processing",
-            total: 45.50,
-            address: "123 Main St, City",
-            orderDate: "2025-04-01",
-            shippingDate: "2025-04-05",
-            paymentDate: "2025-04-01",
-            paymentStatus: "Paid",
-            items: [
-                { name: "Apple", quantity: 5, price: 2.5 },
-                { name: "Milk", quantity: 2, price: 3.0 }
-            ]
-        },
-        {
-            id: 2,
-            customerName: "Jane Smith",
-            phoneNumber: "987-654-3210",
-            email: "jane.smith@example.com",
-            status: "Confirmed",
-            total: 32.80,
-            address: "456 Oak Ave, Town",
-            orderDate: "2025-04-02",
-            shippingDate: "2025-04-06",
-            paymentDate: "2025-04-02",
-            paymentStatus: "Paid",
-            items: [
-                { name: "Orange", quantity: 10, price: 1.8 },
-                { name: "Cheese", quantity: 1, price: 5.0 }
-            ]
-        },
-        {
-            id: 3,
-            customerName: "Alice Johnson",
-            phoneNumber: "555-123-4567",
-            email: "alice.j@example.com",
-            status: "Canceled",
-            total: 20.00,
-            address: "789 Pine Rd, Village",
-            orderDate: "2025-04-03",
-            shippingDate: null,
-            paymentDate: null,
-            paymentStatus: "Pending",
-            items: [
-                { name: "Banana", quantity: 10, price: 2.0 }
-            ]
-        },
-        // Add more sample orders
-        ...Array.from({ length: 27 }, (_, i) => ({
-            id: i + 4,
-            customerName: `Customer ${i + 4}`,
-            phoneNumber: `555-000-${i + 4}`.padStart(10, '0'),
-            email: `customer${i + 4}@@example.com`,
-            status: ["Processing", "Confirmed", "Canceled"][Math.floor(Math.random() * 3)],
-            total: (Math.random() * 100 + 20).toFixed(2),
-            address: `${i + 100} Street, City`,
-            orderDate: `2025-04-${(i % 10 + 1).toString().padStart(2, '0')}`,
-            shippingDate: Math.random() > 0.3 ? `2025-04-${(i % 10 + 5).toString().padStart(2, '0')}` : null,
-            paymentDate: Math.random() > 0.3 ? `2025-04-${(i % 10 + 1).toString().padStart(2, '0')}` : null,
-            paymentStatus: Math.random() > 0.3 ? "Paid" : "Pending",
-            items: [
-                { name: `Item ${i + 1}`, quantity: Math.floor(Math.random() * 5) + 1, price: (Math.random() * 10 + 1).toFixed(2) },
-                { name: `Item ${i + 2}`, quantity: Math.floor(Math.random() * 3) + 1, price: (Math.random() * 10 + 1).toFixed(2) }
-            ]
-        }))
+            ProductID = bd.ProductID,
+            Quantity = bd.Quantity,
+            Price = bd.Price
+        }).ToList();
+        // Tính ShippingDate: từ 3 đến 5 ngày sau Bill.Date
+        var randomDays = new Random().Next(3, 6); // Random từ 3 đến 5
+        var shippingDate = bill.Date.AddDays(randomDays);
+        <text>
+                        {
+                            id: "@bill.BillID",
+                            customerName: "@(customer != null ? customer.Name : "Unknown")",
+                            phoneNumber: "@(customer != null ? customer.Phone : "N/A")",
+                            email: "@(customer != null ? customer.Email : "N/A")",
+                            status: "@(((int)bill.Status) == 0 ? "Processing" : ((int)bill.Status) == 1 ? "Confirmed" : "Canceled")",
+                            total: @bill.TotalPrice,
+                            address: "@Html.Raw(bill.Address ?? customer?.Address ?? "N/A")",
+                            orderDate: "@bill.Date.ToString("yyyy-MM-dd")",
+                            shippingDate: "@shippingDate.ToString("yyyy-MM-dd")",
+                            paymentDate: "@bill.Date.ToString("yyyy-MM-dd")",
+                            paymentStatus: "Paid",
+                            items: [
+            @foreach (var item in billDetailItems)
+            {
+                var product = products.FirstOrDefault(p => p.ProductID == item.ProductID);
+                <text>
+                                                {
+                                                    name: "@(product != null ? product.ProductName : "Unknown")",
+                                                    quantity: @(item.Quantity ?? 0),
+                                                    price: @(item.Price ?? 0)
+                                                },
+                </text>
+            }
+                            ]
+                        },
+        </text>
+    }
     ];
 
     // Pagination variables
@@ -381,9 +412,9 @@
                     <td>
                         <span class="badge ${getBadgeClass(order.status)}">${order.status}</span>
                     </td>
-                    <td>$${parseFloat(order.total).toFixed(2)}</td>
+                    <td>${formatNumber(order.total)}₫</td>
                     <td>
-                        <button class="btn btn-sm btn-link text-dark" onclick="viewOrder(${order.id})">
+                        <button class="btn btn-sm btn-link text-dark" onclick="viewOrder('${order.id}')">
                             <i class="fas fa-eye"></i>
                         </button>
                     </td>
@@ -397,9 +428,9 @@
                     <td>
                         <span class="badge ${getBadgeClass(order.status)}">${order.status}</span>
                     </td>
-                    <td>$${parseFloat(order.total).toFixed(2)}</td>
+                    <td>${formatNumber(order.total)}₫</td>
                     <td>
-                        <button class="btn btn-sm btn-link text-dark" onclick="viewOrder(${order.id})">
+                        <button class="btn btn-sm btn-link text-dark" onclick="viewOrder('${order.id}')">
                             <i class="fas fa-eye"></i>
                         </button>
                     </td>
@@ -504,21 +535,6 @@
         renderOrderTable(orders, page);
     }
 
-    // Show notification
-    function showNotification(message, type = 'success') {
-        const notification = document.createElement('div');
-        notification.style.cssText = `position: fixed; bottom: 20px; right: 20px; padding: 12px 24px; border-radius: 4px; color: white; background-color: ${type === 'success' ? '#28a745' : '#dc3545'}; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1100; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;`;
-        const icon = document.createElement('i');
-        icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
-        notification.appendChild(icon);
-        notification.appendChild(document.createTextNode(message));
-        document.body.appendChild(notification);
-        setTimeout(() => {
-            notification.style.opacity = '0';
-            setTimeout(() => document.body.removeChild(notification), 300);
-        }, 3000);
-    }
-
     // View order
     function viewOrder(id) {
         const order = orders.find(o => o.id === id);
@@ -531,92 +547,88 @@
         overlay.className = 'full-screen-overlay';
 
         const container = document.createElement('div');
-        container.className = 'order-container my-4 mx-auto';
-        container.style.cssText = 'width: 100%; max-width: 1200px;';
-
-        const statusColor = {
-            'Processing': '#F4A261',
-            'Confirmed': '#2E8B57',
-            'Canceled': '#E76F51'
-        };
+        container.className = 'order-container';
 
         container.innerHTML = `
-            <div class="border-bottom py-3 px-4 d-flex justify-content-between align-items-center order-summary-header">
-                <h3 class="fw-bold mb-0 text-dark">Order Summary</h3>
-                <button class="btn btn-close-modal px-4">
-                    <i class="bi bi-arrow-left me-1"></i> CLOSE
+            <div class="order-summary-header">
+                <h3>Order Details</h3>
+                <button class="btn btn-close-modal">
+                    <i class="bi bi-x-lg me-1"></i> Close
                 </button>
             </div>
-            <div class="row mx-0 py-4">
-                <div class="col-md-6 px-4">
-                    <h4 class="fw-bold mb-4">Shipping Details</h4>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingOrderSummaryName" value="${order.customerName}" disabled>
-                        <label for="floatingOrderSummaryName">Name</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingOrderSummaryPhone" value="${order.phoneNumber}" disabled>
-                        <label for="floatingOrderSummaryPhone">Phone</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <textarea class="form-control" id="floatingOrderSummaryAddress" style="resize: none; height: 120px" disabled>${order.address}</textarea>
-                        <label for="floatingOrderSummaryAddress">Address</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingOrderDate" value="${formatDate(order.orderDate)}" disabled>
-                        <label for="floatingOrderDate">Order Date</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingShippingDate" value="${formatDate(order.shippingDate)}" disabled>
-                        <label for="floatingShippingDate">Shipping Date</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingPaymentDate" value="${formatDate(order.paymentDate)}" disabled>
-                        <label for="floatingPaymentDate">Payment Date</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingPaymentStatus" value="${order.paymentStatus}" disabled>
-                        <label for="floatingPaymentStatus">Payment Status</label>
-                    </div>
-                </div>
-                <div class="col-md-6 px-4">
-                    <h4 class="fw-bold mb-4">Order Summary</h4>
-                    <div id="orderStatusLabel" class="w-100 mb-3 py-2 px-3 order-status" style="background-color: ${statusColor[order.status]};">
-                        ORDER STATUS - <span id="orderStatusText">${order.status.toUpperCase()}</span>
-                    </div>
-                    <ul class="list-group list-group-flush mb-4">
-                        ${order.items.map(item => `
-                            <li class="list-group-item py-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <p class="fw-medium mb-1">${item.name}</p>
-                                        <p class="text-muted mb-0">Quantity: ${item.quantity}</p>
-                                    </div>
-                                    <p class="text-success fw-bold fs-5 mb-0">$${parseFloat(item.price).toFixed(2)}</p>
-                                </div>
-                            </li>
-                        `).join('')}
-                        <li class="list-group-item p-0">
-                            <div class="d-flex justify-content-between align-items-center px-3 py-1 total-row">
-                                <span class="fw-bold">Total:</span>
-                                <span class="fw-bold">$${parseFloat(order.total).toFixed(2)}</span>
-                            </div>
-                        </li>
-                    </ul>
-                    <div id="actionButtonsContainer" style="${order.status !== 'Processing' ? 'display: none;' : ''}">
-                        <div id="actionButtons" class="d-grid gap-3">
-                            <button id="confirmButton" class="btn btn-confirm py-2 w-100">CONFIRMED</button>
-                            <button id="cancelButton" class="btn btn-cancel py-2 w-100">CANCELED</button>
+            <div class="order-details">
+                <div class="row">
+                    <div class="col-md-6 mb-4 mb-md-0">
+                        <h4>Shipping Information</h4>
+                        <div class="detail-item">
+                            <label>Name</label>
+                            <p>${order.customerName}</p>
                         </div>
-                        <div id="cancellationForm" class="cancellation-form p-3 mt-3 d-none">
-                            <div class="mb-3">
-                                <label for="cancellationReason" class="form-label fw-bold">Please provide a reason for cancellation...</label>
-                                <textarea id="cancellationReason" class="form-control" rows="3" style="resize: none;"></textarea>
-                                <div id="cancellationError" class="text-danger mt-2 d-none">Please provide a reason for cancellation.</div>
+                        <div class="detail-item">
+                            <label>Phone</label>
+                            <p>${order.phoneNumber}</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Address</label>
+                            <p>${order.address}</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Order Date</label>
+                            <p>${formatDate(order.orderDate)}</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Shipping Date</label>
+                            <p>${formatDate(order.shippingDate)}</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Payment Date</label>
+                            <p>${formatDate(order.paymentDate)}</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Payment Status</label>
+                            <p>${order.status === 'Canceled' ? 'Refunded' : order.paymentStatus}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Order Items</h4>
+                        <ul class="items-list">
+                            ${order.items.map(item => `
+                                <li>
+                                    <div>
+                                        <span class="item-name">${item.name}</span>
+                                        <span class="item-quantity">Qty: ${item.quantity}</span>
+                                    </div>
+                                    <span class="item-price">${formatNumber(item.price)}₫</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        <div class="total-row">
+                            <span>Total</span>
+                            <span>${formatNumber(order.total)}₫</span>
+                        </div>
+                        <div id="actionButtonsContainer" style="${order.status !== 'Processing' ? 'display: none;' : ''}">
+                            <div id="actionButtons" class="d-grid gap-3 mt-4">
+                                <form id="confirmForm" method="post" action="/Admin/ConfirmOrder" onsubmit="handleFormSubmit(event)">
+    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="billId" value="${order.id}" />
+                                    <button type="submit" class="btn btn-confirm py-2 w-100">Confirm Order</button>
+                                </form>
+                                <button id="cancelButton" class="btn btn-cancel py-2 w-100">Cancel Order</button>
                             </div>
-                            <div class="d-grid gap-2 ${isMobile ? '' : 'd-md-flex'}">
-                                <button id="confirmCancellationBtn" class="btn btn-confirm-cancel py-2 flex-grow-1">Confirm cancellation</button>
-                                <button id="keepOrderBtn" class="btn btn-keep py-2 flex-grow-1">Keep Order</button>
+                            <div id="cancellationForm" class="cancellation-form d-none">
+                                <form id="cancelForm" method="post" action="/Admin/CancelOrder" onsubmit="return handleCancelFormSubmit(event)">
+    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="billId" value="${order.id}" />
+                                    <div class="mb-3">
+                                        <label for="cancellationReason" class="form-label">Reason for Cancellation</label>
+                                        <textarea id="cancellationReason" name="reason" class="form-control" rows="3"></textarea>
+                                        <div id="cancellationError" class="text-danger mt-2 d-none">Please provide a reason for cancellation.</div>
+                                    </div>
+                                    <div class="d-grid gap-2 ${isMobile ? '' : 'd-md-flex'}">
+                                        <button type="submit" class="btn btn-confirm-cancel py-2 flex-grow-1">Confirm Cancellation</button>
+                                        <button type="button" id="keepOrderBtn" class="btn btn-keep py-2 flex-grow-1">Keep Order</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -628,15 +640,11 @@
         document.body.appendChild(overlay);
 
         // Get DOM elements
-        const orderStatusLabel = container.querySelector('#orderStatusLabel');
-        const orderStatusText = container.querySelector('#orderStatusText');
         const actionButtons = container.querySelector('#actionButtons');
-        const confirmButton = container.querySelector('#confirmButton');
         const cancelButton = container.querySelector('#cancelButton');
         const cancellationForm = container.querySelector('#cancellationForm');
         const cancellationReason = container.querySelector('#cancellationReason');
         const cancellationError = container.querySelector('#cancellationError');
-        const confirmCancellationBtn = container.querySelector('#confirmCancellationBtn');
         const keepOrderBtn = container.querySelector('#keepOrderBtn');
         const closeBtn = container.querySelector('.btn-close-modal');
 
@@ -652,18 +660,6 @@
             }
         });
 
-        // Handle Confirm button click
-        confirmButton.addEventListener('click', function() {
-            const index = orders.findIndex(o => o.id === order.id);
-            orders[index].status = 'Confirmed';
-            orders[index].shippingDate = orders[index].shippingDate || '2025-04-15';
-            orders[index].paymentDate = orders[index].paymentDate || '2025-04-12';
-            orders[index].paymentStatus = 'Paid';
-            renderOrderTable(orders, currentPage);
-            showNotification('Order confirmed successfully!', 'success');
-            document.body.removeChild(overlay);
-        });
-
         // Handle Cancel button click
         cancelButton.addEventListener('click', function() {
             actionButtons.classList.add('d-none');
@@ -676,25 +672,51 @@
             cancellationForm.classList.add('d-none');
             actionButtons.classList.remove('d-none');
         });
+    }
 
-        // Handle "Confirm Cancellation" button click
-        confirmCancellationBtn.addEventListener('click', function() {
-            const reason = cancellationReason.value.trim();
-            if (reason === '') {
-                cancellationError.classList.remove('d-none');
-                return;
+    // Handle form submission and reload page
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'Accept': 'application/json'
             }
-            cancellationError.classList.add('d-none');
-            const index = orders.findIndex(o => o.id === order.id);
-            orders[index].status = 'Canceled';
-            orders[index].shippingDate = null;
-            orders[index].paymentDate = null;
-            orders[index].paymentStatus = 'Pending';
-            renderOrderTable(orders, currentPage);
-            showNotification('Order canceled successfully!', 'success');
-            document.body.removeChild(overlay);
-            console.log('Order canceled with reason:', reason);
+        })
+        .finally(() => {
+            window.location.reload(); // Tải lại trang ngay sau khi gửi dữ liệu
         });
+
+        return false; // Ngăn form submit mặc định
+    }
+
+    // Handle cancel form submission with reason validation and reload page
+    function handleCancelFormSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+        const reason = form.querySelector('#cancellationReason').value.trim();
+        const cancellationError = form.querySelector('#cancellationError');
+
+        if (!reason) {
+            cancellationError.classList.remove('d-none');
+            return false;
+        }
+
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .finally(() => {
+            window.location.reload(); // Tải lại trang ngay sau khi gửi dữ liệu
+        });
+
+        return false; // Ngăn form submit mặc định
     }
 
     // Initialize

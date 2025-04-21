@@ -1,78 +1,499 @@
 ﻿@using PBL3_HK4.Entity
 
 @{
-    ViewData["Title"] = "Order Summary";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Place Order - Organic Grocery";
+    Layout = null;
     OrderSummaryViewModel orderSummaryViewModel = Model as OrderSummaryViewModel;
     ShoppingCart shoppingCart = orderSummaryViewModel.ShoppingCart;
     IEnumerable<CartItem> cartItems = shoppingCart.Items;
     IEnumerable<Product> products = orderSummaryViewModel.Products;
     Customer customer = orderSummaryViewModel.Customer;
 }
-<div class="row my-4">
-    <div class="col-1"></div>
-    <div class="col-10 border p-0" style="border-radius: 20px; overflow: hidden;">
-        <div class=" border-bottom py-3 px-4 d-flex justify-content-between align-items-center" style="background-color: #E6DACE;">
-            <h3 class="fw-bold mb-0 text-white">Order Summary</h3>
-            <a asp-controller="Home" asp-action="ShoppingCart" class="btn btn-outline-danger px-4">
-                <i class="bi bi-arrow-left me-1"></i> BACK TO CART
-            </a>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #f57c00;
+            --accent-color: #80B500;
+            --text-color: #333333;
+            --light-bg: #f5f7fa;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .order-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .header-section {
+            background-color: var(--primary-color);
+            padding: 20px 30px;
+        }
+
+        h3, h4 {
+            font-weight: 600;
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+            .section-title:after {
+                content: '';
+                display: block;
+                width: 50px;
+                height: 3px;
+                background-color: var(--secondary-color);
+                margin-top: 8px;
+            }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+            .form-control:focus, .form-select:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.15);
+            }
+
+        .form-floating > label {
+            padding: 12px 15px;
+        }
+
+        .form-floating > .form-control {
+            height: calc(3.5rem + 2px);
+            line-height: 1.25;
+        }
+
+        .list-group-item {
+            border-left: none;
+            border-right: none;
+            padding: 15px 20px;
+        }
+
+        .product-name {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .product-quantity {
+            font-size: 13px;
+            color: #757575;
+        }
+
+        .product-price {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .total-row {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .discount-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+            .discount-btn:hover {
+                background-color: #e65100;
+                color: white;
+            }
+
+        .payment-methods .form-check {
+            transition: all 0.3s;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+            .payment-methods .form-check:hover {
+                background-color: rgba(46, 125, 50, 0.05);
+                border-color: var(--primary-color);
+            }
+
+        .payment-methods .form-check-input:checked + .form-check-label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .payment-details {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .payment-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .complete-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+            .complete-btn:hover {
+                background-color: #1b5e20;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+        .back-btn {
+            background-color: white;
+            color: #d32f2f;
+            border: 1px solid #d32f2f;
+            transition: all 0.3s;
+        }
+
+            .back-btn:hover {
+                background-color: #d32f2f;
+                color: white;
+            }
+
+        .terms-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+            .terms-link:hover {
+                text-decoration: underline;
+            }
+
+        .estimation-box {
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #616161;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .estimation-icon {
+            color: var(--accent-color);
+        }
+
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            max-width: 350px;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        @@media (max-width: 768px) {
+            .order-container {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            .notification {
+                left: 20px;
+                right: 20px;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification container -->
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="notification alert alert-danger alert-dismissible fade show" role="alert">
+            <strong><i class="bi bi-exclamation-triangle-fill me-2"></i> Error:</strong> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <div class="row mx-0 py-4 border-bottom">
-            <div class="col-md-6 px-4">
-                <h4 class="fw-bold mb-4">Shipping Details</h4>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingOrderSummaryName" placeholder="Name" value="@customer.Name" disabled>
-                    <label for="floatingOrderSummaryName">Name</label>
+    }
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="notification alert alert-success alert-dismissible fade show" role="alert">
+            <strong><i class="bi bi-check-circle-fill me-2"></i> Success:</strong> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-md-12 mx-auto order-container p-0">
+                <div class="header-section d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0 text-white">Complete Your Order</h3>
+                    <a asp-controller="Home" asp-action="ShoppingCart" class="btn back-btn px-4">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Cart
+                    </a>
                 </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingOrderSummaryPhone" placeholder="Phone" value="@customer.Phone" disabled>
-                    <label for="floatingOrderSummaryPhone">Phone</label>
-                </div>
-                <div class="form-floating mb-1">
-                    <textarea class="form-control" id="floatingOrderSummaryAddress" placeholder="Address" style="resize: none; outline: none; box-shadow: none;height: 120px" disabled>@customer.Address</textarea>
-                    <label for="floatingOrderSummaryAddress">Address</label>
-                </div>
-            </div>
-            <div class="col-md-6 px-4">
-                <h4 class="fw-bold mb-4">Order Summary</h4>
-                <ul class="list-group list-group-flush" style="border-radius: 10px; overflow: hidden;">
-                    @foreach (CartItem cartItem in cartItems)
-                    {
-                        var product = orderSummaryViewModel.GetProductByCartId(cartItem.ProductID);
-                        <li class="list-group-item py-3">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="fw-medium mb-1">@product.ProductName.</p>
-                                    <p class="text-muted mb-0">Quantity: @cartItem.Quantity</p>
-                                </div>
-                                <p class="text-success fw-bold fs-5 mb-0">@cartItem.Price ₫</p>
+
+                <!-- Main Content Wrapper with padding -->
+                <div class="p-4">
+                    <!-- First Section: Order Summary & Shipping -->
+                    <div class="row mb-4">
+                        <!-- Shipping Details Column -->
+                        <div class="col-lg-6 mb-4 mb-lg-0">
+                            <h4 class="section-title">Shipping Details</h4>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingOrderSummaryName" placeholder="Name" value="@customer.Name">
+                                <label for="floatingOrderSummaryName">Full Name</label>
                             </div>
-                        </li>
-                    }
-                    <li class="list-group-item p-0">
-                        <button class="btn w-100 py-2 fw-medium rounded-0" style="background-color: #FF9500; color: white;">
-                            <i class="bi bi-ticket-perforated-fill me-2"></i> Use Discount
-                        </button>
-                    </li>
-                    <li class="list-group-item p-0">
-                        <div class="d-flex justify-content-between align-items-center px-3 py-1" style="background-color: #80B500; font-size: 24px">
-                            <span class="text-white fw-bold">Total:</span>
-                            <span class="text-white fw-bold">@shoppingCart.TotalAmount ₫</span>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingOrderSummaryPhone" placeholder="Phone" value="@customer.Phone">
+                                <label for="floatingOrderSummaryPhone">Phone Number</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="floatingOrderSummaryAddress" placeholder="Address" style="resize: none; outline: none; box-shadow: none;height: 120px">@customer.Address</textarea>
+                                <label for="floatingOrderSummaryAddress">Delivery Address</label>
+                            </div>
+                            <div class="estimation-box">
+                                <i class="bi bi-truck estimation-icon me-2"></i>
+                                Estimated Delivery: @DateTime.Now.AddDays(3).ToString("dd/MM/yyyy") - @DateTime.Now.AddDays(5).ToString("dd/MM/yyyy")
+                            </div>
                         </div>
-                    </li>
-                </ul>
+
+                        <!-- Order Summary Column -->
+                        <div class="col-lg-6">
+                            <h4 class="section-title">Order Summary</h4>
+                            <div class="card shadow-sm">
+                                <ul class="list-group list-group-flush">
+                                    @foreach (CartItem cartItem in cartItems)
+                                    {
+                                        var product = orderSummaryViewModel.GetProductByCartId(cartItem.ProductID);
+                                        <li class="list-group-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <p class="product-name mb-1">@product.ProductName</p>
+                                                    <p class="product-quantity mb-0">Quantity: @cartItem.Quantity</p>
+                                                </div>
+                                                <p class="product-price mb-0">@cartItem.Price ₫</p>
+                                            </div>
+                                        </li>
+                                    }
+                                    <li class="list-group-item p-0">
+                                        <button class="discount-btn btn w-100 rounded-0">
+                                            <i class="bi bi-ticket-perforated-fill me-2"></i> Apply Promo Code
+                                        </button>
+                                    </li>
+                                    <li class="list-group-item p-0">
+                                        <div class="total-row d-flex justify-content-between align-items-center">
+                                            <span>Total</span>
+                                            <span>@shoppingCart.TotalAmount ₫</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second Section: Payment Information -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 class="section-title">Payment Method</h4>
+
+                            <div class="payment-methods">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" checked>
+                                    <label class="form-check-label fw-medium" for="creditCard">
+                                        <i class="bi bi-credit-card payment-icon me-2"></i> Credit/Debit Card
+                                    </label>
+                                    <div class="payment-details">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="cardNumber" class="form-label">Card Number</label>
+                                                <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="cardName" class="form-label">Name on Card</label>
+                                                <input type="text" class="form-control" id="cardName" placeholder="John Doe">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="expDate" class="form-label">Expiration Date</label>
+                                                <input type="text" class="form-control" id="expDate" placeholder="MM/YY">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="cvv" class="form-label">CVV</label>
+                                                <input type="text" class="form-control" id="cvv" placeholder="123">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label for="zipCode" class="form-label">Zip Code</label>
+                                                <input type="text" class="form-control" id="zipCode" placeholder="10001">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="momo">
+                                    <label class="form-check-label fw-medium" for="momo">
+                                        <i class="bi bi-wallet2 payment-icon me-2"></i> MoMo E-Wallet
+                                    </label>
+                                    <div class="payment-details d-none">
+                                        <p class="mb-0">You will be redirected to MoMo to complete your payment after confirming your order.</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer">
+                                    <label class="form-check-label fw-medium" for="bankTransfer">
+                                        <i class="bi bi-bank payment-icon me-2"></i> Bank Transfer
+                                    </label>
+                                    <div class="payment-details d-none">
+                                        <p class="mb-2">Please transfer the total amount to the following bank account:</p>
+                                        <div class="bg-white p-3 rounded border">
+                                            <p class="mb-2"><strong>Bank:</strong> VietcomBank</p>
+                                            <p class="mb-2"><strong>Account Number:</strong> 1234567890</p>
+                                            <p class="mb-2"><strong>Account Name:</strong> Organic Grocery Shop</p>
+                                            <p class="mb-0"><strong>Reference:</strong> Your Order ID will be provided after confirmation</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery">
+                                    <label class="form-check-label fw-medium" for="cashOnDelivery">
+                                        <i class="bi bi-cash-coin payment-icon me-2"></i> Cash on Delivery
+                                    </label>
+                                    <div class="payment-details d-none">
+                                        <p class="mb-0">Pay with cash upon delivery. Our delivery personnel will provide you with a receipt.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Final Order Button -->
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="termsCheck">
+                            <label class="form-check-label" for="termsCheck">
+                                I agree to the <a href="#" class="terms-link">Terms & Conditions</a>
+                            </label>
+                        </div>
+                        <form asp-controller="Home" asp-action="CompleteOrder" method="post" id="orderForm">
+                            <input type="hidden" name="paymentMethod" id="selectedPaymentMethod" value="creditCard">
+                            <button type="submit" class="complete-btn" id="completeOrderBtn">
+                                Complete Order <i class="bi bi-arrow-right ms-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="px-4 py-3 d-flex justify-content-between align-items-center">
-            <p class="mb-0">
-                <i class="bi bi-calendar-event me-2"></i>
-                Estimate Arrival Date: @DateTime.Now.AddDays(3).ToString("dd/MM/yyyy") - @DateTime.Now.AddDays(5).ToString("dd/MM/yyyy")
-            </p>
-            <a asp-controller="Home" asp-action="PlaceOrder" class="btn fw-bold px-4 py-2" style="background-color: #E86D1F; color: white;">
-                PLACE ORDER <i class="bi bi-arrow-right ms-2"></i>
-            </a>
         </div>
     </div>
-    <div class="col-1"></div>
-</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle payment details based on selected payment method
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(input => {
+            input.addEventListener('change', function() {
+                // Hide all payment details
+                document.querySelectorAll('.payment-details').forEach(detail => {
+                    detail.classList.add('d-none');
+                });
+
+                // Show selected payment details
+                const selectedPaymentDetails = this.closest('.form-check').querySelector('.payment-details');
+                if (selectedPaymentDetails) {
+                    selectedPaymentDetails.classList.remove('d-none');
+                }
+
+                // Update hidden input value
+                document.getElementById('selectedPaymentMethod').value = this.id;
+            });
+        });
+
+        // Show credit card details by default
+        document.querySelector('#creditCard').closest('.form-check').querySelector('.payment-details').classList.remove('d-none');
+
+        // Form validation before submission
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            const termsCheck = document.getElementById('termsCheck');
+            if (!termsCheck.checked) {
+                e.preventDefault();
+                alert('Please agree to the Terms & Conditions to proceed.');
+                return false;
+            }
+
+            const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').id;
+
+            // Validate credit card details if that payment method is selected
+            if (selectedPaymentMethod === 'creditCard') {
+                const cardNumber = document.getElementById('cardNumber').value.trim();
+                const cardName = document.getElementById('cardName').value.trim();
+                const expDate = document.getElementById('expDate').value.trim();
+                const cvv = document.getElementById('cvv').value.trim();
+
+                if (!cardNumber || !cardName || !expDate || !cvv) {
+                    e.preventDefault();
+                    alert('Please fill in all credit card details.');
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+        // Auto-hide notifications after 3 seconds
+        setTimeout(function() {
+            var notifications = document.querySelectorAll('.notification');
+            notifications.forEach(function(notification) {
+                // Create a Bootstrap alert instance
+                var bsAlert = new bootstrap.Alert(notification);
+                // Call the close method
+                bsAlert.close();
+            });
+        }, 3000);
+    </script>
+</body>
+</html>

@@ -33,12 +33,15 @@ namespace PBL3_HK4.Service
 
         public async Task UpdateCustomerAsync(Customer customer)
         {
-            var currentUser = await _context.Users.OfType<Customer>().FirstOrDefaultAsync(u => u.UserID == customer.UserID);
-            if (currentUser == null)
+            var existingCustomer = await _context.Users.FindAsync(customer.UserID);
+            if (existingCustomer != null)
             {
-                throw new KeyNotFoundException($"Customer with ID {customer.UserID} not found.");
+                existingCustomer.Name = customer.Name;
+                existingCustomer.Email = customer.Email;
+                existingCustomer.Phone = customer.Phone;
+                existingCustomer.PassWord = customer.PassWord;
             }
-            _context.Users.Update(customer);
+
             await _context.SaveChangesAsync();
         }
 

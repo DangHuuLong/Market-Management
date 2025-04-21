@@ -1,6 +1,12 @@
-﻿@{
+﻿@using PBL3_HK4.Entity
+@{
     ViewData["Title"] = "Order Manage";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    CustomerOrderModelView customerOrderModelView = Model as CustomerOrderModelView;
+    Customer customer = customerOrderModelView.Customer;
+    IEnumerable<Bill> bills = customerOrderModelView.Bills;
+    IEnumerable<BillDetail> billDetails = customerOrderModelView.BillDetails;
+    IEnumerable<Product> products = customerOrderModelView.Products;
 }
 
 <style>
@@ -100,15 +106,12 @@
     }
 
     .view-button {
-        background-color: #5A7D5A;
-        color: white;
-        border-radius: 10px;
-        display: inline-block;
-        width: 100px;
-        padding: 6px 0;
-        text-decoration: none;
-        text-align: center;
-        font-size: 14px;
+        background: none;
+        border: none;
+        color: #5A7D5A;
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0 5px;
     }
 
     .pagination-container {
@@ -130,135 +133,181 @@
         color: #F8E1C4;
     }
 
+    /* Modal styles */
+    .order-modal {
+        display: none;
+        position: fixed;
+        z-index: 1050;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 0;
+        border: none;
+        width: 80%;
+        max-width: 900px;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .modal-header {
+        background-color: #E6DACE;
+        color: white;
+        padding: 15px 20px;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .modal-title {
+        font-weight: bold;
+        color: #192E2F;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .modal-footer {
+        padding: 15px 20px;
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .close {
+        color: #192E2F;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
     /* Responsive styles */
     @@media (max-width: 991px) {
-        .order-title
+        .order-title {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
 
-    {
-        font-size: 28px;
-        text-align: center;
-        margin-bottom: 1rem;
-    }
+        .search-filter-container {
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        /* Adjust table layout for tablets */
+        .order-table-scrollable {
+            overflow-x: auto;
+        }
 
-    .search-filter-container {
-        justify-content: center;
-        margin-bottom: 1rem;
-    }
+        .order-table {
+            min-width: 700px;
+        }
 
-    /* Adjust table layout for tablets */
-    .order-table-scrollable {
-        overflow-x: auto;
-    }
-
-    .order-table {
-        min-width: 700px;
-    }
-
+        .modal-content {
+            width: 95%;
+            margin: 10% auto;
+        }
     }
 
     @@media (max-width: 767px) {
-        .order-title
+        .order-title {
+            font-size: 24px;
+        }
 
-    {
-        font-size: 24px;
-    }
+        .search-container {
+            width: 150px;
+        }
 
-    .search-container {
-        width: 150px;
-    }
+        .search-input {
+            padding: 8px 15px 8px 35px;
+            font-size: 12px;
+        }
 
-    .search-input {
-        padding: 8px 15px 8px 35px;
-        font-size: 12px;
-    }
+        .filter-button {
+            padding: 8px 15px;
+        }
+        /* Further adjust table for mobile */
+        .order-table {
+            min-width: 500px;
+        }
 
-    .filter-button {
-        padding: 8px 15px;
-    }
-
-    /* Further adjust table for mobile */
-    .order-table {
-        min-width: 500px;
-    }
-
-    .view-button {
-        width: 80px;
-        font-size: 12px;
-        padding: 4px 0;
-    }
-
+        .modal-content {
+            width: 98%;
+            margin: 5% auto;
+        }
     }
 
     /* Card view for very small screens */
     @@media (max-width: 575px) {
-        .order-cards
+        .order-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
-    {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
+        .order-card {
+            background-color: #EDE0D4;
+            border: 1px solid #C1A78E;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-    .order-card {
-        background-color: #EDE0D4;
-        border: 1px solid #C1A78E;
-        border-radius: 10px;
-        padding: 1rem;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
+        .order-card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #C1A78E;
+        }
 
-    .order-card-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid #C1A78E;
-    }
+        .order-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
 
-    .order-card-body {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
+        .order-card-row {
+            display: flex;
+            justify-content: space-between;
+        }
 
-    .order-card-row {
-        display: flex;
-        justify-content: space-between;
-    }
+        .order-card-label {
+            font-weight: bold;
+            color: #6D4C41;
+        }
 
-    .order-card-label {
-        font-weight: bold;
-        color: #6D4C41;
-    }
+        .order-card-status {
+            font-weight: bold;
+            text-align: right;
+        }
 
-    .order-card-status {
-        font-weight: bold;
-        text-align: right;
-    }
+        .order-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #C1A78E;
+        }
 
-    .order-card-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 1rem;
-        padding-top: 0.5rem;
-        border-top: 1px solid #C1A78E;
-    }
+        .order-card-total {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        /* Hide table on very small screens and show cards instead */
+        .order-table-container {
+            display: none;
+        }
 
-    .order-card-total {
-        font-weight: bold;
-        font-size: 18px;
-    }
-
-    /* Hide table on very small screens and show cards instead */
-    .order-table-container {
-        display: none;
-    }
-
-    .order-cards-container {
-        display: block;
-    }
-
+        .order-cards-container {
+            display: block;
+        }
     }
 
     /* Hide cards by default (for larger screens) */
@@ -295,12 +344,12 @@
                             <li><h6 class="dropdown-header">Status</h6></li>
                             <li><a class="dropdown-item" href="#" onclick="filterOrders('Processing')">Processing</a></li>
                             <li><a class="dropdown-item" href="#" onclick="filterOrders('Confirmed')">Confirmed</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="filterOrders('Canceled')">Canceled</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterOrders('Cancelled')">Cancelled</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><h6 class="dropdown-header">Total</h6></li>
-                            <li><a class="dropdown-item" href="#" onclick="filterOrders('Under $100')">Under $100</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="filterOrders('$100 - $200')">$100 - $200</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="filterOrders('Over $200')">Over $200</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterOrders('Under 2.000.000₫')">Under 2.000.000₫</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterOrders('2.000.000₫ - 5.000.000₫')">2.000.000₫ - 5.000.000₫</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterOrders('Over 5.000.000₫')">Over 5.000.000₫</a></li>
                         </ul>
                     </div>
                 </div>
@@ -340,59 +389,175 @@
     <div class="col-lg-1 col-md-1 col-sm-0"></div>
 </div>
 
+<!-- Order Details Modal -->
+<div id="orderDetailsModal" class="order-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Order Summary</h5>
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="row mx-0 py-4 border-bottom">
+                <div class="col-md-6 px-4">
+                    <h4 class="fw-bold mb-4">Shipping Details</h4>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control required-field" id="floatingOrderSummaryName" placeholder="Name" name="" pattern="[A-Za-z\s]+" title="Please enter only letters and spaces" disabled>
+                        <label for="floatingOrderSummaryName">Name</label>
+                        <div class="invalid-feedback">Please enter a valid name (letters only)</div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control required-field" id="floatingOrderSummaryPhone" placeholder="Phone" name="" pattern="[0-9]{10}" title="Please enter exactly 10 digits" disabled>
+                        <label for="floatingOrderSummaryPhone">Phone</label>
+                        <div class="invalid-feedback">Please enter a valid phone number (10 digits)</div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control required-field" id="floatingOrderSummaryAddress" placeholder="Address" name="" style="resize: none; outline: none; box-shadow: none;height: 120px" disabled></textarea>
+                        <label for="floatingOrderSummaryAddress">Address</label>
+                        <div class="invalid-feedback">Please enter a valid address (no special characters)</div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control required-field" id="floatingOrderDate" placeholder="Order Date" name="" disabled>
+                        <label for="floatingOrderDate">Order Date</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control required-field" id="floatingShippingDate" placeholder="Shipping Date" name="" disabled>
+                        <label for="floatingShippingDate">Shipping Date</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control required-field" id="floatingPaymentDate" placeholder="Payment Date" name="" disabled>
+                        <label for="floatingPaymentDate">Payment Date</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control required-field" id="floatingPaymentStatus" placeholder="Payment Status" name="" disabled>
+                        <label for="floatingPaymentStatus">Payment Status</label>
+                    </div>
+                </div>
+                <div class="col-md-6 px-4">
+                    <h4 class="fw-bold mb-4">Order Summary</h4>
+
+                    <!-- Order Status Label -->
+                    <div id="orderStatusLabel" class="w-100 mb-3 py-2 px-3 text-center" style="font-weight: bold; color: white; border-radius: 10px; font-size: 12px;">
+                        ORDER STATUS - <span id="orderStatusText">PROCESSING</span>
+                    </div>
+
+                    <ul class="list-group list-group-flush mb-4" style="border-radius: 10px; overflow: hidden;" id="orderItemsList">
+                        <!-- Order items will be inserted here -->
+                    </ul>
+
+                    <div class="d-flex justify-content-between align-items-center px-3 py-1" style="background-color: #192E2F; font-size: 24px">
+                        <span class="text-white fw-bold">Total:</span>
+                        <span class="text-white fw-bold" id="modalOrderTotal">0 ₫</span>
+                    </div>
+
+                    <!-- Action Buttons Container -->
+                    <div id="actionButtonsContainer" class="mt-3">
+                        <!-- Action Buttons will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closeModalBtn">Close</button>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
-        const buyer = {
-            name: "John Smith",
-            phone: "1234567890",
-            email: "john.smith@email.com"
-        };
-        const statuses = [
-            { text: "Processing", color: "#FF8C00" },
-            { text: "Confirmed", color: "#008000" },
-            { text: "Canceled", color: "#DC3545" }
+        // Format number with dots as thousand separators
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Khởi tạo mảng orders từ dữ liệu Bill trong C#
+        const orders = [
+        @foreach (var bill in bills)
+        {
+            var billDetails = customerOrderModelView.BillDetails.Where(bd => bd.BillID == bill.BillID).ToList();
+            var statusText = "";
+            var statusColor = "";
+
+            switch ((int)bill.Status)
+            {
+                case 0:
+                    statusText = "Processing";
+                    statusColor = "#FF8C00";
+                    break;
+                case 1:
+                    statusText = "Confirmed";
+                    statusColor = "#008000";
+                    break;
+                case 2:
+                    statusText = "Cancelled";
+                    statusColor = "#DC3545";
+                    break;
+            }
+            
+            // Calculate shipping date (3 days after bill creation)
+            var shippingDate = bill.Date.AddDays(3);
+            
+            <text>
+                        {
+                            id: "@bill.BillID",
+                            name: "@(customer?.Name ?? "Customer")",
+                            phone: "@(customer?.Phone ?? "N/A")",
+                            email: "@(customer?.Email ?? "N/A")",
+                            address: "@Html.Raw(bill.Address ?? customer?.Address ?? "N/A")",
+                            status: "@statusText",
+                            statusColor: "@statusColor",
+                            total: formatNumber(@bill.TotalPrice),
+                            orderDate: "@bill.Date.ToString("MM/dd/yyyy")",
+                            shippingDate: "@shippingDate.ToString("MM/dd/yyyy")",
+                            paymentDate: "@bill.Date.ToString("MM/dd/yyyy")",
+                            paymentStatus: "@(bill.Status == BillStatus.Cancelled ? "Refunded" : bill.Status == BillStatus.Confirmed ? "Paid" : "Pending")",
+                            items: [
+                @foreach (var detail in billDetails)
+                {
+                    var product = products.FirstOrDefault(p => p.ProductID == detail.ProductID);
+                    <text>
+                                            {
+                                                name: "@(product?.ProductName ?? "Unknown Product")",
+                                                quantity: @(detail.Quantity ?? 0),
+                                                price: formatNumber(@(detail.Price ?? 0))
+                                            },
+                    </text>
+                }
+                            ]
+                        },
+            </text>
+        }
         ];
-        let orders = [];
+
         const ordersPerPage = 5;
         let currentPage = 1;
         let currentFilteredOrders = [];
+        let currentSelectedOrder = null;
 
-        function generateOrderId(index) {
-            return `ORD${(index + 1).toString().padStart(3, "0")}`;
-        }
-
-        function generateRandomTotal() {
-            return (Math.random() * 200 + 50).toFixed(2);
-        }
-
-        function createOrder(index) {
-            const status = statuses[index % statuses.length];
-            return {
-                id: generateOrderId(index),
-                name: buyer.name,
-                phone: buyer.phone,
-                email: buyer.email,
-                status: status.text,
-                statusColor: status.color,
-                total: generateRandomTotal()
-            };
-        }
+        // Modal elements
+        const modal = document.getElementById("orderDetailsModal");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        const closeModalBtn = document.getElementById("closeModalBtn");
+        const orderStatusLabel = document.getElementById('orderStatusLabel');
+        const orderStatusText = document.getElementById('orderStatusText');
+        const actionButtonsContainer = document.getElementById('actionButtonsContainer');
+        const orderItemsList = document.getElementById('orderItemsList');
+        const modalOrderTotal = document.getElementById('modalOrderTotal');
 
         function createOrderRow(order) {
             return `
                 <tr class="order-row">
-                    <td>${order.id}</td>
+                    <td>${order.id.substring(0, 8)}...</td>
                     <td>${order.name}</td>
                     <td>${order.phone}</td>
                     <td>${order.email}</td>
                     <td class="status-cell" style="color: ${order.statusColor};">
                         ${order.status}
                     </td>
-                    <td class="total-cell">${order.total}$</td>
+                    <td class="total-cell">${order.total}₫</td>
                     <td class="actions-cell">
-                        <a href="/Order/Details" class="view-button">
-                            <i class="bi bi-eye-fill"></i> View
-                        </a>
+                        <button onclick="openOrderDetails('${order.id}')" class="view-button" title="View details">
+                            <i class="bi bi-eye-fill"></i>
+                        </button>
                     </td>
                 </tr>
             `;
@@ -402,7 +567,7 @@
             return `
                 <div class="order-card">
                     <div class="order-card-header">
-                        <span class="order-id">${order.id}</span>
+                        <span class="order-id">${order.id.substring(0, 8)}...</span>
                         <span class="order-card-status" style="color: ${order.statusColor};">${order.status}</span>
                     </div>
                     <div class="order-card-body">
@@ -420,20 +585,172 @@
                         </div>
                     </div>
                     <div class="order-card-footer">
-                        <span class="order-card-total">${order.total}$</span>
-                        <a href="/Order/Details" class="view-button">
-                            <i class="bi bi-eye-fill"></i> View
-                        </a>
+                        <span class="order-card-total">${order.total}₫</span>
+                        <button onclick="openOrderDetails('${order.id}')" class="view-button" title="View details">
+                            <i class="bi bi-eye-fill"></i>
+                        </button>
                     </div>
                 </div>
             `;
         }
 
-        function initOrders() {
-            orders = [];
-            for (let i = 0; i < 10; i++) {
-                orders.push(createOrder(i));
+        function openOrderDetails(orderId) {
+            currentSelectedOrder = orders.find(order => order.id === orderId);
+            if (!currentSelectedOrder) return;
+
+            // Fill modal with order details
+            document.getElementById('floatingOrderSummaryName').value = currentSelectedOrder.name;
+            document.getElementById('floatingOrderSummaryPhone').value = currentSelectedOrder.phone;
+            document.getElementById('floatingOrderSummaryAddress').value = currentSelectedOrder.address;
+            document.getElementById('floatingOrderDate').value = currentSelectedOrder.orderDate;
+            document.getElementById('floatingShippingDate').value = currentSelectedOrder.shippingDate;
+            document.getElementById('floatingPaymentDate').value = currentSelectedOrder.paymentDate;
+            document.getElementById('floatingPaymentStatus').value = currentSelectedOrder.paymentStatus;
+
+            // Update status
+            orderStatusText.textContent = currentSelectedOrder.status.toUpperCase();
+            orderStatusLabel.style.backgroundColor = currentSelectedOrder.statusColor;
+
+            // Update order items
+            orderItemsList.innerHTML = '';
+            currentSelectedOrder.items.forEach(item => {
+                const itemElement = document.createElement('li');
+                itemElement.className = 'list-group-item py-3';
+                itemElement.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="fw-medium mb-1">${item.name}</p>
+                            <p class="text-muted mb-0">Quantity: ${item.quantity}</p>
+                        </div>
+                        <p class="text-success fw-bold fs-5 mb-0">${item.price}₫</p>
+                    </div>
+                `;
+                orderItemsList.appendChild(itemElement);
+            });
+
+            // Update total
+            modalOrderTotal.textContent = `${currentSelectedOrder.total}₫`;
+
+            // Update action buttons based on status
+            updateActionButtons(currentSelectedOrder.status);
+
+            // Show modal
+            modal.style.display = "block";
+        }
+
+        function updateActionButtons(status) {
+            actionButtonsContainer.innerHTML = '';
+
+            if (status === 'Processing') {
+                actionButtonsContainer.innerHTML = `
+                    <div id="actionButtons" class="d-grid gap-3">
+                        <button id="cancelButton" class="btn py-2 w-100" style="font-weight: bold; color: white; background-color: #E76F51; border-radius: 10px; font-size: 18px;">
+                            CANCEL ORDER
+                        </button>
+                    </div>
+                    <div id="cancellationForm" class="border rounded p-3 mt-3 d-none">
+                        <div class="mb-3">
+                            <label for="cancellationReason" class="form-label fw-bold">Please provide a reason for cancellation...</label>
+                            <textarea id="cancellationReason" class="form-control" rows="3" style="resize: none; outline: none; box-shadow: none;"></textarea>
+                            <div id="cancellationError" class="text-danger mt-2 d-none">Please provide a reason for cancellation.</div>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button id="confirmCancellationBtn" class="btn py-2 flex-grow-1" style="font-weight: bold; color: white; background-color: #E76F51; border-radius: 10px; font-size: 16px;">
+                                Confirm cancellation
+                            </button>
+                            <button id="keepOrderBtn" class="btn py-2 flex-grow-1" style="font-weight: bold; color: white; background-color: #2A9D8F; border-radius: 10px; font-size: 16px;">
+                                Keep Order
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                // Add event listeners for new buttons
+                document.getElementById('cancelButton').addEventListener('click', function() {
+                    document.getElementById('actionButtons').classList.add('d-none');
+                    document.getElementById('cancellationForm').classList.remove('d-none');
+                });
+
+                document.getElementById('keepOrderBtn').addEventListener('click', function() {
+                    document.getElementById('cancellationError').classList.add('d-none');
+                    document.getElementById('cancellationForm').classList.add('d-none');
+                    document.getElementById('actionButtons').classList.remove('d-none');
+                });
+
+                document.getElementById('confirmCancellationBtn').addEventListener('click', function() {
+                    const reason = document.getElementById('cancellationReason').value.trim();
+
+                    if (reason === '') {
+                        document.getElementById('cancellationError').classList.remove('d-none');
+                        return;
+                    }
+
+                    // Submit the cancellation to the server
+                    fetch('@Url.Action("CancelOrder", "Order")', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value
+                        },
+                        body: new URLSearchParams({
+                            'billId': currentSelectedOrder.id,
+                            'reason': reason
+                        })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Update the order status locally
+                            currentSelectedOrder.status = 'Cancelled';
+                            currentSelectedOrder.statusColor = '#DC3545';
+                            currentSelectedOrder.paymentStatus = 'Refunded';
+
+                            // Update the status in the orders array
+                            const orderIndex = orders.findIndex(o => o.id === currentSelectedOrder.id);
+                            if (orderIndex !== -1) {
+                                orders[orderIndex] = currentSelectedOrder;
+                            }
+
+                            // Change status text and background color
+                            orderStatusText.textContent = 'CANCELLED';
+                            orderStatusLabel.style.backgroundColor = '#DC3545';
+                            
+                            // Update payment status field
+                            document.getElementById('floatingPaymentStatus').value = 'Refunded';
+
+                            // Hide all buttons
+                            actionButtonsContainer.innerHTML = '';
+
+                            // Re-render orders to reflect the status change
+                            renderOrders(currentFilteredOrders);
+
+                            // Show success message or take other action
+                            alert('Order successfully cancelled');
+                        } else {
+                            alert('Failed to cancel order');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error cancelling order:', error);
+                        alert('An error occurred while cancelling the order');
+                    });
+                });
             }
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Event listeners for modal
+        closeBtn.onclick = closeModal;
+        closeModalBtn.onclick = closeModal;
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        function initOrders() {
             currentFilteredOrders = [...orders];
             renderOrders();
             checkScreenSize();
@@ -569,14 +886,17 @@
 
         window.filterOrders = function(filter) {
             let filteredOrders = orders;
-            if (filter === "Processing" || filter === "Confirmed" || filter === "Canceled") {
+            if (filter === "Processing" || filter === "Confirmed" || filter === "Cancelled") {
                 filteredOrders = orders.filter(order => order.status === filter);
-            } else if (filter === "Under $100") {
-                filteredOrders = orders.filter(order => parseFloat(order.total) < 100);
-            } else if (filter === "$100 - $200") {
-                filteredOrders = orders.filter(order => parseFloat(order.total) >= 100 && parseFloat(order.total) <= 200);
-            } else if (filter === "Over $200") {
-                filteredOrders = orders.filter(order => parseFloat(order.total) > 200);
+            } else if (filter === "Under 2.000.000₫") {
+                filteredOrders = orders.filter(order => parseFloat(order.total.replace(/\./g, '')) < 2000000);
+            } else if (filter === "2.000.000₫ - 5.000.000₫") {
+                filteredOrders = orders.filter(order => {
+                    const total = parseFloat(order.total.replace(/\./g, ''));
+                    return total >= 2000000 && total <= 5000000;
+                });
+            } else if (filter === "Over 5.000.000₫") {
+                filteredOrders = orders.filter(order => parseFloat(order.total.replace(/\./g, '')) > 5000000);
             }
             currentPage = 1;
             renderOrders(filteredOrders);
@@ -598,9 +918,11 @@
         }
 
         // Initial setup
-        initOrders();
+        document.addEventListener('DOMContentLoaded', function() {
+            initOrders();
 
-        // Listen for window resize
-        window.addEventListener('resize', checkScreenSize);
+            // Listen for window resize
+            window.addEventListener('resize', checkScreenSize);
+        });
     </script>
 }

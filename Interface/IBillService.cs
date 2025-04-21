@@ -11,6 +11,9 @@ namespace PBL3_HK4.Interface
 {
     public interface IBillService
     {
+        public Task<IEnumerable<Bill>> GetBillByUserIdAsync(Guid userId);
+        public Task<IEnumerable<Bill>> GetAllBillsAsync();
+        Task<Bill> GetBillByIdAsync(Guid billId);
         public Task<IEnumerable<Bill>> GetConfirmedBillsAsync();
         public Task<Bill> GetConfirmedBillByIdAsync(Guid billId);
         public Task<IEnumerable<Bill>> GetConfirmedBillsByCustomerIdAsync(Guid customerId);
@@ -20,5 +23,7 @@ namespace PBL3_HK4.Interface
         public Task DeleteBillAsync(Guid billId);
         public Task ConfirmBillAsync(Guid billid);
         public Task<IEnumerable<Bill>> GetUnconfirmedBillAsync();
+        public Task UpdateBillConfirmedAsync(Guid billId);
+        public Task UpdateBillCanceledAsync(Guid billId);
     }
 }
