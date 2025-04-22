@@ -9,6 +9,16 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 namespace PBL3_HK4.Entity
 {
+    public class ProductImage
+    {
+        [Key]
+        public Guid ImageID { get; set; }
+        public string ImagePath { get; set; }
+
+        [ForeignKey("Product")]
+        public Guid ProductID { get; set; }
+        public virtual Product Product { get; set; }
+    }
     public class Product
     {
         [Key]
@@ -34,6 +44,9 @@ namespace PBL3_HK4.Entity
         [DataType(DataType.Date)]
         public DateTime EXPDate { get; set; }
 
+        [StringLength(100)]
+        public string Unit { get; set; }
+        public virtual ICollection<ProductImage> Images { get; set; } = new List<ProductImage>();
         public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
         [NotMapped]
         public float AverageRating

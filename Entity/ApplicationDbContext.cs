@@ -16,6 +16,7 @@ namespace PBL3_HK4.Entity
         public DbSet<BillDetail> BillDetails { get; set; }
         public DbSet<Catalog> Catalogs { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<Review> Reviews { get; set; }
@@ -28,6 +29,7 @@ namespace PBL3_HK4.Entity
             modelBuilder.Entity<BillDetail>().ToTable("BillDetails");
             modelBuilder.Entity<Catalog>().ToTable("Catalogs");
             modelBuilder.Entity<Product>().ToTable("Products");
+            modelBuilder.Entity<ProductImage>().ToTable("ProductImages");
             modelBuilder.Entity<CartItem>().ToTable("CartItems");
             modelBuilder.Entity<Discount>().ToTable("Discounts");
             modelBuilder.Entity<Review>().ToTable("Reviews");
