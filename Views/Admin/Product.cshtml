@@ -40,7 +40,6 @@
         <table class="table table-striped table-hover" id="product-table">
             <thead class="table-light">
                 <tr>
-                    <th>Id</th>
                     <th>Name</th>
                     <th>
                         Price
@@ -88,9 +87,9 @@
         color: #2E8B57;
     }
 
-        .page-link:hover {
-            color: #1e7d45;
-        }
+    .page-link:hover {
+        color: #1e7d45;
+    }
 
     .form-label {
         font-weight: 500;
@@ -102,39 +101,36 @@
     }
 
     @@keyframes fadeIn {
-        from
-
-    {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     .modal-content {
         animation: slideDown 0.3s ease-in-out;
+        position: relative;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
     }
 
     @@keyframes slideDown {
-        from
-
-    {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
+        from { transform: translateY(-50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
     }
 
     .close-btn:hover {
         color: #2E8B57 !important;
+    }
+
+    .modal-header {
+        background-color: white;
+        z-index: 10;
+    }
+
+    .modal-footer {
+        background-color: white;
+        margin-top: 20px;
+        border-top: 1px solid #dee2e6;
+        padding-top: 15px;
     }
 
     .modal-footer .btn {
@@ -143,9 +139,9 @@
         transition: all 0.3s;
     }
 
-        .modal-footer .btn:hover {
-            opacity: 0.9;
-        }
+    .modal-footer .btn:hover {
+        opacity: 0.9;
+    }
 
     .form-row {
         display: flex;
@@ -159,16 +155,21 @@
         min-width: 250px;
     }
 
-        .form-group label {
-            margin-bottom: 5px;
-            display: block;
-        }
+    .form-group label {
+        margin-bottom: 5px;
+        display: block;
+    }
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-        }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+    }
+
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
 
     .image-container {
         width: 200px;
@@ -183,11 +184,11 @@
         margin-top: 10px;
     }
 
-        .image-container img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
+    .image-container img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
 
     #search-product::placeholder {
         opacity: 0.7;
@@ -202,150 +203,258 @@
         color: white;
     }
 
-    /* Responsive styles - Only for tablet and mobile */
-    @@media (max-width: 991.98px) {
-        .row.mb-4
-
-    {
-        margin-bottom: 1rem !important;
+    .modal-content::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
     }
 
-    .col-md-6:first-child {
-        margin-bottom: 0.5rem;
+    .modal-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
     }
 
-    .d-flex.justify-content-end {
+    .modal-content::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    .image-gallery, .new-images-gallery {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
+        gap: 5px;
+        margin-top: 10px;
     }
 
-    #category-filter {
-        flex-grow: 1;
-        max-width: none;
+    .image-thumbnail {
+        position: relative;
+        width: 50px;
+        height: 50px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        cursor: pointer;
     }
 
-    #product-table th,
-    #product-table td {
-        padding: 0.5rem;
+    .image-thumbnail.active {
+        border: 2px solid #2E8B57;
     }
 
-    .form-row {
-        gap: 10px;
-        margin-bottom: 10px;
+    .image-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
+    .delete-image {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        line-height: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        z-index: 10;
+        display: none;
+    }
+
+    .delete-image:hover {
+        background-color: darkred;
+    }
+
+    .image-thumbnail:hover .delete-image {
+        display: block;
+    }
+
+    @@media (max-width: 991.98px) {
+        .row.mb-4 {
+            margin-bottom: 1rem !important;
+        }
+
+        .col-md-6:first-child {
+            margin-bottom: 0.5rem;
+        }
+
+        .d-flex.justify-content-end {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        #category-filter {
+            flex-grow: 1;
+            max-width: none;
+        }
+
+        #product-table th,
+        #product-table td {
+            padding: 0.5rem;
+        }
+
+        .form-row {
+            gap: 10px;
+            margin-bottom: 10px;
+        }
     }
 
     @@media (max-width: 767.98px) {
-        h1
+        h1 {
+            font-size: 1.75rem;
+        }
 
-    {
-        font-size: 1.75rem;
-    }
+        .d-flex.justify-content-between.align-items-center.mb-3 {
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 0.5rem;
+        }
 
-    .d-flex.justify-content-between.align-items-center.mb-3 {
-        flex-direction: column;
-        align-items: flex-start !important;
-        gap: 0.5rem;
-    }
+        #add-product-btn {
+            align-self: stretch;
+        }
 
-    #add-product-btn {
-        align-self: stretch;
-    }
+        .modal-content {
+            width: 95% !important;
+            padding: 15px !important;
+            max-height: 90vh !important;
+            overflow-y: auto !important;
+        }
 
-    .modal-content {
-        width: 95% !important;
-        padding: 15px !important;
-        max-height: 90vh !important;
-        overflow-y: auto !important;
-    }
+        .form-row {
+            flex-direction: column;
+            gap: 8px;
+        }
 
-    .form-row {
-        flex-direction: column;
-        gap: 8px;
-    }
+        .form-group {
+            min-width: 100%;
+        }
 
-    .form-group {
-        min-width: 100%;
-    }
+        .image-container {
+            margin: 0 auto;
+        }
 
-    .image-container {
-        margin: 0 auto;
-    }
-
-    .modal-footer {
-        flex-direction: column;
-        width: 100%;
-    }
+        .modal-footer {
+            flex-direction: column;
+            width: 100%;
+        }
 
         .modal-footer .btn {
             width: 100%;
             margin-bottom: 5px;
         }
 
-    /* Pagination for mobile */
-    .pagination .page-link {
-        padding: 0.375rem 0.5rem;
-    }
+        .pagination .page-link {
+            padding: 0.375rem 0.5rem;
+        }
 
-    .pagination .page-item:not(.active):not(:first-child):not(:last-child) {
-        display: none;
-    }
+        .pagination .page-item:not(.active):not(:first-child):not(:last-child) {
+            display: none;
+        }
 
-    .pagination .page-item.active {
-        display: block;
-    }
+        .pagination .page-item.active {
+            display: block;
+        }
 
+        .description-group {
+            flex: 100%;
+        }
     }
 
     @@media (max-width: 575.98px) {
-        .modal-content
+        .modal-content {
+            padding: 10px !important;
+        }
 
-    {
-        padding: 10px !important;
-    }
+        .modal-header h3 {
+            font-size: 1.5rem;
+        }
 
-    .modal-header h3 {
-        font-size: 1.5rem;
-    }
+        .image-container {
+            height: 150px;
+        }
 
-    .image-container {
-        height: 150px;
-    }
+        .image-thumbnail {
+            width: 40px;
+            height: 40px;
+        }
 
+        .delete-image {
+            width: 16px;
+            height: 16px;
+            line-height: 16px;
+            font-size: 12px;
+            top: -8px;
+            right: -8px;
+        }
     }
 </style>
 
 <script>
-    // Get categories from ViewModel
+    // Nạp các thư viện cần thiết
     const categories = [
-    @foreach (var catalog in Model.Catalogs)
-    {
-        @:{ id: "@catalog.CatalogID", name: "@catalog.CatalogName" },
-    }
+        @foreach (var catalog in Model.Catalogs)
+        {
+            @:{ id: "@catalog.CatalogID", name: "@catalog.CatalogName" },
+        }
     ];
 
-    // Get products from ViewModel
     const allProducts = [
     @foreach (var product in Model.Products)
     {
-        @:{
-        @:  id: "@product.ProductID",
-        @:  name: "@product.ProductName",
-        @:  description: "@(product.ProductDescription?.Replace("\n", "\\n").Replace("\"", "\\\""))",
-        @:  price: @product.Price,
-        @:  stock: @product.StockQuantity,
-        @:  categoryId: "@product.CatalogID",
-        @:  mfgDate: "@product.MFGDate.ToString("yyyy-MM-dd")",
-        @:  expDate: "@product.EXPDate.ToString("yyyy-MM-dd")",
-        @:  imageUrl: "/product-images/@product.ProductID.ToString()",
-        @:  averageStar: @product.AverageRating
-        @:},
+        @: {
+        @: id: "@product.ProductID",
+        @: name: "@product.ProductName",
+        @: description: "@(product.ProductDescription?.Replace("\n", "\\n").Replace("\"", "\\\""))",
+        @: price: @product.Price,
+        @: stock: @product.StockQuantity,
+        @: unit: "@product.Unit",
+        @: categoryId: "@product.CatalogID",
+        @: mfgDate: "@product.MFGDate.ToString("yyyy-MM-dd")",
+        @: expDate: "@product.EXPDate.ToString("yyyy-MM-dd")",
+        @: images: [
+        var productImages = Model.ProductImages.Where(pimg => pimg.ProductID == product.ProductID).ToList();
+        if (productImages.Any())
+        {
+            foreach (var img in productImages)
+            {
+                @:{ id: "@img.ImageID", path: "@img.ImagePath" },
+            }
+        }
+        @: ],
+        @: averageStar: @product.AverageRating
+        @: },
     }
     ];
 
-    // Variables for search and filter
+    function logAllProducts(products) {
+        console.log('=== DANH SÁCH TẤT CẢ SẢN PHẨM ===');
+        products.forEach((product, index) => {
+            console.log(`\n=== Sản phẩm ${index + 1} ===`);
+            console.log(`ID: ${product.id}`);
+            console.log(`Tên: ${product.name}`);
+            console.log(`Mô tả: ${product.description}`);
+            console.log(`Giá: ${product.price}`);
+            console.log(`Tồn kho: ${product.stock} ${product.unit}`);
+            console.log(`Danh mục ID: ${product.categoryId}`);
+            console.log(`Ngày SX: ${product.mfgDate}`);
+            console.log(`Ngày HH: ${product.expDate}`);
+            console.log(`Đánh giá trung bình: ${product.averageStar} sao`);
+            console.log('Hình ảnh:');
+            product.images.forEach(img => {
+                console.log(`  - ID ảnh: ${img.id}, Đường dẫn: ${img.path}`);
+            });
+        });
+        console.log('\n=== TỔNG SỐ SẢN PHẨM: ' + products.length + ' ===');
+    }
+
+    logAllProducts(allProducts);
+
     let filteredProducts = [...allProducts];
     let searchTerm = '';
     let selectedCategory = '';
@@ -353,108 +462,77 @@
     let currentPage = 1;
     let itemsPerPage = 10;
 
-    // Adjust items per page based on screen size
     function adjustItemsPerPage() {
-        if (window.innerWidth <= 576) {
-            itemsPerPage = 5;
-        } else if (window.innerWidth <= 992) {
-            itemsPerPage = 8;
-        } else {
-            itemsPerPage = 10;
-        }
+        if (window.innerWidth <= 576) itemsPerPage = 5;
+        else if (window.innerWidth <= 992) itemsPerPage = 8;
+        else itemsPerPage = 10;
         renderProductTable();
     }
 
-    // Format price as VND
     function formatVND(amount) {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
     }
 
-    // Get category name by ID
     function getCategoryName(id) {
         const category = categories.find(c => c.id === id);
         return category ? category.name : 'N/A';
     }
 
-    // Render product table
     function renderProductTable() {
         const tbody = document.querySelector('#product-table tbody');
         const pagination = document.querySelector('.pagination');
         tbody.innerHTML = '';
 
-        // Calculate pagination
         const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
         const paginatedData = filteredProducts.slice(startIndex, endIndex);
 
-        // Check if current page is valid after items per page change
         if (currentPage > totalPages && totalPages > 0) {
             currentPage = totalPages;
             renderProductTable();
             return;
         }
 
-        // If no products found
         if (paginatedData.length === 0) {
-            const emptyRow = document.createElement('tr');
-            emptyRow.innerHTML = `
-                <td colspan="6" class="text-center py-4">
-                    <div class="alert alert-info mb-0">
-                        No products found matching your criteria. Try adjusting your filters.
-                    </div>
-                </td>
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="text-center py-4">
+                        <div class="alert alert-info mb-0">
+                            No products found matching your criteria. Try adjusting your filters.
+                        </div>
+                    </td>
+                </tr>
             `;
-            tbody.appendChild(emptyRow);
         } else {
-            // Display products
+            const isMobile = window.innerWidth <= 767.98;
             paginatedData.forEach(product => {
                 const category = getCategoryName(product.categoryId);
                 const row = document.createElement('tr');
-
-                // Check if mobile view
-                const isMobile = window.innerWidth <= 767.98;
-                if (isMobile) {
-                    row.innerHTML = `
-                        <td>${product.id}</td>
-                        <td>
-                            <div>${product.name}</div>
-                            <small class="text-muted d-md-none">
-                                ${category} · ${product.expDate}
-                            </small>
-                        </td>
-                        <td>${formatVND(product.price)}</td>
-                        <td>
-                            <button class="btn btn-sm btn-link text-dark me-2" onclick="viewProduct('${product.id}')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn btn-sm btn-link text-danger" onclick="deleteProduct('${product.id}')">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </td>
-                    `;
-                } else {
-                    row.innerHTML = `
-                        <td>${product.id}</td>
-                        <td>${product.name}</td>
-                        <td>${formatVND(product.price)}</td>
-                        <td class="d-none d-md-table-cell">${category}</td>
-                        <td class="d-none d-md-table-cell">${product.expDate}</td>
-                        <td>
-                            <button class="btn btn-sm btn-link text-dark me-2" onclick="viewProduct('${product.id}')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn btn-sm btn-link text-danger" onclick="deleteProduct('${product.id}')">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </td>
-                    `;
-                }
+                row.innerHTML = isMobile ? `
+                    <td>
+                        <div>${product.name}</div>
+                        <small class="text-muted d-md-none">${category} · ${product.expDate}</small>
+                    </td>
+                    <td>${formatVND(product.price)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-link text-dark me-2" onclick="viewProduct('${product.id}')"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-sm btn-link text-danger" onclick="deleteProduct('${product.id}')"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                ` : `
+                    <td>${product.name}</td>
+                    <td>${formatVND(product.price)}</td>
+                    <td class="d-none d-md-table-cell">${category}</td>
+                    <td class="d-none d-md-table-cell">${product.expDate}</td>
+                    <td>
+                        <button class="btn btn-sm btn-link text-dark me-2" onclick="viewProduct('${product.id}')"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-sm btn-link text-danger" onclick="deleteProduct('${product.id}')"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                `;
                 tbody.appendChild(row);
             });
         }
 
-        // Show pagination if needed
         if (filteredProducts.length > itemsPerPage) {
             renderPagination(totalPages);
             pagination.style.display = 'flex';
@@ -463,276 +541,220 @@
         }
     }
 
-    // Render pagination
     function renderPagination(totalPages) {
         const pagination = document.querySelector('.pagination');
         pagination.innerHTML = '';
 
-        // Previous button
         const prevLi = document.createElement('li');
         prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
         prevLi.innerHTML = `<a class="page-link" href="#" onclick="event.preventDefault(); changePage(${currentPage - 1})">«</a>`;
         pagination.appendChild(prevLi);
 
-        // Determine visible pages based on screen size
-        let maxVisiblePages = 5; // Desktop default
-        const isMobile = window.innerWidth <= 767.98;
-        const isTablet = window.innerWidth <= 991.98 && window.innerWidth > 767.98;
-
-        if (isMobile) {
-            maxVisiblePages = 1;
-        } else if (isTablet) {
-            maxVisiblePages = 3;
-        }
-
+        let maxVisiblePages = window.innerWidth <= 767.98 ? 1 : window.innerWidth <= 991.98 ? 3 : 5;
         const startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
         const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
-        // First page (if not in range)
         if (startPage > 1) {
-            const firstPageLi = document.createElement('li');
-            firstPageLi.className = 'page-item';
-            firstPageLi.innerHTML = `<a class="page-link" href="#" onclick="event.preventDefault(); changePage(1)">1</a>`;
-            pagination.appendChild(firstPageLi);
-
-            // Ellipsis if needed
+            pagination.innerHTML += `<li class="page-item"><a class="page-link" href="#" onclick="event.preventDefault(); changePage(1)">1</a></li>`;
             if (startPage > 2) {
-                const ellipsisLi = document.createElement('li');
-                ellipsisLi.className = 'page-item disabled d-none d-md-block';
-                ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
-                pagination.appendChild(ellipsisLi);
+                pagination.innerHTML += `<li class="page-item disabled d-none d-md-block"><span class="page-link">...</span></li>`;
             }
         }
 
-        // Page numbers
         for (let i = startPage; i <= endPage; i++) {
-            const pageLi = document.createElement('li');
-            pageLi.className = `page-item ${i === currentPage ? 'active' : ''}`;
-            pageLi.innerHTML = `<a class="page-link" href="#" onclick="event.preventDefault(); changePage(${i})">${i}</a>`;
-            pagination.appendChild(pageLi);
+            pagination.innerHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="event.preventDefault(); changePage(${i})">${i}</a></li>`;
         }
 
-        // Last page (if not in range)
         if (endPage < totalPages) {
-            // Ellipsis if needed
             if (endPage < totalPages - 1) {
-                const ellipsisLi = document.createElement('li');
-                ellipsisLi.className = 'page-item disabled d-none d-md-block';
-                ellipsisLi.innerHTML = `<span class="page-link">...</span>`;
-                pagination.appendChild(ellipsisLi);
+                pagination.innerHTML += `<li class="page-item disabled d-none d-md-block"><span class="page-link">...</span></li>`;
             }
-
-            const lastPageLi = document.createElement('li');
-            lastPageLi.className = 'page-item';
-            lastPageLi.innerHTML = `<a class="page-link" href="#" onclick="event.preventDefault(); changePage(${totalPages})">${totalPages}</a>`;
-            pagination.appendChild(lastPageLi);
+            pagination.innerHTML += `<li class="page-item"><a class="page-link" href="#" onclick="event.preventDefault(); changePage(${totalPages})">${totalPages}</a></li>`;
         }
 
-        // Next button
         const nextLi = document.createElement('li');
         nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
         nextLi.innerHTML = `<a class="page-link" href="#" onclick="event.preventDefault(); changePage(${currentPage + 1})">»</a>`;
         pagination.appendChild(nextLi);
     }
 
-    // Change page
     function changePage(page) {
         if (page < 1 || page > Math.ceil(filteredProducts.length / itemsPerPage)) return;
         currentPage = page;
         renderProductTable();
     }
 
-    // Update category dropdown based on current filtered products
     function updateCategoryDropdown() {
         const dropdown = document.getElementById('category-filter');
-
-        // Save current selection
         const currentValue = dropdown.value;
-
-        // Clear all existing options
         dropdown.innerHTML = '<option value="">All Categories</option>';
 
-        // Get categories from current filtered products
-        let availableCategories = categories;
+        let availableCategories = searchTerm && !selectedCategory
+            ? categories.filter(c => filteredProducts.map(p => p.categoryId).includes(c.id))
+            : categories;
 
-        // If searching by name, only show categories from search results
-        if (searchTerm && !selectedCategory) {
-            const categoryIds = [...new Set(filteredProducts.map(p => p.categoryId))];
-            availableCategories = categories.filter(c => categoryIds.includes(c.id));
-        }
-
-        // Add options
         availableCategories.forEach(category => {
-            const option = document.createElement('option');
-            option.value = category.id;
-            option.textContent = category.name;
-            dropdown.appendChild(option);
+            dropdown.innerHTML += `<option value="${category.id}">${category.name}</option>`;
         });
 
-        // Restore selection if it exists in new options
-        if (currentValue) {
-            const exists = Array.from(dropdown.options).some(opt => opt.value === currentValue);
-            if (exists) {
-                dropdown.value = currentValue;
-            } else {
-                selectedCategory = '';
-            }
+        if (currentValue && Array.from(dropdown.options).some(opt => opt.value === currentValue)) {
+            dropdown.value = currentValue;
+        } else {
+            selectedCategory = '';
         }
     }
 
-    // Search products
     function searchProducts() {
         currentPage = 1;
-
-        // Reset filtered products
         filteredProducts = [...allProducts];
 
-        // Filter by name (case insensitive)
         if (searchTerm) {
-            const term = searchTerm.toLowerCase();
             filteredProducts = filteredProducts.filter(product =>
-                product.name.toLowerCase().includes(term)
+                product.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
 
-        // Filter by category
         if (selectedCategory) {
             filteredProducts = filteredProducts.filter(product =>
                 product.categoryId === selectedCategory
             );
         }
 
-        // Apply sorting
         if (sortDirection === 'asc') {
             filteredProducts.sort((a, b) => a.price - b.price);
         } else if (sortDirection === 'desc') {
             filteredProducts.sort((a, b) => b.price - a.price);
         }
 
-        // Update dropdown and display
         updateCategoryDropdown();
         renderProductTable();
     }
 
-    // Reset all filters
     function clearFilters() {
-        // Reset variables
         searchTerm = '';
         selectedCategory = '';
         sortDirection = null;
         currentPage = 1;
-
-        // Reset UI elements
         document.getElementById('search-product').value = '';
         document.getElementById('category-filter').value = '';
-        document.querySelectorAll('.dropdown-item').forEach(item => {
-            item.classList.remove('active');
-        });
-
-        // Reset filtered products
+        document.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
         filteredProducts = [...allProducts];
-
-        // Update dropdown and display
         updateCategoryDropdown();
         renderProductTable();
     }
 
-    // View product details
     function viewProduct(id) {
         const product = allProducts.find(p => p.id === id);
-        if (!product) return;
+        if (!product) {
+            console.error("Product not found:", id);
+            return;
+        }
 
-        // Check if mobile device
         const isMobile = window.innerWidth <= 767.98;
-
         const modal = document.createElement('div');
         modal.className = 'modal-overlay';
         modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1050; display: flex; justify-content: center; align-items: center;';
 
         const modalContent = document.createElement('div');
         modalContent.className = 'modal-content';
+        modalContent.style.cssText = isMobile
+            ? 'background-color: white; padding: 15px; border-radius: 8px; width: 95%; max-width: 95%; max-height: 90vh; overflow-y: auto; position: relative;'
+            : 'background-color: white; padding: 25px; border-radius: 8px; width: 800px; max-width: 90%; max-height: 90vh; overflow-y: auto; position: relative;';
 
-        if (isMobile) {
-            modalContent.style.cssText = 'background-color: white; padding: 15px; border-radius: 8px; width: 95%; max-width: 95%; max-height: 90vh; overflow-y: auto;';
-        } else {
-            modalContent.style.cssText = 'background-color: white; padding: 25px; border-radius: 8px; width: 800px; max-width: 90%;';
-        }
+        let mainImagePath = product.images && product.images.length > 0 ? product.images[0].path : '/images/products/default.jpg';
+        console.log(`Product ID: ${product.id}, Main Image Path: ${mainImagePath}`);
 
         modalContent.innerHTML = `
-            <div class="modal-header" style="border-bottom: 1px solid #dee2e6; margin-bottom: 20px; padding-bottom: 10px;">
-                <h3 class="modal-title" style="color: #2E8B57; margin: 0;">Product Details</h3>
+            <div class="modal-header" style="border-bottom: 1px solid #dee2e6; margin-bottom: 20px; padding-bottom: 10px; background-color: white; z-index: 10;">
+                <h3 class="modal-title" style="color: #2E8B57; margin: 0;">Chi tiết sản phẩm</h3>
             </div>
-            <form id="editProductForm" action="UpdateProduct" method="post">
+            <form id="editProductForm" action="UpdateProduct" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
+                    <input type="hidden" id="product-id" name="id" value="${product.id}">
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">ID</label>
-                            <input type="text" class="form-control" id="product-id" name="id" value="${product.id}" readonly style="background-color: #f8f9fa; cursor: not-allowed;">
+                            <label class="form-label">Tên</label>
+                            <input type="text" class="form-control" id="product-name" name="productName" value="${product.name || ''}" disabled>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Name</label>
-                            <input type="text" class="form-control" id="product-name" name="productName" value="${product.name || ''}" disabled>
+                            <label class="form-label">Giá (VND)</label>
+                            <input type="number" class="form-control" id="product-price" name="price" value="${product.price}" disabled>
+                            <small class="text-muted">Hiển thị: ${formatVND(product.price)}</small>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">Price (VND)</label>
-                            <input type="number" class="form-control" id="product-price" name="price" value="${product.price}" disabled>
-                            <small class="text-muted">Displayed as: ${formatVND(product.price)}</small>
+                            <label class="form-label">Đơn vị</label>
+                            <input type="text" class="form-control" id="product-unit" name="unit" value="${product.unit || ''}" disabled>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Stock</label>
+                            <label class="form-label">Tồn kho</label>
                             <input type="number" class="form-control" id="product-stock" name="stockQuantity" value="${product.stock}" disabled>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">Category</label>
+                            <label class="form-label">Danh mục</label>
                             <select class="form-control" id="product-category" name="catalogID" disabled>
                                 ${categories.map(c => `<option value="${c.id}" ${c.id === product.categoryId ? 'selected' : ''}>${c.name}</option>`).join('')}
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">MFG Date</label>
+                            <label class="form-label">Ngày sản xuất</label>
                             <input type="date" class="form-control" id="product-mfg" name="mfgDate" value="${product.mfgDate}" disabled>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">EXP Date</label>
+                            <label class="form-label">Ngày hết hạn</label>
                             <input type="date" class="form-control" id="product-exp" name="expDate" value="${product.expDate}" disabled>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Average Rating</label>
+                            <label class="form-label">Đánh giá trung bình</label>
                             <input type="number" class="form-control" id="product-star" value="${product.averageStar}" disabled readonly>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" id="product-description" name="productDescription" disabled>${product.description || ''}</textarea>
+                        <div class="form-group" style="flex: 2; min-width: 300px;">
+                            <label class="form-label">Mô tả</label>
+                            <textarea class="form-control" id="product-description" name="productDescription" rows="5" style="min-height: 120px;" disabled>${product.description || ''}</textarea>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Image</label>
-                            <input type="file" class="form-control" id="product-image" name="imageFile" accept="image/*" disabled style="display: none;">
+                        <div class="form-group" style="flex: 1; min-width: 250px;">
+                            <label class="form-label">Hình ảnh</label>
+                            <input type="file" class="form-control" id="product-image" name="imgfile" accept="image/*" multiple disabled style="display: none;">
                             <div class="image-container">
-                                <img src="${product.imageUrl}" id="product-image-preview" onerror="this.src='https://via.placeholder.com/150'">
+                                <img src="${mainImagePath}" id="product-image-preview" onerror="this.src='/images/products/default.jpg'">
                             </div>
+                            <div class="image-gallery" id="product-image-gallery">
+                                ${product.images && product.images.length > 0 ?
+                                    product.images.map((img, index) => `
+                                        <div class="image-thumbnail ${index === 0 ? 'active' : ''}" data-index="${index}" data-path="${img.path}" data-image-id="${img.id}">
+                                            <img src="${img.path}" onerror="this.src='/images/products/default.jpg'">
+                                            <span class="delete-image" style="display: none;">x</span>
+                                        </div>
+                                    `).join('') :
+                                    `<div class="image-thumbnail active" data-index="0" data-path="${mainImagePath}">
+                                        <img src="${mainImagePath}" onerror="this.src='/images/products/default.jpg'">
+                                        <span class="delete-image" style="display: none;">x</span>
+                                    </div>`
+                                }
+                            </div>
+                            <div class="new-images-gallery" id="new-images-gallery" style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;"></div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer" style="border-top: 1px solid #dee2e6; margin-top: 20px; padding-top: 15px; display: flex; gap: 10px;">
+                <div class="modal-footer" style="border-top: 1px solid #dee2e6; margin-top: 20px; padding-top: 15px; display: flex; gap: 10px; background-color: white;">
                     <button type="button" class="btn btn-edit" style="background-color: #2E8B57; color: white;">
-                        <i class="fas fa-edit me-2"></i>Edit
+                        <i class="fas fa-edit me-2"></i>Chỉnh sửa
                     </button>
-                    <button type="submit" class="btn btn-save" style="background-color: #28a745; color: white; display: none;">
-                        <i class="fas fa-save me-2"></i>Save
+                    <button type="submit" class="btn btn-save" style="background-color: #28a745; color: white-photosynthesis white; display: none;">
+                        <i class="fas fa-save me-2"></i>Lưu
                     </button>
                     <button type="button" class="btn btn-cancel" style="background-color: #6c757d; color: white; display: none;">
-                        Cancel
+                        Hủy
                     </button>
                     <button type="button" class="btn btn-close-modal" style="background-color: #6c757d; color: white;">
-                        Close
+                        Đóng
                     </button>
                 </div>
             </form>
@@ -744,21 +766,96 @@
             name: modalContent.querySelector('#product-name'),
             description: modalContent.querySelector('#product-description'),
             price: modalContent.querySelector('#product-price'),
+            unit: modalContent.querySelector('#product-unit'),
             stock: modalContent.querySelector('#product-stock'),
             category: modalContent.querySelector('#product-category'),
             mfg: modalContent.querySelector('#product-mfg'),
             exp: modalContent.querySelector('#product-exp'),
             image: modalContent.querySelector('#product-image'),
             imagePreview: modalContent.querySelector('#product-image-preview'),
+            imageGallery: modalContent.querySelector('#product-image-gallery'),
+            newImagesGallery: modalContent.querySelector('#new-images-gallery'),
             star: modalContent.querySelector('#product-star')
         };
 
-        const buttons = {
-            edit: modalContent.querySelector('.btn-edit'),
-            save: modalContent.querySelector('.btn-save'),
-            cancel: modalContent.querySelector('.btn-cancel'),
-            close: modalContent.querySelector('.btn-close-modal')
+        let deletedImageIds = [];
+        let newImages = [];
+
+        const updateDeletedImagesInputs = () => {
+            form.querySelectorAll('input[name="deletedImageIds"]').forEach(input => input.remove());
+            deletedImageIds.forEach(imageId => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'deletedImageIds';
+                input.value = imageId;
+                console.log("Adding hidden input for deletedImageIds:", imageId);
+                form.appendChild(input);
+            });
         };
+
+        const updateMainImage = () => {
+            const activeThumb = inputs.imageGallery.querySelector('.image-thumbnail.active') ||
+                               inputs.newImagesGallery.querySelector('.image-thumbnail.active');
+            inputs.imagePreview.src = activeThumb ? activeThumb.dataset.path : mainImagePath;
+        };
+
+        const thumbnails = inputs.imageGallery.querySelectorAll('.image-thumbnail');
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', () => {
+                thumbnails.forEach(t => t.classList.remove('active'));
+                inputs.newImagesGallery.querySelectorAll('.image-thumbnail').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+                inputs.imagePreview.src = thumb.dataset.path;
+            });
+
+            const deleteBtn = thumb.querySelector('.delete-image');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', () => {
+                    const imageId = thumb.dataset.imageId;
+                    if (imageId && !deletedImageIds.includes(imageId)) {
+                        deletedImageIds.push(imageId);
+                        console.log("Added to deletedImageIds:", imageId);
+                        updateDeletedImagesInputs();
+                        thumb.remove();
+                        updateMainImage();
+                    }
+                });
+            }
+        });
+
+        inputs.image.addEventListener('change', (e) => {
+            inputs.newImagesGallery.innerHTML = '';
+            newImages = Array.from(e.target.files);
+            newImages.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const thumb = document.createElement('div');
+                    thumb.className = `image-thumbnail ${index === 0 && !inputs.imageGallery.querySelector('.image-thumbnail') ? 'active' : ''}`;
+                    thumb.dataset.path = reader.result;
+                    thumb.innerHTML = `
+                        <img src="${reader.result}" alt="New image">
+                        <span class="delete-image" style="display: block;">x</span>
+                    `;
+                    inputs.newImagesGallery.appendChild(thumb);
+
+                    thumb.addEventListener('click', () => {
+                        inputs.imageGallery.querySelectorAll('.image-thumbnail').forEach(t => t.classList.remove('active'));
+                        inputs.newImagesGallery.querySelectorAll('.image-thumbnail').forEach(t => t.classList.remove('active'));
+                        thumb.classList.add('active');
+                        inputs.imagePreview.src = thumb.dataset.path;
+                    });
+
+                    thumb.querySelector('.delete-image').addEventListener('click', () => {
+                        thumb.remove();
+                        newImages.splice(index, 1);
+                        inputs.image.value = '';
+                        updateMainImage();
+                    });
+                };
+                reader.readAsDataURL(file);
+            });
+            updateMainImage();
+        });
 
         const enterEditMode = () => {
             Object.values(inputs).forEach(input => {
@@ -767,6 +864,8 @@
                 }
                 if (input.id === 'product-image') input.style.display = 'block';
             });
+            inputs.imageGallery.querySelectorAll('.delete-image').forEach(btn => btn.style.display = 'block');
+            inputs.newImagesGallery.querySelectorAll('.delete-image').forEach(btn => btn.style.display = 'block');
             buttons.edit.style.display = 'none';
             buttons.save.style.display = 'block';
             buttons.cancel.style.display = 'block';
@@ -781,35 +880,42 @@
             inputs.name.value = product.name || '';
             inputs.description.value = product.description || '';
             inputs.price.value = product.price;
+            inputs.unit.value = product.unit || '';
             inputs.stock.value = product.stock;
             inputs.category.value = product.categoryId;
             inputs.mfg.value = product.mfgDate;
             inputs.exp.value = product.expDate;
-            inputs.imagePreview.src = product.imageUrl;
+            inputs.imagePreview.src = mainImagePath;
+            inputs.newImagesGallery.innerHTML = '';
+            inputs.image.value = '';
+            deletedImageIds = [];
+            updateDeletedImagesInputs();
+            newImages = [];
+            inputs.imageGallery.querySelectorAll('.delete-image').forEach(btn => btn.style.display = 'none');
+            inputs.newImagesGallery.querySelectorAll('.delete-image').forEach(btn => btn.style.display = 'none');
             buttons.edit.style.display = 'block';
             buttons.save.style.display = 'none';
             buttons.cancel.style.display = 'none';
             buttons.close.style.display = 'block';
         };
 
-        inputs.image.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = () => inputs.imagePreview.src = reader.result;
-                reader.readAsDataURL(file);
-            }
-        });
+        const buttons = {
+            edit: modalContent.querySelector('.btn-edit'),
+            save: modalContent.querySelector('.btn-save'),
+            cancel: modalContent.querySelector('.btn-cancel'),
+            close: modalContent.querySelector('.btn-close-modal')
+        };
 
         buttons.close.addEventListener('click', () => document.body.removeChild(modal));
         buttons.edit.addEventListener('click', enterEditMode);
         buttons.cancel.addEventListener('click', exitEditMode);
 
-        // Form submit handler
-        form.addEventListener('submit', function(event) {
+        form.addEventListener('submit', (event) => {
             if (!inputs.name.value.trim() || inputs.price.value <= 0) {
                 event.preventDefault();
-                return false;
+                alert('Vui lòng nhập tên sản phẩm và giá hợp lệ.');
+            } else {
+                console.log("Submitting form with deletedImageIds:", deletedImageIds);
             }
         });
 
@@ -824,59 +930,50 @@
         document.body.appendChild(modal);
     }
 
-    // Delete product
     function deleteProduct(id) {
         const product = allProducts.find(p => p.id === id);
         if (!product) return;
 
-        // Check if mobile device
         const isMobile = window.innerWidth <= 767.98;
-
         const confirmModal = document.createElement('div');
         confirmModal.className = 'modal-overlay';
         confirmModal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1050; display: flex; justify-content: center; align-items: center;';
 
-        if (isMobile) {
-            confirmModal.innerHTML = `
-                <div class="modal-content" style="background-color: white; padding: 15px; border-radius: 8px; width: 95%; max-width: 95%;">
-                    <div class="modal-header" style="border-bottom: 1px solid #dee2e6; margin-bottom: 15px; padding-bottom: 10px;">
-                        <h3 class="modal-title" style="color: #2E8B57; font-size: 1.5rem;">Confirm Deletion</h3>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete this product?</p>
-                        <p><strong>Name:</strong> ${product.name || ''}</p>
-
-                        <form id="deleteProductForm" action="DeleteProduct" method="post">
-                            <input type="hidden" name="id" value="${product.id}">
-                        </form>
-                    </div>
-                    <div class="modal-footer" style="border-top: 1px solid #dee2e6; margin-top: 15px; padding-top: 10px; display: flex; flex-direction: column; width: 100%; gap: 5px;">
-                        <button type="button" class="btn btn-cancel" style="background-color: #6c757d; color: white; width: 100%;">Cancel</button>
-                        <button type="button" class="btn btn-confirm" style="background-color: #dc3545; color: white; width: 100%;">Delete</button>
-                    </div>
+        confirmModal.innerHTML = isMobile ? `
+            <div class="modal-content" style="background-color: white; padding: 15px; border-radius: 8px; width: 95%; max-width: 95%;">
+                <div class="modal-header" style="border-bottom: 1px solid #dee2e6; margin-bottom: 15px; padding-bottom: 10px;">
+                    <h3 class="modal-title" style="color: #2E8B57; font-size: 1.5rem;">Confirm Deletion</h3>
                 </div>
-            `;
-        } else {
-            confirmModal.innerHTML = `
-                <div class="modal-content" style="background-color: white; padding: 25px; border-radius: 8px; width: 400px; max-width: 90%;">
-                    <div class="modal-header">
-                        <h3 class="modal-title" style="color: #2E8B57;">Confirm Deletion</h3>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete this product?</p>
-                        <p><strong>Name:</strong> ${product.name || ''}</p>
-
-                        <form id="deleteProductForm" action="DeleteProduct" method="post">
-                            <input type="hidden" name="id" value="${product.id}">
-                        </form>
-                    </div>
-                    <div class="modal-footer" style="display: flex; gap: 10px;">
-                        <button type="button" class="btn btn-cancel" style="background-color: #6c757d; color: white;">Cancel</button>
-                        <button type="button" class="btn btn-confirm" style="background-color: #dc3545; color: white;">Delete</button>
-                    </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this product?</p>
+                    <p><strong>Name:</strong> ${product.name || ''}</p>
+                    <form id="deleteProductForm" action="DeleteProduct" method="post">
+                        <input type="hidden" name="id" value="${product.id}">
+                    </form>
                 </div>
-            `;
-        }
+                <div class="modal-footer" style="border-top: 1px solid #dee2e6; margin-top: 15px; padding-top: 10px; display: flex; flex-direction: column; width: 100%; gap: 5px;">
+                    <button type="button" class="btn btn-cancel" style="background-color: #6c757d; color: white; width: 100%;">Cancel</button>
+                    <button type="button" class="btn btn-confirm" style="background-color: #dc3545; color: white; width: 100%;">Delete</button>
+                </div>
+            </div>
+        ` : `
+            <div class="modal-content" style="background-color: white; padding: 25px; border-radius: 8px; width: 400px; max-width: 90%;">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: #2E8B57;">Confirm Deletion</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this product?</p>
+                    <p><strong>Name:</strong> ${product.name || ''}</p>
+                    <form id="deleteProductForm" action="DeleteProduct" method="post">
+                        <input type="hidden" name="id" value="${product.id}">
+                    </form>
+                </div>
+                <div class="modal-footer" style="display: flex; gap: 10px;">
+                    <button type="button" class="btn btn-cancel" style="background-color: #6c757d; color: white;">Cancel</button>
+                    <button type="button" class="btn btn-confirm" style="background-color: #dc3545; color: white;">Delete</button>
+                </div>
+            </div>
+        `;
 
         const deleteForm = confirmModal.querySelector('#deleteProductForm');
         const cancelBtn = confirmModal.querySelector('.btn-cancel');
@@ -884,16 +981,12 @@
 
         cancelBtn.addEventListener('click', () => document.body.removeChild(confirmModal));
         confirmBtn.addEventListener('click', () => {
-            // Submit form
             deleteForm.submit();
-
-            // Update UI locally
             const index = allProducts.findIndex(p => p.id === id);
             if (index !== -1) {
                 allProducts.splice(index, 1);
-                searchProducts(); // Reapply current filters
+                searchProducts();
             }
-
             document.body.removeChild(confirmModal);
         });
 
@@ -904,26 +997,20 @@
         document.body.appendChild(confirmModal);
     }
 
-    // Add new product
     function addNewProduct() {
-        // Check if mobile device
         const isMobile = window.innerWidth <= 767.98;
-
         const modal = document.createElement('div');
         modal.className = 'modal-overlay';
         modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1050; display: flex; justify-content: center; align-items: center;';
 
         const modalContent = document.createElement('div');
         modalContent.className = 'modal-content';
-
-        if (isMobile) {
-            modalContent.style.cssText = 'background-color: white; padding: 15px; border-radius: 8px; width: 95%; max-width: 95%; max-height: 90vh; overflow-y: auto;';
-        } else {
-            modalContent.style.cssText = 'background-color: white; padding: 25px; border-radius: 8px; width: 800px; max-width: 90%;';
-        }
+        modalContent.style.cssText = isMobile
+            ? 'background-color: white; padding: 15px; border-radius: 8px; width: 95%; max-width: 95%; max-height: 90vh; overflow-y: auto; position: relative;'
+            : 'background-color: white; padding: 25px; border-radius: 8px; width: 800px; max-width: 90%; max-height: 90vh; overflow-y: auto; position: relative;';
 
         modalContent.innerHTML = `
-            <div class="modal-header">
+            <div class="modal-header" style="border-bottom: 1px solid #dee2e6; margin-bottom: 20px; padding-bottom: 10px; background-color: white; z-index: 10;">
                 <h3 class="modal-title" style="color: #2E8B57; ${isMobile ? 'font-size: 1.5rem;' : ''}">Add New Product</h3>
             </div>
             <form id="addProductForm" action="CreateProduct" method="post" enctype="multipart/form-data">
@@ -940,9 +1027,15 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
+                            <label class="form-label">Unit <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="new-product-unit" name="unit" placeholder="Enter unit (e.g. kg, piece)" required>
+                        </div>
+                        <div class="form-group">
                             <label class="form-label">Stock <span style="color: red;">*</span></label>
                             <input type="number" class="form-control" id="new-product-stock" name="stockQuantity" placeholder="Enter stock" min="0" required>
                         </div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Category <span style="color: red;">*</span></label>
                             <select class="form-control" id="new-product-category" name="catalogID" required>
@@ -950,38 +1043,38 @@
                                 ${categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
                             </select>
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">MFG Date <span style="color: red;">*</span></label>
                             <input type="date" class="form-control" id="new-product-mfg" name="mfgDate" required>
                         </div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">EXP Date <span style="color: red;">*</span></label>
                             <input type="date" class="form-control" id="new-product-exp" name="expDate" required>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
+                        <div class="form-group" style="flex: 2; min-width: 300px;">
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" id="new-product-description" name="productDescription" placeholder="Enter description"></textarea>
+                            <textarea class="form-control" id="new-product-description" name="productDescription" placeholder="Enter description" rows="5" style="min-height: 120px;"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Image</label>
-                            <input type="file" class="form-control" id="new-product-image" name="imageFile" accept="image/*">
+                        <div class="form-group" style="flex: 1; min-width: 250px;">
+                            <label class="form-label">Images</label>
+                            <input type="file" class="form-control" id="new-product-image" name="imgfile" accept="image/*" multiple>
                             <div class="image-container">
                                 <img src="" id="new-product-image-preview" style="display: none;">
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer" style="display: flex; gap: 10px; ${isMobile ? 'flex-direction: column; width: 100%;' : ''}">
-                    <button type="submit" class="btn btn-add" style="background-color: #2E8B57; color: white; ${isMobile ? 'width: 100%;' : ''}">
-                        <i class="fas fa-plus me-2"></i>Add
-                    </button>
-                    <button type="button" class="btn btn-cancel" style="background-color: #6c757d; color: white; ${isMobile ? 'width: 100%;' : ''}">
-                        Cancel
-                    </button>
+                    <div class="modal-footer" style="border-top: 1px solid #dee2e6; margin-top: 20px; padding-top: 15px; display: flex; gap: 10px; ${isMobile ? 'flex-direction: column; width: 100%;' : ''} background-color: white;">
+                        <button type="submit" class="btn btn-add" style="background-color: #2E8B57; color: white; ${isMobile ? 'width: 100%;' : ''}">
+                            <i class="fas fa-plus me-2"></i>Add
+                        </button>
+                        <button type="button" class="btn btn-cancel" style="background-color: #6c757d; color: white; ${isMobile ? 'width: 100%;' : ''}">
+                            Cancel
+                        </button>
+                    </div>
                 </div>
             </form>
         `;
@@ -991,6 +1084,7 @@
             name: modalContent.querySelector('#new-product-name'),
             description: modalContent.querySelector('#new-product-description'),
             price: modalContent.querySelector('#new-product-price'),
+            unit: modalContent.querySelector('#new-product-unit'),
             stock: modalContent.querySelector('#new-product-stock'),
             category: modalContent.querySelector('#new-product-category'),
             mfg: modalContent.querySelector('#new-product-mfg'),
@@ -1000,22 +1094,21 @@
         };
 
         inputs.image.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
+            const files = e.target.files;
+            if (files && files.length > 0) {
                 const reader = new FileReader();
                 reader.onload = () => {
                     inputs.imagePreview.src = reader.result;
                     inputs.imagePreview.style.display = 'block';
                 };
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(files[0]);
             }
         });
 
-        // Form validation on submit
-        form.addEventListener('submit', function(event) {
-            if (!inputs.name.value.trim() || !inputs.price.value || !inputs.category.value) {
+        form.addEventListener('submit', (event) => {
+            if (!inputs.name.value.trim() || !inputs.price.value || !inputs.unit.value.trim() || !inputs.category.value) {
                 event.preventDefault();
-                return false;
+                alert('Vui lòng nhập đầy đủ các trường bắt buộc.');
             }
         });
 
@@ -1028,75 +1121,64 @@
         document.body.appendChild(modal);
     }
 
-    // Initialize
-    document.addEventListener('DOMContentLoaded', function() {
-        // Set up initial UI
+    document.addEventListener('DOMContentLoaded', () => {
         adjustItemsPerPage();
         updateCategoryDropdown();
         renderProductTable();
 
-        // Set up event listeners
         const searchInput = document.getElementById('search-product');
         const searchBtn = document.getElementById('search-btn');
         const categoryFilter = document.getElementById('category-filter');
         const clearFiltersBtn = document.getElementById('clear-filters');
         const addProductBtn = document.getElementById('add-product-btn');
 
-        // Search by pressing Enter
-        searchInput.addEventListener('keyup', function(e) {
+        searchInput.addEventListener('keyup', (e) => {
             if (e.key === 'Enter') {
-                searchTerm = this.value.trim();
+                searchTerm = searchInput.value.trim();
                 searchProducts();
             }
         });
 
-        // Search by clicking search button
-        searchBtn.addEventListener('click', function() {
+        searchBtn.addEventListener('click', () => {
             searchTerm = searchInput.value.trim();
             searchProducts();
         });
 
-        // Filter by category
-        categoryFilter.addEventListener('change', function() {
-            selectedCategory = this.value;
+        categoryFilter.addEventListener('change', () => {
+            selectedCategory = categoryFilter.value;
             searchProducts();
         });
 
-        // Clear all filters
         clearFiltersBtn.addEventListener('click', clearFilters);
-
-        // Add new product
         addProductBtn.addEventListener('click', addNewProduct);
 
-        // Listen for window resize to adjust responsive elements
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', () => {
             adjustItemsPerPage();
             renderProductTable();
         });
 
-        // Setup price sorting
-        document.getElementById('sort-price-asc').addEventListener('click', function(e) {
+        document.getElementById('sort-price-asc').addEventListener('click', (e) => {
             e.preventDefault();
             sortDirection = 'asc';
             searchProducts();
             document.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
-            this.classList.add('active');
+            e.target.classList.add('active');
         });
 
-        document.getElementById('sort-price-desc').addEventListener('click', function(e) {
+        document.getElementById('sort-price-desc').addEventListener('click', (e) => {
             e.preventDefault();
             sortDirection = 'desc';
             searchProducts();
             document.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
-            this.classList.add('active');
+            e.target.classList.add('active');
         });
 
-        document.getElementById('sort-price-none').addEventListener('click', function(e) {
+        document.getElementById('sort-price-none').addEventListener('click', (e) => {
             e.preventDefault();
             sortDirection = null;
             searchProducts();
             document.querySelectorAll('.dropdown-item').forEach(item => item.classList.remove('active'));
-            this.classList.add('active');
+            e.target.classList.add('active');
         });
     });
 </script>

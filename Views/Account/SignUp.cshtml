@@ -12,9 +12,14 @@
     <!-- Link CSS Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Google Fonts for professional typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="~/css/site.css" rel="stylesheet" />
     <style>
         body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, rgba(27, 94, 32, 0.1), rgba(76, 175, 80, 0.1));
             overflow-x: hidden;
         }
 
@@ -32,39 +37,139 @@
         }
 
         .btn-signup {
-            background-color: #212529;
+            background: linear-gradient(45deg, #1b5e20, #4caf50);
             color: white;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 0.75rem;
             transition: all 0.3s ease;
         }
 
             .btn-signup:hover {
-                background-color: #343a40;
-                color: white;
+                background: linear-gradient(45deg, #4caf50, #ab47bc);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             }
 
             .btn-signup:disabled {
-                background-color: #6c757d;
+                background: rgba(108, 117, 125, 0.7);
                 cursor: not-allowed;
                 opacity: 0.65;
             }
 
         /* Hiệu ứng focus cho ô input hiện tại */
         .form-control:focus, .form-check-input:focus {
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-            border-color: #86b7fe;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+            border-color: #4caf50;
         }
 
         /* Responsive styles */
         .signup-title {
             font-size: 64px;
-            font-weight: bold;
-            letter-spacing: 10px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            text-align: center;
+            color: #1b5e20;
+            animation: fadeIn 1s ease-in;
+            background: linear-gradient(45deg, #4caf50, #ab47bc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .signup-container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            position: relative;
+        }
+
+            .signup-container::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url('https://www.transparenttextures.com/patterns/food.png') repeat;
+                opacity: 0.05;
+                z-index: 0;
+            }
+
+        /* Decorative Elements */
+        .decorative-orchid {
+            position: absolute;
+            font-size: 2.5rem;
+            color: rgba(171, 71, 188, 0.3);
+            animation: sway 6s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .orchid-top-left {
+            top: 20px;
+            left: 20px;
+            transform: rotate(-20deg);
+        }
+
+        .orchid-bottom-right {
+            bottom: 20px;
+            right: 20px;
+            transform: rotate(20deg);
+        }
+
+        @@keyframes sway {
+            0%, 100%
+
+        {
+            transform: translateY(0) rotate(-20deg);
+        }
+
+        50% {
+            transform: translateY(15px) rotate(-10deg);
+        }
+
+        }
+
+        @@keyframes fadeIn {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        /* Form styling */
+        .form-floating input, .form-floating textarea {
+            border: 1px solid rgba(76, 175, 80, 0.4);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            padding: 1rem;
+        }
+
+            .form-floating input:focus, .form-floating textarea:focus {
+                border-color: #4caf50;
+                box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+                background: rgba(255, 255, 255, 1);
+            }
+
+        .form-floating label {
+            color: #388e3c;
+            font-weight: 500;
+            padding-left: 1.5rem;
+        }
+
+        /* Labels for other form elements */
+        .form-label {
+            color: #388e3c;
+            font-weight: 500;
         }
 
         /* Back to home button for mobile */
@@ -73,7 +178,51 @@
             top: 15px;
             left: 15px;
             z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            color: #4caf50;
             display: none;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .back-home:hover {
+                background: rgba(171, 71, 188, 0.1);
+                color: #ab47bc;
+            }
+
+        /* Social Buttons */
+        .btn-outline-secondary {
+            border-color: rgba(76, 175, 80, 0.5);
+            color: #4caf50;
+            transition: all 0.3s ease;
+        }
+
+            .btn-outline-secondary:hover {
+                background: rgba(171, 71, 188, 0.1);
+                color: #ab47bc;
+                transform: scale(1.1);
+            }
+
+        /* Links and HR */
+        hr {
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+
+        .text-primary {
+            color: #4caf50 !important;
+        }
+
+            .text-primary:hover {
+                color: #ab47bc !important;
+            }
+
+        /* Radio buttons */
+        .form-check-input:checked {
+            background-color: #4caf50;
+            border-color: #4caf50;
         }
 
         /* Tablet styles */
@@ -110,7 +259,11 @@
         }
 
         .back-home {
-            display: block;
+            display: flex;
+        }
+
+        .decorative-orchid {
+            font-size: 2rem;
         }
 
         }
@@ -136,14 +289,16 @@
 
 <body>
     <!-- Back to home button for mobile -->
-    <a href="/" class="btn btn-light rounded-circle shadow-sm back-home">
+    <a href="/" class="btn rounded-circle shadow-sm back-home">
         <i class="bi bi-house-fill"></i>
     </a>
 
     <div class="container-fluid p-0">
         <div class="signup-container d-flex flex-column justify-content-center min-vh-100 py-3 py-md-5">
-            <div class="w-100">
-                <p class="text-center mb-4 signup-title">SIGN UP</p>
+            <i class="bi bi-flower2 decorative-orchid orchid-top-left"></i>
+            <i class="bi bi-flower2 decorative-orchid orchid-bottom-right"></i>
+            <div class="w-100 position-relative">
+                <p class="signup-title mb-4">SIGN UP</p>
 
                 <form id="signupForm" asp-action="SignUp" method="post">
                     <!-- Hàng 1: Full Name và Email -->
@@ -152,7 +307,7 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control form-field" id="floatingName" placeholder="Full Name" tabindex="1"
                                        name="Name" pattern="^[a-zA-ZÀ-ỹ][a-zA-ZÀ-ỹ0-9\s]*$" required>
-                                <label for="floatingName"><i class="bi bi-person-badge-fill"></i> Full Name</label>
+                                <label for="floatingName"><i class="bi bi-person-badge-fill me-2"></i>Full Name</label>
                                 <div class="invalid-feedback">Vui lòng nhập tên hợp lệ (không chứa số hoặc ký tự đặc biệt)</div>
                             </div>
                         </div>
@@ -162,7 +317,7 @@
                                        name="Email"
                                        pattern="[a-zA-Z0-9._%+-]+\@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                                        required>
-                                <label for="floatingEmail"><i class="bi bi-envelope-fill"></i> Email</label>
+                                <label for="floatingEmail"><i class="bi bi-envelope-fill me-2"></i>Email</label>
                                 <div class="invalid-feedback">Vui lòng nhập email hợp lệ (ví dụ: example@domain.com)</div>
                             </div>
                         </div>
@@ -174,14 +329,14 @@
                             <div class="form-floating">
                                 <input type="tel" class="form-control form-field" id="floatingPhone" placeholder="Phone Number" tabindex="3"
                                        name="Phone" pattern="[0-9]{10}" required>
-                                <label for="floatingPhone"><i class="bi bi-telephone-fill"></i> Phone Number</label>
+                                <label for="floatingPhone"><i class="bi bi-telephone-fill me-2"></i>Phone Number</label>
                                 <div class="invalid-feedback">Số điện thoại phải có đúng 10 chữ số</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="date" class="form-control form-field" id="floatingDate" placeholder="Date of Birth" name="DateOfBirth" tabindex="4" required>
-                                <label for="floatingDate"><i class="bi bi-calendar-fill"></i> Date of Birth</label>
+                                <label for="floatingDate"><i class="bi bi-calendar-fill me-2"></i>Date of Birth</label>
                                 <div class="invalid-feedback">Vui lòng chọn ngày sinh</div>
                             </div>
                         </div>
@@ -189,7 +344,7 @@
 
                     <!-- Gender -->
                     <div class="mb-3">
-                        <label class="form-label"><i class="bi bi-gender-ambiguous"></i> Gender</label>
+                        <label class="form-label"><i class="bi bi-gender-ambiguous me-2"></i>Gender</label>
                         <div class="gender-options">
                             <div class="form-check gender-option">
                                 <input class="form-check-input form-field" type="radio" name="Sex" id="male" value="Male" tabindex="5" checked required>
@@ -209,7 +364,7 @@
                     <!-- Address -->
                     <div class="form-floating mb-3">
                         <textarea class="form-control form-field" id="floatingAddress" placeholder="Address" style="height: 100px" name="Address" tabindex="8" required></textarea>
-                        <label for="floatingAddress"><i class="bi bi-house-fill"></i> Address</label>
+                        <label for="floatingAddress"><i class="bi bi-house-fill me-2"></i>Address</label>
                         <div class="invalid-feedback">Vui lòng nhập địa chỉ</div>
                     </div>
 
@@ -219,7 +374,7 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control form-field" id="floatingUsername" placeholder="User Name" tabindex="9"
                                        name="UserName" pattern="^[a-zA-ZÀ-ỹ][a-zA-ZÀ-ỹ0-9\s]*$" required>
-                                <label for="floatingUsername"><i class="bi bi-person-fill"></i> User Name</label>
+                                <label for="floatingUsername"><i class="bi bi-person-fill me-2"></i>User Name</label>
                                 <div class="invalid-feedback">Tên đăng nhập phải bắt đầu bằng chữ cái và chỉ chứa chữ cái và số</div>
                             </div>
                         </div>
@@ -227,7 +382,7 @@
                             <div class="form-floating position-relative">
                                 <input type="password" class="form-control form-field" id="floatingPassword" placeholder="Password" tabindex="10"
                                        name="PassWord" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$" required>
-                                <label for="floatingPassword"><i class="bi bi-lock-fill"></i> Password</label>
+                                <label for="floatingPassword"><i class="bi bi-lock-fill me-2"></i>Password</label>
                                 <i class="bi bi-eye-fill position-absolute end-0 top-50 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i>
                                 <div class="invalid-feedback">
                                     Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt
@@ -240,7 +395,7 @@
                     <div class="form-floating mb-3 position-relative">
                         <input type="password" class="form-control form-field" id="floatingConfirmPassword" tabindex="11"
                                placeholder="Confirm Password" name="ConfirmPassword" required>
-                        <label for="floatingConfirmPassword"><i class="bi bi-lock-fill"></i> Confirm Password</label>
+                        <label for="floatingConfirmPassword"><i class="bi bi-lock-fill me-2"></i>Confirm Password</label>
                         <i class="bi bi-eye-fill position-absolute end-0 top-50 translate-middle-y me-3" id="toggleConfirmPassword" style="cursor: pointer;"></i>
                         <div class="invalid-feedback">Mật khẩu xác nhận không khớp</div>
                     </div>
@@ -278,7 +433,7 @@
                 </div>
 
                 <div class="text-center">
-                    <a asp-controller="Account" asp-action="Main" class="text-decoration-none me-1"><i class="bi bi-arrow-bar-left"></i></a>
+                    <a asp-controller="Account" asp-action="Main" class="text-decoration-none me-1 text-primary"><i class="bi bi-arrow-bar-left"></i></a>
                     Already have an account?
                     <a asp-controller="Account" asp-action="SignIn" class="text-primary text-decoration-underline">Sign in now</a>
                 </div>

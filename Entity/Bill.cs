@@ -11,7 +11,8 @@ namespace PBL3_HK4.Entity
     {
         Unconfirmed = 0,
         Confirmed = 1,
-        Cancelled = 2
+        Cancelled = 2,
+        Received = 3
     }
     public class Bill
     {

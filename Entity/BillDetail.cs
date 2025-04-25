@@ -26,18 +26,6 @@ namespace PBL3_HK4.Entity
         public virtual Discount? Discount { get; set; }
         public int? Quantity { get; set; }
         public double? Price { get; set; }
-        public double Total
-        {
-            get
-            {
-                if (Quantity.HasValue && Price.HasValue)
-                {
-                    double discountRate = Discount?.DiscountRate ?? 1;
-                    return Quantity.Value * Price.Value * discountRate;
-                }
-                return 0;
-
-            }
-        }
+        public double Total { get; set; }
     }
 }

@@ -10,6 +10,8 @@ namespace PBL3_HK4.Interface
 {
     public interface IProductImageService
     {
+        public Task<List<ProductImage>> GetAllImagesByProductId(Guid productid);
+        public Task<List<ProductImage>> GetAllImages();
         public Task<ProductImage> SaveImageAsync(IFormFile imageFile, Guid productId);
         public Task DeleteImageAsync(Guid imageId);
     }

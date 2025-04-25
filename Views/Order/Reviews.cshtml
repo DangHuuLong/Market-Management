@@ -1,0 +1,254 @@
+﻿@using PBL3_HK4.Entity
+@{
+    ViewData["Title"] = "Reviews";
+    Layout = null;
+    ReviewsViewModel reviewsViewModel = Model as ReviewsViewModel;
+    var customer = reviewsViewModel.Customer;
+    var products = reviewsViewModel.Products;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7f3;
+            padding: 20px;
+        }
+
+        .review-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .review-product {
+            border-bottom: 1px solid #e6e9e1;
+            padding: 15px 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+            .star-rating input {
+                display: none;
+            }
+
+            .star-rating label {
+                font-size: 1.5rem;
+                color: #ccc;
+                cursor: pointer;
+                transition: color 0.2s;
+            }
+
+        .review-comment {
+            resize: none;
+            height: 80px;
+        }
+
+        .submit-btn {
+            background-color: #80b500;
+            border: none;
+            padding: 10px 20px;
+            color: #fff;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+            .submit-btn:hover {
+                background-color: #6d7b30;
+            }
+
+        .back-btn {
+            background-color: #6c757d;
+            border: none;
+            padding: 10px 20px;
+            color: #fff;
+            border-radius: 5px;
+            font-weight: 500;
+            margin-right: 10px;
+        }
+
+            .back-btn:hover {
+                background-color: #5a6268;
+            }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 0.9rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="review-container">
+        <h2 class="text-center mb-4">Product Reviews</h2>
+        <form id="reviewForm" action="@Url.Action("SubmitReviews", "Order")" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="UserID" value="@customer?.UserID" />
+            @if (products != null && products.Any())
+            {
+                @for (int i = 0; i < products.Count(); i++)
+                {
+                    var product = products.ElementAt(i);
+                    <div class="review-product">
+                        @if (product.Images != null && product.Images.Any())
+                        {
+                            <img src="@product.Images.First().ImagePath" alt="@product.ProductName" class="product-image" />
+                        }
+                        else
+                        {
+                            <img src="https://via.placeholder.com/100" alt="No image" class="product-image" />
+                        }
+                        <div class="product-info">
+                            <h5>@product.ProductName</h5>
+                            <input type="hidden" name="Reviews[@i].ProductID" value="@product.ProductID" />
+                            <input type="hidden" name="Reviews[@i].UserID" value="@customer?.UserID" />
+                            <div class="star-rating" data-index="@i">
+                                @for (int star = 1; star <= 5; star++)
+                                {
+                                    <input type="radio" name="Reviews[@i].Rating" id="star-@i-@star" value="@star" />
+                                    <label for="star-@i-@star" class="bi bi-star-fill"></label>
+                                }
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control review-comment" name="Reviews[@i].Text" maxlength="100" placeholder="Enter your comment (max 100 characters)"></textarea>
+                                <div class="error-message" id="error-@i">Please select a rating if you have added a comment.</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-center">No products to review.</p>
+            }
+            @if (products != null && products.Any())
+            {
+                <div class="text-center">
+                    <a href="@Url.Action("Index", "Order")" class="back-btn">Back</a>
+                    <button type="submit" class="submit-btn">Submit Reviews</button>
+                </div>
+            }
+        </form>
+    </div>
+
+    <script>
+        // Default comments based on star rating
+        const defaultComments = {
+            1: "Very Bad - I'm very disappointed with this product",
+            2: "Bad - This product didn't meet my expectations",
+            3: "Average - This product is okay, but could be better",
+            4: "Good - I'm satisfied with this product",
+            5: "Excellent - This product exceeded my expectations"
+        };
+
+        // Handle star display from left to right and auto-fill comments
+        document.querySelectorAll('.star-rating').forEach(ratingDiv => {
+            const index = ratingDiv.dataset.index;
+            const inputs = ratingDiv.querySelectorAll('input[type="radio"]');
+            const labels = ratingDiv.querySelectorAll('label');
+            const textarea = document.querySelector(`textarea[name="Reviews[${index}].Text"]`);
+
+            inputs.forEach((input, idx) => {
+                input.addEventListener('change', (e) => {
+                    const selectedRating = parseInt(e.target.value);
+
+                    // Highlight stars
+                    labels.forEach((label, labelIdx) => {
+                        if (labelIdx < selectedRating) { // Highlight up to the selected star
+                            label.style.color = '#ffc107';
+                        } else {
+                            label.style.color = '#ccc';
+                        }
+                    });
+
+                    // Update default comment only if the current text matches the previous default or is empty
+                    // This prevents overwriting a custom comment the user has typed
+                    let currentComment = textarea.value.trim();
+                    let shouldUpdateDefault = false;
+
+                    // Check if the current comment is empty or matches any of the default comments
+                    if (currentComment === '') {
+                        shouldUpdateDefault = true;
+                    } else {
+                        for (const rating in defaultComments) {
+                             if (currentComment === defaultComments[rating]) {
+                                shouldUpdateDefault = true;
+                                break;
+                             }
+                        }
+                    }
+
+                    if (shouldUpdateDefault) {
+                        textarea.value = defaultComments[selectedRating];
+                    }
+
+
+                    // Clear the error message if a rating is selected
+                    const error = document.getElementById(`error-${index}`);
+                    if (error) {
+                        error.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Handle form validation on submit
+        document.getElementById('reviewForm').addEventListener('submit', function (e) {
+            let valid = true;
+            const reviewProducts = document.querySelectorAll('.review-product');
+
+            reviewProducts.forEach((product, index) => {
+                const rating = product.querySelector(`input[name="Reviews[${index}].Rating"]:checked`);
+                const comment = product.querySelector(`textarea[name="Reviews[${index}].Text"]`).value.trim();
+                const error = document.getElementById(`error-${index}`);
+
+                if (comment && !rating) {
+                    // If there is a comment but no rating, show error
+                    if (error) {
+                        error.style.display = 'block';
+                    }
+                    valid = false;
+                } else {
+                    // Hide error if valid
+                    if (error) {
+                        error.style.display = 'none';
+                    }
+                }
+            });
+
+            if (!valid) {
+                e.preventDefault();
+                alert('Please select a rating for products with comments.');
+            }
+        });
+    </script>
+</body>
+</html>

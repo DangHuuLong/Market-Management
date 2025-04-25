@@ -47,10 +47,13 @@ namespace PBL3_HK4.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProfile(Customer customer)
         {
-            var newpass = customer.NewPassWord;
-            var password = _passwordHasher.HashPassword(newpass);
-            customer.PassWord = password;
-            customer.NewPassWord = null;
+            if (customer.NewPassWord != null)
+            {
+                var newpass = customer.NewPassWord;
+                var password = _passwordHasher.HashPassword(newpass);
+                customer.PassWord = password;
+                customer.NewPassWord = null;
+            }
             await _customerService.UpdateCustomerAsync(customer);
             return RedirectToAction("SignIn","Account");
         }

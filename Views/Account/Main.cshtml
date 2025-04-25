@@ -3,12 +3,13 @@
     Layout = null;
 }
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Link CSS Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="../css/site.css" rel="stylesheet" />
-
 </head>
 <body style="margin: 0;">
 
@@ -18,18 +19,16 @@
 
         <!-- Semi-transparent overlay -->
         <div class="position-absolute top-0 start-0 w-100 h-100" style="z-index: -1; background-color: rgba(255, 255, 255, 0.3);"></div>
-        
+
         <div class="col-1 content d-flex align-items-center">
             <div>
                 <div class="talkbycoconut text-white">Hello guy!!!</div>
                 <img class="img-fluid" src="~/img/coconut.png" class="icon-img" />
-                <i class="icon-overlay  fa-solid fa-hand"></i> 
+                <i class="icon-overlay fa-solid fa-hand"></i>
             </div>
         </div>
 
         <div class="col-10 justify-content-center" style="display: flex; flex-direction: column; height: 100%; margin: 0 auto;">
-
-
             <div class="d-flex justify-content-center align-items-center my-4">
                 <h1 style="color: #fff; font-weight: 600; margin: 0;">
                     Welcome To <span style="color: var(--dark-green-color); font-weight: bold">Organic Grocery Shopping Online</span>
@@ -39,17 +38,13 @@
                      alt="Logo" />
             </div>
 
-
             <div class="row justify-content-center my-4 mx-0">
                 <!-- Card 1 -->
                 <div class="col-lg-3 col-md-4 mb-4 mx-2 p-0" style="background-color: rgba(255, 255, 255, 0.5); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); overflow: hidden;">
                     <div class="d-flex flex-column h-100">
-                        <!-- Header with accent color -->
                         <div class="p-3 bg-primary bg-opacity-10 border-bottom border-primary border-opacity-25">
                             <h4 class="mb-0 text-primary"><i class="fa-solid fa-leaf"></i> Fresh & Organic</h4>
                         </div>
-
-                        <!-- Content area with fixed height -->
                         <div class="p-3 flex-grow-1 d-flex flex-column" style="min-height: 320px;">
                             <p>Enjoy direct-from-farm freshness with our organic produce. We source locally whenever possible and ensure all items meet the highest standards.</p>
                             <ul class="list-unstyled mt-auto mb-0">
@@ -58,8 +53,6 @@
                                 <li><i class="fa-solid fa-check text-success me-2"></i>Support local farmers</li>
                             </ul>
                         </div>
-
-                        <!-- Fixed button at bottom -->
                         <div class="mt-auto p-3 pt-0">
                             <a asp-controller="Account" asp-action="SignIn" class="btn btn-primary w-100 py-2">Sign In</a>
                         </div>
@@ -69,12 +62,9 @@
                 <!-- Card 2 -->
                 <div class="col-lg-3 col-md-4 mb-4 mx-2 p-0" style="background-color: rgba(255, 255, 255, 0.5); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); overflow: hidden;">
                     <div class="d-flex flex-column h-100">
-                        <!-- Header with accent color -->
                         <div class="p-3 bg-success bg-opacity-10 border-bottom border-success border-opacity-25">
                             <h4 class="mb-0 text-success"><i class="fa-solid fa-truck-fast"></i> Fast Delivery</h4>
                         </div>
-
-                        <!-- Content area with fixed height -->
                         <div class="p-3 flex-grow-1 d-flex flex-column" style="min-height: 320px;">
                             <p>Get your groceries delivered right to your doorstep with our rapid delivery service. We ensure everything arrives fresh and in perfect condition.</p>
                             <ul class="list-unstyled mt-auto mb-0">
@@ -83,8 +73,6 @@
                                 <li><i class="fa-solid fa-check text-success me-2"></i>Live order tracking</li>
                             </ul>
                         </div>
-
-                        <!-- Fixed button at bottom -->
                         <div class="mt-auto p-3 pt-0">
                             <a asp-controller="Account" asp-action="SignUp" class="btn btn-success w-100 py-2">Sign Up</a>
                         </div>
@@ -94,11 +82,9 @@
                 <!-- Card 3 -->
                 <div class="col-lg-3 col-md-4 mb-4 mx-2 p-0" style="background-color: rgba(248, 249, 250, 0.5); backdrop-filter: blur(5px); border: 1px solid rgba(222, 226, 230, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden;">
                     <div class="d-flex flex-column h-100">
-                        <!-- Header with softer accent color -->
                         <div class="p-3 bg-danger bg-opacity-10 border-bottom border-secondary border-opacity-25">
                             <h4 class="mb-0 text-danger"><i class="fa-solid fa-tags"></i> Special Offers</h4>
                         </div>
-                        <!-- Content area with fixed height -->
                         <div class="p-3 flex-grow-1 d-flex flex-column" style="min-height: 320px;">
                             <p>Discover exclusive deals and discounts that make healthy eating affordable. New members receive a welcome discount on their first purchase!</p>
                             <ul class="list-unstyled mt-auto mb-0">
@@ -107,7 +93,6 @@
                                 <li><i class="fa-solid fa-check text-success me-2"></i>First-time buyer discount</li>
                             </ul>
                         </div>
-                        <!-- Fixed button at bottom with softer color -->
                         <div class="mt-auto p-3 pt-0">
                             <a href="#everything-section" class="btn btn-danger w-100 py-2 text-white">Everything You Need to Know</a>
                         </div>
@@ -119,48 +104,35 @@
         <div class="col-1"> </div>
     </div>
 
-    <div class="row position-relative" id="everything-section" style="width: 100vw; height: 100vh; margin: 0;">
-
+    <div class="row position-relative" id="everything-section" style="width: 100vw; min-height: 100vh; margin: 0; padding: 40px 0;">
         <!-- Background image container -->
         <div class="position-absolute top-0 start-0 w-100 h-100" style="z-index: -2; background-image: url('/img/Fish_MainPage.jpg'); background-size: cover; background-position: center;"></div>
 
         <!-- Semi-transparent overlay -->
-        <div class="position-absolute top-0 start-0 w-100 h-100" style="z-index: -1; background-color: rgba(255, 255, 255, 0.3);"></div>
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="z-index: -1; background-color: rgba(255, 255, 255, 0.4);"></div>
 
         <div class="col-1"></div>
 
-        <div class="col-10" style="display: flex; flex-direction: column; height: 100%; padding-top: 30px;">
+        <div class="col-10 d-flex flex-column align-items-center">
+            <h1 class="section-title">
+                We Bring You the <span class="highlight-text">Best <i class="fa-solid fa-hand-holding-heart"></i></span>
+            </h1>
 
-            <h1 class="text-center text-white fw-bold" style="margin-bottom: 30px;">We Bring You the <span style="color: #ffd3b6	;">Best <i class="fa-solid fa-hand-holding-heart"></i></span></h1>
-
-            <div class="features-container d-flex gap-3" style="flex: 1; overflow-x: auto; max-height: 85%; padding-bottom: 20px; align-items: center; position: relative;">
-
-                <!-- Cột 1 -->
-                <div class="feature-column d-flex flex-column align-items-center justify-content-start"
-                     style="border-radius: 20px; background-color: rgba(255, 255, 255, 0.4); border: 2px solid transparent; width: 100%; flex: 1; padding: 20px 10px; margin-bottom: 10px; margin-top: 10px;">
-
-                    <span class="feature-icon text-black" style="font-size: 60px;"><i class="fa-solid fa-apple-whole"></i></span>
-
-                    <div class="d-flex flex-column justify-content-start align-items-center" style="width: 100%; margin-top: 20px;">
-                        <p class="feature-text text-black text-center" style="font-size: 20px; line-height: 30px;">
-                            Fresh<br>
-                            Vegetables<br>
-                            &<br>
-                            Organic<br>
-                            Fruits
-                        </p>
+            <div class="features-container">
+                <!-- Column 1 -->
+                <div class="feature-column">
+                    <span class="feature-icon"><i class="fa-solid fa-apple-whole"></i></span>
+                    <div class="feature-text-container">
+                        <p class="feature-text">Fresh Vegetables & Organic Fruits</p>
                     </div>
-
-                    <div class="expanded-header" style="display: none; width: 100%;">
+                    <div class="expanded-header">
                         <div class="d-flex align-items-center">
-                            <span class="feature-icon" style="font-size: 60px; color: black;"><i class="fa-solid fa-apple-whole"></i></span>
-                            <p class="feature-text ms-3" style="font-size: 24px; font-weight: bold; color: black; margin: 0;">Fresh Vegetables & Organic Fruits</p>
+                            <span class="feature-icon"><i class="fa-solid fa-apple-whole"></i></span>
+                            <p class="feature-text ms-3">Fresh Vegetables & Organic Fruits</p>
                         </div>
                     </div>
-
-                    <!-- Phần expanded-content với padding-top tăng lên và margin-top tăng lên -->
-                    <div class="expanded-content row m-0 d-flex justify-content-between" style="display: none; width: 100%; margin-top: 30px; min-height: 250px;">
-                        <div class="col-6 d-flex flex-column p-3">
+                    <div class="expanded-content row m-0">
+                        <div class="col-8 d-flex flex-column p-3">
                             <h4 class="mb-3">Fresh Vegetables & Organic Fruits</h4>
                             <p>Discover our selection of hand-picked fresh vegetables and organic fruits, sourced directly from local farms and global providers adhering to the strictest organic farming standards.</p>
                             <ul class="mt-2">
@@ -170,33 +142,26 @@
                                 <li>Carefully selected for optimal freshness</li>
                             </ul>
                         </div>
-                        <div class="col-6 p-0 h-100 d-flex overflow-hidden" style="border-radius: 20px; border: 1px solid black;">
-                            <img src="/img/column1.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="col-4 p-0 d-flex align-items-center justify-content-center">
+                            <img src="/img/column1.jpg" alt="Vegetables and Fruits" />
                         </div>
                     </div>
                 </div>
 
-                <!-- Cột 2 -->
-                <div class="feature-column d-flex flex-column align-items-center justify-content-start"
-                     style="border-radius: 20px; background-color: rgba(255, 255, 255, 0.4); border: 2px solid transparent; width: 100%; flex: 1; padding: 20px 10px; margin-bottom: 10px; margin-top: 10px;">
-                    <span class="feature-icon text-black" style="font-size: 60px;"><i class="fa-solid fa-fish-fins"></i></span>
-                    <div class="d-flex flex-column justify-content-start align-items-center" style="width: 100%; margin-top: 20px;">
-                        <p class="feature-text text-black text-center" style="font-size: 20px; line-height: 30px;">
-                            Fresh<br />
-                            Catch<br />
-                            &<br />
-                            Ocean<br />
-                            Taste
-                        </p>
+                <!-- Column 2 -->
+                <div class="feature-column">
+                    <span class="feature-icon"><i class="fa-solid fa-fish-fins"></i></span>
+                    <div class="feature-text-container">
+                        <p class="feature-text">Fresh Catch & Ocean Taste</p>
                     </div>
-                    <div class="expanded-header" style="display: none; width: 100%;">
+                    <div class="expanded-header">
                         <div class="d-flex align-items-center">
-                            <span class="feature-icon" style="font-size: 60px; color: black;"><i class="fa-solid fa-fish-fins"></i></span>
-                            <p class="feature-text ms-3" style="font-size: 24px; font-weight: bold; color: black; margin: 0;">Fresh Catch & Ocean Taste</p>
+                            <span class="feature-icon"><i class="fa-solid fa-fish-fins"></i></span>
+                            <p class="feature-text ms-3">Fresh Catch & Ocean Taste</p>
                         </div>
                     </div>
-                    <div class="expanded-content row m-0 d-flex justify-content-between" style="display: none; width: 100%; margin-top: 30px; min-height: 250px;">
-                        <div class="col-6 d-flex flex-column p-3">
+                    <div class="expanded-content row m-0">
+                        <div class="col-8 d-flex flex-column p-3">
                             <h4 class="mb-3">Fresh Catch & Ocean Taste</h4>
                             <p>Experience the finest seafood sourced from sustainable fisheries around the world. Our seafood arrives fresh daily to ensure you get the perfect ocean taste and quality.</p>
                             <ul class="mt-2">
@@ -206,33 +171,26 @@
                                 <li>Variety of options from local and exotic waters</li>
                             </ul>
                         </div>
-                        <div class="col-6 p-0 h-100 d-flex overflow-hidden" style="border-radius: 20px; border: 1px solid black;">
-                            <img src="/img/column2.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="col-4 p-0 d-flex align-items-center justify-content-center">
+                            <img src="/img/column2.jpg" alt="Seafood" />
                         </div>
                     </div>
                 </div>
 
-                <!-- Cột 3 -->
-                <div class="feature-column d-flex flex-column align-items-center justify-content-start"
-                     style="border-radius: 20px; background-color: rgba(255, 255, 255, 0.4); border: 2px solid transparent; width: 100%; flex: 1; padding: 20px 10px; margin-bottom: 10px; margin-top: 10px;">
-                    <span class="feature-icon text-black" style="font-size: 60px;"><i class="fa-solid fa-drumstick-bite"></i></span>
-                    <div class="d-flex flex-column justify-content-start align-items-center" style="width: 100%; margin-top: 20px;">
-                        <p class="feature-text text-black text-center" style="font-size: 20px; line-height: 30px;">
-                            Premium<br />
-                            Cuts<br />
-                            &<br />
-                            Juicy<br />
-                            Texture
-                        </p>
+                <!-- Column 3 -->
+                <div class="feature-column">
+                    <span class="feature-icon"><i class="fa-solid fa-drumstick-bite"></i></span>
+                    <div class="feature-text-container">
+                        <p class="feature-text">Premium Cuts & Juicy Texture</p>
                     </div>
-                    <div class="expanded-header" style="display: none; width: 100%;">
+                    <div class="expanded-header">
                         <div class="d-flex align-items-center">
-                            <span class="feature-icon" style="font-size: 60px; color: black;"><i class="fa-solid fa-drumstick-bite"></i></span>
-                            <p class="feature-text ms-3" style="font-size: 24px; font-weight: bold; color: black; margin: 0;">Premium Cuts & Juicy Texture</p>
+                            <span class="feature-icon"><i class="fa-solid fa-drumstick-bite"></i></span>
+                            <p class="feature-text ms-3">Premium Cuts & Juicy Texture</p>
                         </div>
                     </div>
-                    <div class="expanded-content row m-0 d-flex justify-content-between" style="display: none; width: 100%; margin-top: 30px; min-height: 250px;">
-                        <div class="col-6 d-flex flex-column p-3">
+                    <div class="expanded-content row m-0">
+                        <div class="col-8 d-flex flex-column p-3">
                             <h4 class="mb-3">Premium Cuts & Juicy Texture</h4>
                             <p>Our selection of premium meats are handpicked from farms that prioritize animal welfare and sustainable practices. We offer both traditional and exotic cuts to satisfy all preferences.</p>
                             <ul class="mt-2">
@@ -242,33 +200,26 @@
                                 <li>Hormone and antibiotic-free meats</li>
                             </ul>
                         </div>
-                        <div class="col-6 p-0 h-100 d-flex overflow-hidden" style="border-radius: 20px; border: 1px solid black;">
-                            <img src="/img/column3.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="col-4 p-0 d-flex align-items-center justify-content-center">
+                            <img src="/img/column3.jpg" alt="Meat Cuts" />
                         </div>
                     </div>
                 </div>
 
-                <!-- Cột 4 -->
-                <div class="feature-column d-flex flex-column align-items-center justify-content-start"
-                     style="border-radius: 20px; background-color: rgba(255, 255, 255, 0.4); border: 2px solid transparent; width: 100%; flex: 1; padding: 20px 10px; margin-bottom: 10px; margin-top: 10px;">
-                    <span class="feature-icon text-black" style="font-size: 60px;"><i class="bi bi-headset"></i></span>
-                    <div class="d-flex flex-column justify-content-start align-items-center" style="width: 100%; margin-top: 20px;">
-                        <p class="feature-text text-black text-center" style="font-size: 20px; line-height: 30px;">
-                            24/7<br />
-                            Support<br />
-                            &<br />
-                            Dedicated<br />
-                            Help
-                        </p>
+                <!-- Column 4 -->
+                <div class="feature-column">
+                    <span class="feature-icon"><i class="bi bi-headset"></i></span>
+                    <div class="feature-text-container">
+                        <p class="feature-text">24/7 Support & Dedicated Help</p>
                     </div>
-                    <div class="expanded-header" style="display: none; width: 100%;">
+                    <div class="expanded-header">
                         <div class="d-flex align-items-center">
-                            <span class="feature-icon" style="font-size: 60px; color: black;"><i class="bi bi-headset"></i></span>
-                            <p class="feature-text ms-3" style="font-size: 24px; font-weight: bold; color: black; margin: 0;">24/7 Support & Dedicated Help</p>
+                            <span class="feature-icon"><i class="bi bi-headset"></i></span>
+                            <p class="feature-text ms-3">24/7 Support & Dedicated Help</p>
                         </div>
                     </div>
-                    <div class="expanded-content row m-0 d-flex justify-content-between" style="display: none; width: 100%; margin-top: 30px; min-height: 250px;">
-                        <div class="col-6 d-flex flex-column p-3">
+                    <div class="expanded-content row m-0">
+                        <div class="col-8 d-flex flex-column p-3">
                             <h4 class="mb-3">24/7 Support & Dedicated Help</h4>
                             <p>Our customer service team is available round the clock to assist you with any questions, concerns, or special requests. We believe in building lasting relationships with our customers.</p>
                             <ul class="mt-2">
@@ -278,33 +229,26 @@
                                 <li>Quick response time and issue resolution</li>
                             </ul>
                         </div>
-                        <div class="col-6 p-0 h-100 d-flex overflow-hidden" style="border-radius: 20px; border: 1px solid black;">
-                            <img src="/img/column4.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="col-4 p-0 d-flex align-items-center justify-content-center">
+                            <img src="/img/column4.jpg" alt="Support Team" />
                         </div>
                     </div>
                 </div>
 
-                <!-- Cột 5 -->
-                <div class="feature-column d-flex flex-column align-items-center justify-content-start"
-                     style="border-radius: 20px; background-color: rgba(255, 255, 255, 0.4); border: 2px solid transparent; width: 100%; flex: 1; padding: 20px 10px; margin-bottom: 10px; margin-top: 10px;">
-                    <span class="feature-icon text-black" style="font-size: 60px;"><i class="bi bi-coin"></i></span>
-                    <div class="d-flex flex-column justify-content-start align-items-center" style="width: 100%; margin-top: 20px;">
-                        <p class="feature-text text-black text-center" style="font-size: 20px; line-height: 30px;">
-                            Easy<br />
-                            Returns<br />
-                            &<br />
-                            Customer<br />
-                            Satisfaction
-                        </p>
+                <!-- Column 5 -->
+                <div class="feature-column">
+                    <span class="feature-icon"><i class="bi bi-coin"></i></span>
+                    <div class="feature-text-container">
+                        <p class="feature-text">Easy Returns & Customer Satisfaction</p>
                     </div>
-                    <div class="expanded-header" style="display: none; width: 100%;">
+                    <div class="expanded-header">
                         <div class="d-flex align-items-center">
-                            <span class="feature-icon" style="font-size: 60px; color: black;"><i class="bi bi-coin"></i></span>
-                            <p class="feature-text ms-3" style="font-size: 24px; font-weight: bold; color: black; margin: 0;">Easy Returns & Customer Satisfaction</p>
+                            <span class="feature-icon"><i class="bi bi-coin"></i></span>
+                            <p class="feature-text ms-3">Easy Returns & Customer Satisfaction</p>
                         </div>
                     </div>
-                    <div class="expanded-content row m-0 d-flex justify-content-between" style="display: none; width: 100%; margin-top: 30px; min-height: 250px;">
-                        <div class="col-6 d-flex flex-column p-3">
+                    <div class="expanded-content row m-0">
+                        <div class="col-8 d-flex flex-column p-3">
                             <h4 class="mb-3">Easy Returns & Customer Satisfaction</h4>
                             <p>Your satisfaction is our priority. If you're not completely happy with your purchase, our hassle-free return policy makes it simple to get a refund or exchange within 30 days.</p>
                             <ul class="mt-2">
@@ -314,33 +258,26 @@
                                 <li>Customer feedback drives our improvements</li>
                             </ul>
                         </div>
-                        <div class="col-6 p-0 h-100 d-flex overflow-hidden" style="border-radius: 20px; border: 1px solid black;">
-                            <img src="/img/column5.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="col-4 p-0 d-flex align-items-center justify-content-center">
+                            <img src="/img/column5.jpg" alt="Returns Policy" />
                         </div>
                     </div>
                 </div>
 
-                <!-- Cột 6 -->
-                <div class="feature-column d-flex flex-column align-items-center justify-content-start"
-                     style="border-radius: 20px; background-color: rgba(255, 255, 255, 0.4); border: 2px solid transparent; width: 100%; flex: 1; padding: 20px 10px; margin-bottom: 10px; margin-top: 10px;">
-                    <span class="feature-icon text-black" style="font-size: 60px;"><i class="bi bi-truck"></i></span>
-                    <div class="d-flex flex-column justify-content-start align-items-center" style="width: 100%; margin-top: 20px;">
-                        <p class="feature-text text-black text-center" style="font-size: 20px; line-height: 30px;">
-                            Fast<br />
-                            Delivery<br />
-                            &<br />
-                            Safe<br />
-                            Packaging
-                        </p>
+                <!-- Column 6 -->
+                <div class="feature-column">
+                    <span class="feature-icon"><i class="bi bi-truck"></i></span>
+                    <div class="feature-text-container">
+                        <p class="feature-text">Fast Delivery & Safe Packaging</p>
                     </div>
-                    <div class="expanded-header" style="display: none; width: 100%;">
+                    <div class="expanded-header">
                         <div class="d-flex align-items-center">
-                            <span class="feature-icon" style="font-size: 60px; color: black;"><i class="bi bi-truck"></i></span>
-                            <p class="feature-text ms-3" style="font-size: 24px; font-weight: bold; color: black; margin: 0;">Fast Delivery & Safe Packaging</p>
+                            <span class="feature-icon"><i class="bi bi-truck"></i></span>
+                            <p class="feature-text ms-3">Fast Delivery & Safe Packaging</p>
                         </div>
                     </div>
-                    <div class="expanded-content row m-0 d-flex justify-content-between" style="display: none; width: 100%; margin-top: 30px; min-height: 250px;">
-                        <div class="col-6 d-flex flex-column p-3">
+                    <div class="expanded-content row m-0">
+                        <div class="col-8 d-flex flex-column p-3">
                             <h4 class="mb-3">Fast Delivery & Safe Packaging</h4>
                             <p>We understand the importance of receiving your groceries quickly and in perfect condition. Our optimized delivery network ensures prompt service, while our specialized packaging keeps your items fresh and secure.</p>
                             <ul class="mt-2">
@@ -350,34 +287,26 @@
                                 <li>Real-time tracking of your order</li>
                             </ul>
                         </div>
-                        <div class="col-6 p-0 h-100 d-flex overflow-hidden" style="border-radius: 20px; border: 1px solid black;">
-                            <img src="/img/column6.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="col-4 p-0 d-flex align-items-center justify-content-center">
+                            <img src="/img/column6.jpg" alt="Delivery Truck" />
                         </div>
                     </div>
                 </div>
 
-                <!-- Cột 7 -->
-                <div class="feature-column d-flex flex-column align-items-center justify-content-start"
-                     style="border-radius: 20px; background-color: rgba(255, 255, 255, 0.4); border: 2px solid transparent; width: 100%; flex: 1; padding: 20px 10px; margin-bottom: 10px; margin-top: 10px;">
-                    <span class="feature-icon text-black" style="font-size: 60px;"><i class="fa-solid fa-ranking-star"></i></span>
-                    <div class="d-flex flex-column justify-content-start align-items-center" style="width: 100%; margin-top: 20px;">
-                        <p class="feature-text text-black text-center" style="font-size: 20px; line-height: 30px;">
-                            Years<br />
-                            of<br />
-                            Experience<br />
-                            &<br />
-                            Industry<br />
-                            Expertise
-                        </p>
+                <!-- Column 7 -->
+                <div class="feature-column">
+                    <span class="feature-icon"><i class="fa-solid fa-ranking-star"></i></span>
+                    <div class="feature-text-container">
+                        <p class="feature-text">Years of Experience & Industry Expertise</p>
                     </div>
-                    <div class="expanded-header" style="display: none; width: 100%;">
+                    <div class="expanded-header">
                         <div class="d-flex align-items-center">
-                            <span class="feature-icon" style="font-size: 60px; color: black;"><i class="fa-solid fa-ranking-star"></i></span>
-                            <p class="feature-text ms-3" style="font-size: 24px; font-weight: bold; color: black; margin: 0;">Years of Experience & Industry Expertise</p>
+                            <span class="feature-icon"><i class="fa-solid fa-ranking-star"></i></span>
+                            <p class="feature-text ms-3">Years of Experience & Industry Expertise</p>
                         </div>
                     </div>
-                    <div class="expanded-content row m-0 d-flex justify-content-between" style="display: none; width: 100%; margin-top: 30px; min-height: 250px;">
-                        <div class="col-6 d-flex flex-column p-3">
+                    <div class="expanded-content row m-0">
+                        <div class="col-8 d-flex flex-column p-3">
                             <h4 class="mb-3">Years of Experience & Industry Expertise</h4>
                             <p>With over two decades in the grocery industry, we've perfected our selection process, supply chain, and customer service. Our team includes food experts, nutritionists, and culinary professionals who ensure you get the best products.</p>
                             <ul class="mt-2">
@@ -387,33 +316,26 @@
                                 <li>Continuous training for our staff</li>
                             </ul>
                         </div>
-                        <div class="col-6 p-0 h-100 d-flex overflow-hidden" style="border-radius: 20px; border: 1px solid black;">
-                            <img src="/img/column7.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="col-4 p-0 d-flex align-items-center justify-content-center">
+                            <img src="/img/column7.jpg" alt="Industry Experts" />
                         </div>
                     </div>
                 </div>
 
-                <!-- Cột 8 -->
-                <div class="feature-column d-flex flex-column align-items-center justify-content-start"
-                     style="border-radius: 20px; background-color: rgba(255, 255, 255, 0.4); border: 2px solid transparent; width: 100%; flex: 1; padding: 20px 10px; margin-bottom: 10px; margin-top: 10px;">
-                    <span class="feature-icon text-black" style="font-size: 60px;"><i class="bi bi-fire"></i></span>
-                    <div class="d-flex flex-column justify-content-start align-items-center" style="width: 100%; margin-top: 20px;">
-                        <p class="feature-text text-black text-center" style="font-size: 20px; line-height: 30px;">
-                            Flash<br />
-                            Deals<br />
-                            &<br />
-                            Hot<br />
-                            Discounts
-                        </p>
+                <!-- Column 8 -->
+                <div class="feature-column">
+                    <span class="feature-icon"><i class="bi bi-fire"></i></span>
+                    <div class="feature-text-container">
+                        <p class="feature-text">Flash Deals & Hot Discounts</p>
                     </div>
-                    <div class="expanded-header" style="display: none; width: 100%;">
+                    <div class="expanded-header">
                         <div class="d-flex align-items-center">
-                            <span class="feature-icon" style="font-size: 60px; color: black;"><i class="bi bi-fire"></i></span>
-                            <p class="feature-text ms-3" style="font-size: 24px; font-weight: bold; color: black; margin: 0;">Flash Deals & Hot Discounts</p>
+                            <span class="feature-icon"><i class="bi bi-fire"></i></span>
+                            <p class="feature-text ms-3">Flash Deals & Hot Discounts</p>
                         </div>
                     </div>
-                    <div class="expanded-content row m-0 d-flex justify-content-between" style="display: none; width: 100%; margin-top: 30px; min-height: 250px;">
-                        <div class="col-6 d-flex flex-column p-3">
+                    <div class="expanded-content row m-0">
+                        <div class="col-8 d-flex flex-column p-3">
                             <h4 class="mb-3">Flash Deals & Hot Discounts</h4>
                             <p>Take advantage of our limited-time offers and special promotions that make quality groceries even more affordable. Subscribe to our newsletter to never miss out on these savings opportunities.</p>
                             <ul class="mt-2">
@@ -423,33 +345,26 @@
                                 <li>First-time customer special offers</li>
                             </ul>
                         </div>
-                        <div class="col-6 p-0 h-100 d-flex overflow-hidden" style="border-radius: 20px; border: 1px solid black;">
-                            <img src="/img/column8.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="col-4 p-0 d-flex align-items-center justify-content-center">
+                            <img src="/img/column8.jpg" alt="Discount Offers" />
                         </div>
                     </div>
                 </div>
 
-                <!-- Cột 9 -->
-                <div class="feature-column d-flex flex-column align-items-center justify-content-start"
-                     style="border-radius: 20px; background-color: rgba(255, 255, 255, 0.4); border: 2px solid transparent; width: 100%; flex: 1; padding: 20px 10px; margin-bottom: 10px; margin-top: 10px;">
-                    <span class="feature-icon text-black" style="font-size: 60px;"><i class="fa-solid fa-shield-halved"></i></span>
-                    <div class="d-flex flex-column justify-content-start align-items-center" style="width: 100%; margin-top: 20px;">
-                        <p class="feature-text text-black text-center" style="font-size: 20px; line-height: 30px;">
-                            Smart<br />
-                            Interface<br />
-                            &<br />
-                            Secure<br />
-                            Access
-                        </p>
+                <!-- Column 9 -->
+                <div class="feature-column">
+                    <span class="feature-icon"><i class="fa-solid fa-shield-halved"></i></span>
+                    <div class="feature-text-container">
+                        <p class="feature-text">Smart Interface & Secure Access</p>
                     </div>
-                    <div class="expanded-header" style="display: none; width: 100%;">
+                    <div class="expanded-header">
                         <div class="d-flex align-items-center">
-                            <span class="feature-icon" style="font-size: 60px; color: black;"><i class="fa-solid fa-shield-halved"></i></span>
-                            <p class="feature-text ms-3" style="font-size: 24px; font-weight: bold; color: black; margin: 0;">Smart Interface & Secure Access</p>
+                            <span class="feature-icon"><i class="fa-solid fa-shield-halved"></i></span>
+                            <p class="feature-text ms-3">Smart Interface & Secure Access</p>
                         </div>
                     </div>
-                    <div class="expanded-content row m-0 d-flex justify-content-between" style="display: none; width: 100%; margin-top: 30px; min-height: 250px;">
-                        <div class="col-6 d-flex flex-column p-3">
+                    <div class="expanded-content row m-0">
+                        <div class="col-8 d-flex flex-column p-3">
                             <h4 class="mb-3">Smart Interface & Secure Access</h4>
                             <p>Our intuitive website and mobile app make grocery shopping a breeze. Browse products, create shopping lists, and check out securely with industry-leading encryption protecting your personal and payment information.</p>
                             <ul class="mt-2">
@@ -459,33 +374,26 @@
                                 <li>Privacy-focused data handling</li>
                             </ul>
                         </div>
-                        <div class="col-6 p-0 h-100 d-flex overflow-hidden" style="border-radius: 20px; border: 1px solid black;">
-                            <img src="/img/column9.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="col-4 p-0 d-flex align-items-center justify-content-center">
+                            <img src="/img/column9.jpg" alt="Secure Interface" />
                         </div>
                     </div>
                 </div>
 
-                <!-- Cột 10 -->
-                <div class="feature-column d-flex flex-column align-items-center justify-content-start"
-                     style="border-radius: 20px; background-color: rgba(255, 255, 255, 0.4); border: 2px solid transparent; width: 100%; flex: 1; padding: 20px 10px; margin-bottom: 10px; margin-top: 10px;">
-                    <span class="feature-icon text-black" style="font-size: 60px;"><i class="fa-solid fa-lightbulb"></i></span>
-                    <div class="d-flex flex-column justify-content-start align-items-center" style="width: 100%; margin-top: 20px;">
-                        <p class="feature-text text-black text-center" style="font-size: 20px; line-height: 30px;">
-                            Quick<br />
-                            Facts<br />
-                            &<br />
-                            Deeper<br />
-                            Info
-                        </p>
+                <!-- Column 10 -->
+                <div class="feature-column">
+                    <span class="feature-icon"><i class="fa-solid fa-lightbulb"></i></span>
+                    <div class="feature-text-container">
+                        <p class="feature-text">Quick Facts & Deeper Info</p>
                     </div>
-                    <div class="expanded-header" style="display: none; width: 100%;">
+                    <div class="expanded-header">
                         <div class="d-flex align-items-center">
-                            <span class="feature-icon" style="font-size: 60px; color: black;"><i class="fa-solid fa-lightbulb"></i></span>
-                            <p class="feature-text ms-3" style="font-size: 24px; font-weight: bold; color: black; margin: 0;">Quick Facts & Deeper Info</p>
+                            <span class="feature-icon"><i class="fa-solid fa-lightbulb"></i></span>
+                            <p class="feature-text ms-3">Quick Facts & Deeper Info</p>
                         </div>
                     </div>
-                    <div class="expanded-content row m-0 d-flex justify-content-between" style="display: none; width: 100%; margin-top: 30px; min-height: 250px;">
-                        <div class="col-6 d-flex flex-column p-3">
+                    <div class="expanded-content row m-0">
+                        <div class="col-8 d-flex flex-column p-3">
                             <h4 class="mb-3">Quick Facts & Deeper Info</h4>
                             <p>Get comprehensive information about every product we offer. From nutritional content to sourcing details, we believe in transparency and providing you with the knowledge to make informed choices.</p>
                             <ul class="mt-2">
@@ -495,116 +403,44 @@
                                 <li>Preparation tips and recipe suggestions</li>
                             </ul>
                         </div>
-                        <div class="col-6 p-0 h-100 d-flex overflow-hidden" style="border-radius: 20px; border: 1px solid black;">
-                            <img src="/img/column10.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="col-4 p-0 d-flex align-items-center justify-content-center">
+                            <img src="/img/column10.jpg" alt="Product Info" />
                         </div>
                     </div>
                 </div>
 
-                <!-- Container cho expanded view -->
-                <div class="expanded-view-container" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: white; border-radius: 20px; padding: 20px; z-index: 1000; overflow-y: auto;">
-                    <div class="close-btn" style="position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: black;">
+                <!-- Expanded view container -->
+                <div class="expanded-view-container">
+                    <div class="close-btn">
                         <i class="fa-solid fa-times"></i>
                     </div>
-                    <div class="expanded-view-content">
-                        <!-- Nội dung sẽ được clone vào đây khi click -->
-                    </div>
+                    <div class="expanded-view-content"></div>
                 </div>
-
             </div>
         </div>
 
         <div class="col-1 d-flex justify-content-center" style="padding-top: 40px; color: white; font-size: 50px;">
             <a href="#main-page"><i class="bi bi-arrow-bar-up"></i></a>
         </div>
-
     </div>
 
     <style>
-
-        .feature-column {
-            position: relative;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            z-index: 1;
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
+        :root {
+            --primary-green: #2e7d32;
+            --accent-orange: #ffb74d;
+            --light-bg: #f5f5f5;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --dark-green-color: #2e7d32;
         }
 
-        .feature-column:hover {
-            border-color: #9932CC !important;
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            z-index: 10;
+        /* General Styling */
+        body {
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .feature-column:hover .feature-icon,
-        .feature-column:hover .feature-text {
-            color: #9932CC !important;
-            font-weight: bold;
-
-        }
-
-        .not-hovered {
-            transform: translateY(5px);
-            opacity: 0.8;
-        }
-
-        .features-container {
-            min-height: 350px;
-        }
-
-        .feature-text {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .expanded-view-container {
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .expanded-content {
-            margin-top: 30px !important; /* Tăng margin-top */
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            padding-top: 30px !important; /* Tăng padding-top */
-            min-height: 250px;
-        }
-
-        .expanded-content {
-            border-top: 1px solid rgba(0, 0, 0, 0.2); /* Màu đậm hơn */
-        }
-
-        .expanded-header {
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-        }
-
-        .expanded-content .col-6:first-child {
-            height: 100%;
-        }
-
-        .expanded-content img {
-            border-top-right-radius: 20px;
-            border-bottom-right-radius: 20px;
-        }
-
-        .close-btn:hover {
-            color: #9932CC;
-        }
-
-        /* Đảm bảo expanded-content luôn ẩn trước khi click */
-        .expanded-content {
-            display: none !important;
-        }
-
-        /* Đảm bảo hiển thị khi được thêm vào view-container */
-        .expanded-view-content .expanded-content {
-            display: flex !important;
-        }
-
+        /* Styling cho phần #main-page */
         .content {
             position: relative;
             display: inline-block;
@@ -620,84 +456,317 @@
             left: 0%;
             white-space: nowrap;
             overflow: hidden;
-            border-right: 2px solid white; /* Hiệu ứng con trỏ gõ phím */
+            border-right: 2px solid white;
         }
 
-        /* Animation gõ phím */
         @@keyframes typing {
             from
 
         {
-            width: 0
+            width: 0;
         }
 
         to {
-            width: 100%
+            width: 100%;
         }
 
         }
 
-        /* Animation nhấp nháy con trỏ */
         @@keyframes blink-caret {
             from, to
 
         {
-            border-color: transparent
+            border-color: transparent;
         }
 
         50% {
-            border-color: white
+            border-color: white;
         }
 
         }
 
         .icon-overlay {
-            /* color: #A9746E; */
             color: white;
             position: absolute;
             top: 50%;
             left: 60%;
-            transform: translate(-50%, -50%) translate(30px, -20px); 
-            font-size: 24px;
+            transform: translate(-50%, -50%) translate(30px, -20px);
             font-size: 50px;
             animation: wave 1s ease-in-out infinite;
-            transform-origin: bottom center; /* gốc xoay là cổ tay */
+            transform-origin: bottom center;
         }
 
         @@keyframes wave {
-            0% {
-                transform: translate(-50%, -50%) translate(30px, -20px) rotate(0deg);
-            }
+            0%
 
-            20% {
-                transform: translate(-50%, -50%) translate(30px, -20px) rotate(20deg);
-            }
-
-            40% {
-                transform: translate(-50%, -50%) translate(30px, -20px) rotate(-15deg);
-            }
-
-            60% {
-                transform: translate(-50%, -50%) translate(30px, -20px) rotate(10deg);
-            }
-
-            80% {
-                transform: translate(-50%, -50%) translate(30px, -20px) rotate(-5deg);
-            }
-
-            100% {
-                transform: translate(-50%, -50%) translate(30px, -20px) rotate(0deg);
-            }
+        {
+            transform: translate(-50%, -50%) translate(30px, -20px) rotate(0deg);
         }
 
-        to {
-            transform: translate(-50%, -50%) translate(30px, -20px) rotate(360deg);
+        20% {
+            transform: translate(-50%, -50%) translate(30px, -20px) rotate(20deg);
+        }
+
+        40% {
+            transform: translate(-50%, -50%) translate(30px, -20px) rotate(-15deg);
+        }
+
+        60% {
+            transform: translate(-50%, -50%) translate(30px, -20px) rotate(10deg);
+        }
+
+        80% {
+            transform: translate(-50%, -50%) translate(30px, -20px) rotate(-5deg);
+        }
+
+        100% {
+            transform: translate(-50%, -50%) translate(30px, -20px) rotate(0deg);
+        }
+
+        }
+
+        /* Styling cho phần #everything-section */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .highlight-text {
+            color: var(--primary-green);
+            font-weight: 800;
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+            padding: 0 15px;
+        }
+
+        .feature-column {
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .feature-column:hover {
+                border-color: var(--accent-orange);
+                transform: translateY(-10px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+
+                .feature-column:hover .feature-icon,
+                .feature-column:hover .feature-text {
+                    color: var(--accent-orange);
+                }
+
+        .feature-icon {
+            font-size: 50px;
+            color: var(--text-dark);
+            transition: color 0.3s ease;
+        }
+
+        .feature-text-container {
+            margin-top: 15px;
+        }
+
+        .feature-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            line-height: 1.5;
+            transition: color 0.3s ease;
+        }
+
+        .expanded-header {
+            display: none;
+        }
+
+        .expanded-content {
+            display: none !important;
+            margin-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding-top: 20px;
+        }
+
+            .expanded-content .col-8 {
+                padding: 20px;
+            }
+
+            .expanded-content img {
+                width: 100%;
+                height: 250px;
+                object-fit: cover;
+                border-radius: 10px;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+        .expanded-view-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .expanded-view-content .expanded-header,
+        .expanded-view-content .expanded-content {
+            display: block !important;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dark);
+            transition: color 0.3s ease;
+        }
+
+            .close-btn:hover {
+                color: var(--accent-orange);
+            }
+
+        .scroll-btn {
+            color: var(--white);
+            font-size: 40px;
+            transition: color 0.3s ease;
+        }
+
+            .scroll-btn:hover {
+                color: var(--accent-orange);
+            }
+
+        /* Responsive Styles */
+        @@media (max-width: 991px) {
+            .section-title
+
+        {
+            font-size: 2rem;
+        }
+
+        .features-container {
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+
+        .expanded-content img {
+            height: 200px;
+        }
+
+        }
+
+        @@media (max-width: 767px) {
+            .features-container
+
+        {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .feature-column {
+            width: 90%;
+            margin-bottom: 20px;
+        }
+
+        .expanded-content {
+            flex-direction: column;
+        }
+
+            .expanded-content .col-8,
+            .expanded-content .col-4 {
+                width: 100%;
+            }
+
+            .expanded-content img {
+                height: 300px;
+                margin-top: 20px;
+            }
+
+        }
+
+        @@media (max-width: 575px) {
+            .col-10
+
+        {
+            width: 100%;
+        }
+
+        .col-1 {
+            display: none;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
         }
 
         }
     </style>
 
-    <!-- JavaScript điều chỉnh -->
+    <script>
+        const messages = [
+            "Welcome to",
+            "Organic Grocery Shopping Online"
+        ];
+
+        const talkElement = document.querySelector('.talkbycoconut');
+        let currentIndex = 0;
+
+        function typeWriter(text, element, speed = 50) {
+            let i = 0;
+            element.textContent = '';
+            element.style.borderRight = '2px solid white';
+
+            function typing() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typing, speed);
+                } else {
+                    setTimeout(() => {
+                        element.style.borderRight = 'none';
+                        setTimeout(changeMessage, 500);
+                    }, 500);
+                }
+            }
+
+            typing();
+        }
+
+        function changeMessage() {
+            currentIndex = (currentIndex + 1) % messages.length;
+            typeWriter(messages[currentIndex], talkElement);
+        }
+
+        typeWriter(messages[currentIndex], talkElement);
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const columns = document.querySelectorAll('.feature-column');
@@ -706,25 +775,7 @@
             const closeBtn = document.querySelector('.close-btn');
             let expandedColumn = null;
 
-            columns.forEach((column, index) => {
-                column.addEventListener('mouseenter', function() {
-                    if (!expandedColumn) {
-                        columns.forEach(otherColumn => {
-                            if(otherColumn !== column) {
-                                otherColumn.classList.add('not-hovered');
-                            }
-                        });
-                    }
-                });
-
-                column.addEventListener('mouseleave', function() {
-                    if (!expandedColumn) {
-                        columns.forEach(otherColumn => {
-                            otherColumn.classList.remove('not-hovered');
-                        });
-                    }
-                });
-
+            columns.forEach(column => {
                 column.addEventListener('click', function() {
                     expandedContent.innerHTML = '';
 
@@ -739,71 +790,24 @@
 
                     expandedContainer.style.display = 'block';
                     expandedColumn = column;
+
+                    document.body.style.overflow = 'hidden';
                 });
             });
 
             closeBtn.addEventListener('click', function() {
                 expandedContainer.style.display = 'none';
                 expandedColumn = null;
+                document.body.style.overflow = 'auto';
             });
 
-            function equalizeColumnHeights() {
-                let maxHeight = 0;
-                columns.forEach(column => {
-                    const height = column.scrollHeight;
-                    if (height > maxHeight) {
-                        maxHeight = height;
-                    }
-                });
-
-                columns.forEach(column => {
-                    column.style.height = (maxHeight * 1.5) + 'px';
-                });
-            }
-
-            equalizeColumnHeights();
-            window.addEventListener('resize', equalizeColumnHeights);
-        });
-    </script>
-
-    <script>
-        const messages = [
-            "Welcome to",
-            "Organic Grogery Shopping Online"
-        ];
-
-        const talkElement = document.querySelector('.talkbycoconut');
-        let currentIndex = 0;
-
-        function typeWriter(text, element, speed = 50) {
-            let i = 0;
-            element.textContent = ''; // Xóa nội dung cũ
-            element.style.borderRight = '2px solid white'; // Hiển thị con trỏ
-
-            function typing() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(typing, speed);
-                } else {
-                    // Khi hoàn thành, giữ con trỏ nhấp nháy 1 lúc
-                    setTimeout(() => {
-                        element.style.borderRight = 'none';
-                        // Chuyển sang message tiếp theo sau khi hiển thị đủ lâu
-                        setTimeout(changeMessage, 500);
-                    }, 500);
+            window.addEventListener('click', function(e) {
+                if (e.target === expandedContainer) {
+                    expandedContainer.style.display = 'none';
+                    expandedColumn = null;
+                    document.body.style.overflow = 'auto';
                 }
-            }
-
-            typing();
-        }
-
-        function changeMessage() {
-            currentIndex = (currentIndex + 1) % messages.length;
-            typeWriter(messages[currentIndex], talkElement);
-        }
-
-        // Bắt đầu hiệu ứng
-        typeWriter(messages[currentIndex], talkElement);
+            });
+        });
     </script>
 </body>

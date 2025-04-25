@@ -173,5 +173,15 @@ namespace PBL3_HK4.Service
             existingBill.Status = BillStatus.Cancelled;
             await _context.SaveChangesAsync();
         }
+        public async Task UpdateBillReceivedAsync(Guid billId)
+        {
+            var existingBill = await _context.Bills.FirstOrDefaultAsync(b => b.BillID == billId);
+            if (existingBill == null)
+            {
+                throw new KeyNotFoundException($"Bill with ID {billId} not found.");
+            }
+            existingBill.Status = BillStatus.Received;
+            await _context.SaveChangesAsync();
+        }
     }
 }

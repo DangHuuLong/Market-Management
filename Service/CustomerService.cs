@@ -33,13 +33,17 @@ namespace PBL3_HK4.Service
 
         public async Task UpdateCustomerAsync(Customer customer)
         {
-            var existingCustomer = await _context.Users.FindAsync(customer.UserID);
+            var existingCustomer = (Customer)(await _context.Users.FindAsync(customer.UserID));
             if (existingCustomer != null)
             {
                 existingCustomer.Name = customer.Name;
                 existingCustomer.Email = customer.Email;
                 existingCustomer.Phone = customer.Phone;
-                existingCustomer.PassWord = customer.PassWord;
+                existingCustomer.DateOfBirth = customer.DateOfBirth;
+                existingCustomer.Sex = customer.Sex;
+                existingCustomer.Address = customer.Address;
+                
+                if (customer.PassWord != null) existingCustomer.PassWord = customer.PassWord;
             }
 
             await _context.SaveChangesAsync();

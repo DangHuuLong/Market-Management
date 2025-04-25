@@ -7,6 +7,7 @@
     ShoppingCart shoppingCart = orderSummaryViewModel.ShoppingCart;
     IEnumerable<CartItem> cartItems = shoppingCart.Items;
     IEnumerable<Product> products = orderSummaryViewModel.Products;
+    IEnumerable<Discount> discounts = orderSummaryViewModel.Discounts;
     Customer customer = orderSummaryViewModel.Customer;
 }
 
@@ -233,6 +234,48 @@
             overflow: hidden;
         }
 
+        /* Additional CSS for discount functionality */
+        .discount-item {
+            background-color: #f8f9fa;
+            border-left: 3px solid var(--accent-color);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .text-success {
+            color: #28a745 !important;
+        }
+
+        /* Animation for the discount application */
+        .discount-applied {
+            animation: pulse 1s;
+        }
+
+        @@keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
         @@media (max-width: 768px) {
             .order-container {
                 margin-top: 20px;
@@ -305,6 +348,13 @@
                             <h4 class="section-title">Order Summary</h4>
                             <div class="card shadow-sm">
                                 <ul class="list-group list-group-flush">
+                                    <!-- Hiển thị số điểm hiện tại -->
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="product-name mb-0">Your Points</p>
+                                            <p class="product-price mb-0" id="earnedPoints">@customer.EarnedPoint Points</p>
+                                        </div>
+                                    </li>
                                     @foreach (CartItem cartItem in cartItems)
                                     {
                                         var product = orderSummaryViewModel.GetProductByCartId(cartItem.ProductID);
@@ -318,15 +368,19 @@
                                             </div>
                                         </li>
                                     }
+                                    <!-- Form để gửi yêu cầu trừ điểm -->
                                     <li class="list-group-item p-0">
-                                        <button class="discount-btn btn w-100 rounded-0">
-                                            <i class="bi bi-ticket-perforated-fill me-2"></i> Apply Promo Code
-                                        </button>
+                                        <form asp-controller="Home" asp-action="DeductPoints" method="post" id="spinForm">
+                                            <input type="hidden" name="customerId" value="@customer.UserID" />
+                                            <button type="button" class="discount-btn btn w-100 rounded-0" id="spinButton">
+                                                <i class="bi bi-ticket-perforated-fill me-2"></i> Spin for Discount (2 Points)
+                                            </button>
+                                        </form>
                                     </li>
                                     <li class="list-group-item p-0">
                                         <div class="total-row d-flex justify-content-between align-items-center">
                                             <span>Total</span>
-                                            <span>@shoppingCart.TotalAmount ₫</span>
+                                            <span id="totalAmount">@shoppingCart.TotalAmount ₫</span>
                                         </div>
                                     </li>
                                 </ul>
@@ -422,6 +476,11 @@
                         </div>
                         <form asp-controller="Home" asp-action="CompleteOrder" method="post" id="orderForm">
                             <input type="hidden" name="paymentMethod" id="selectedPaymentMethod" value="creditCard">
+                            <!-- Discount ID will be added here dynamically if a discount is applied -->
+                            @if (TempData["DiscountId"] != null)
+                            {
+                                <input type="hidden" name="discountId" value="@TempData["DiscountId"]" />
+                            }
                             <button type="submit" class="complete-btn" id="completeOrderBtn">
                                 Complete Order <i class="bi bi-arrow-right ms-2"></i>
                             </button>
@@ -494,6 +553,205 @@
                 bsAlert.close();
             });
         }, 3000);
+
+        // Discount functionality with spinning effect on the client side
+        document.addEventListener('DOMContentLoaded', function() {
+            const spinButton = document.getElementById('spinButton');
+            const spinForm = document.getElementById('spinForm');
+            let currentPoints = @customer.EarnedPoint; // Lấy điểm hiện tại của khách hàng
+
+            // Kiểm tra xem đã có phiếu giảm giá được áp dụng chưa
+            let discountApplied = @((TempData["DiscountApplied"] != null).ToString().ToLower());
+
+            // Nếu đã có phiếu giảm giá, hiển thị nó
+        @if (TempData["DiscountApplied"] != null)
+        {
+            <text>
+                        const discountItem = document.createElement('li');
+                        discountItem.className = 'list-group-item discount-item discount-applied';
+                        discountItem.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="product-name mb-1">Discount: @TempData["DiscountName"]</p>
+                                    <p class="product-quantity mb-0">@TempData["DiscountDescription"]</p>
+                                </div>
+                                <p class="product-price mb-0 text-success">-${@TempData["DiscountRate"]}%</p>
+                            </div>
+                        `;
+
+                        // Chèn vào danh sách trước nút Spin
+                        const listGroup = document.querySelector('.list-group');
+                        const spinBtn = document.querySelector('#spinForm').closest('.list-group-item');
+                        listGroup.insertBefore(discountItem, spinBtn);
+
+                        // Cập nhật tổng tiền
+                        const totalElement = document.querySelector('#totalAmount');
+                        totalElement.textContent = `${@TempData["NewTotal"]} ₫`;
+                        totalElement.classList.add('text-success');
+
+                        // Cập nhật nút thành "Spin Again"
+                        spinButton.innerHTML = '<i class="bi bi-ticket-perforated-fill me-2"></i> Spin Again (2 Points)';
+            </text>
+        }
+
+            // Thêm sự kiện click cho nút Spin
+                    // Thay thế phần sự kiện click của spinButton bằng code này
+        spinButton.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            if (currentPoints < 2) {
+                showMessage('warning', 'Not enough points to spin! You need at least 2 points.');
+                return;
+            }
+
+            // Vô hiệu hóa nút trong khi quay
+            spinButton.disabled = true;
+            spinButton.innerHTML = '<i class="bi bi-hourglass-split me-2"></i> Spinning...';
+
+            // Lấy danh sách phiếu giảm giá
+            const discounts = @Html.Raw(Json.Serialize(discounts));
+
+            // Hiệu ứng nhảy liên tục
+            let counter = 0;
+            const spinInterval = setInterval(function() {
+                counter++;
+
+                // Hiển thị hiệu ứng quay ngẫu nhiên
+                const randomText = ["Spinning...", "Good luck!", "Almost there!", "Wheel is spinning!"][Math.floor(Math.random() * 4)];
+                spinButton.innerHTML = `<i class="bi bi-ticket-perforated-fill me-2"></i> ${randomText}`;
+
+                if (counter >= 10) {
+                    clearInterval(spinInterval);
+
+                    // Gửi AJAX request để trừ điểm trước
+                    fetch(spinForm.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams(new FormData(spinForm))
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Cập nhật điểm hiện tại
+                            currentPoints = data.remainingPoints;
+                            document.getElementById('earnedPoints').textContent = `${data.remainingPoints} Points`;
+
+                            // Tiếp tục xử lý quay thưởng
+                            const finalResult = Math.random() > 0.7 ? 1 : -1; // 30% cơ hội trúng
+
+                            if (finalResult === -1) {
+                                showMessage('warning', 'Better luck next time!');
+                                spinButton.innerHTML = discountApplied ?
+                                    '<i class="bi bi-ticket-perforated-fill me-2"></i> Spin Again (2 Points)' :
+                                    '<i class="bi bi-ticket-perforated-fill me-2"></i> Spin for Discount (2 Points)';
+                            } else {
+                                // Random chọn 1 discount
+                                const randomDiscount = discounts[Math.floor(Math.random() * discounts.length)];
+                                discountApplied = true;
+                                showAppliedDiscount(randomDiscount);
+
+                                // Cập nhật tổng tiền
+                                const originalTotal = @shoppingCart.TotalAmount;
+                                const discountAmount = originalTotal * (randomDiscount.discountRate / 100);
+                                const newTotal = originalTotal - discountAmount;
+                                updateTotal(newTotal);
+
+                                // Thêm discountId vào form CompleteOrder
+                                const orderForm = document.getElementById('orderForm');
+                                const existingInput = document.getElementById('discountIdInput');
+                                if (existingInput) {
+                                    existingInput.remove();
+                                }
+                                const discountInput = document.createElement('input');
+                                discountInput.type = 'hidden';
+                                discountInput.id = 'discountIdInput';
+                                discountInput.name = 'discountId';
+                                discountInput.value = randomDiscount.discountID;
+                                orderForm.appendChild(discountInput);
+
+                                spinButton.innerHTML = '<i class="bi bi-ticket-perforated-fill me-2"></i> Spin Again (2 Points)';
+                            }
+                        } else {
+                            showMessage('error', data.message);
+                            spinButton.innerHTML = '<i class="bi bi-ticket-perforated-fill me-2"></i> Spin for Discount (2 Points)';
+                        }
+                        spinButton.disabled = false;
+                    })
+                    .catch(error => {
+                        showMessage('error', 'An error occurred during spinning');
+                        spinButton.disabled = false;
+                        spinButton.innerHTML = '<i class="bi bi-ticket-perforated-fill me-2"></i> Spin for Discount (2 Points)';
+                    });
+                }
+            }, 100);
+        });
+
+            // Hàm hiển thị phiếu giảm giá đã áp dụng
+            function showAppliedDiscount(discount) {
+                // Xóa phiếu giảm giá cũ nếu có
+                const existingDiscount = document.querySelector('.discount-item');
+                if (existingDiscount) {
+                    existingDiscount.remove();
+                }
+
+                // Tạo mục phiếu giảm giá mới
+                const discountItem = document.createElement('li');
+                discountItem.className = 'list-group-item discount-item discount-applied';
+                discountItem.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="product-name mb-1">Discount: ${discount.name}</p>
+                            <p class="product-quantity mb-0">${discount.describe || 'Applied to entire order'}</p>
+                        </div>
+                        <p class="product-price mb-0 text-success">-${discount.discountRate}%</p>
+                    </div>
+                `;
+
+                // Chèn vào danh sách trước nút Spin
+                const listGroup = document.querySelector('.list-group');
+                const spinBtn = document.querySelector('#spinForm').closest('.list-group-item');
+                listGroup.insertBefore(discountItem, spinBtn);
+
+                // Hiển thị thông báo thành công
+                showMessage('success', `Congratulations! You received "${discount.name}" discount!`);
+            }
+
+            // Hàm cập nhật tổng tiền
+            function updateTotal(newTotal) {
+                const totalElement = document.querySelector('#totalAmount');
+                totalElement.textContent = `${Math.round(newTotal)} ₫`;
+                totalElement.classList.add('text-success');
+                setTimeout(() => {
+                    totalElement.classList.remove('text-success');
+                }, 2000);
+            }
+
+            // Hàm hiển thị thông báo
+            function showMessage(type, message) {
+                const notification = document.createElement('div');
+                notification.className = `notification alert alert-${type} alert-dismissible fade show`;
+                notification.setAttribute('role', 'alert');
+
+                let icon = 'info-circle-fill';
+                if (type === 'success') icon = 'check-circle-fill';
+                if (type === 'warning') icon = 'exclamation-triangle-fill';
+                if (type === 'danger') icon = 'exclamation-triangle-fill';
+
+                notification.innerHTML = `
+                    <strong><i class="bi bi-${icon} me-2"></i></strong> ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+
+                document.body.appendChild(notification);
+
+                setTimeout(function() {
+                    const bsAlert = new bootstrap.Alert(notification);
+                    bsAlert.close();
+                }, 3000);
+            }
+        });
     </script>
 </body>
 </html>

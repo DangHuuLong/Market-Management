@@ -9,14 +9,18 @@
     IEnumerable<Product> products = homeViewModel.Products;
 }
 
-<!-- Section: Banner giới thiệu sản phẩm tươi sống với nút kêu gọi hành động (CTA) -->
-<!-- Banner section remains the same -->
-<div class="row p-lg-3">
-    <!-- Banner content here - unchanged -->
-    <div class="col-6" style="padding-left: 30px;">
-        <p style="font-size: 42px; font-weight: bold;">Make healthy life with <span style="color: var(--green-color);">fresh</span> grocery</p>
+<!-- Đặt màu nền body -->
+<style>
+    body {
+        background-color: #F5F7F3 !important;
+    }
+</style>
 
-        <p class="pb-2" style="max-width: 90%; line-height: 2;">
+<!-- Section: Banner -->
+<div class="row p-lg-3">
+    <div class="col-6" style="padding-left: 30px;">
+        <p style="font-size: 42px; font-weight: bold; color: #4A7043;">Make healthy life with fresh grocery</p>
+        <p class="pb-2" style="max-width: 90%; line-height: 2; color: #333;">
             Get the best quality and freshest grocery food, sourced directly from local farms.
             From organic vegetables to premium meat, we have everything you need for a healthy lifestyle.
             Order now and enjoy doorstep delivery with just a few clicks!
@@ -24,12 +28,11 @@
             We ensure strict quality control, so you receive only the best products every time.
             Join thousands of happy customers who trust us for their daily grocery needs.
         </p>
-
         <div class="d-flex gap-3">
-            <a href="#product-container" class="btn rounded-pill flex-grow-1 py-2" style="background-color: var(--green-color); color: white; max-width: 33.33%;">
+            <a href="#product-container" class="btn rounded-pill flex-grow-1 py-2" style="background-color: #4A7043; color: white; max-width: 33.33%;">
                 Order Now
             </a>
-            <button class="btn rounded-pill flex-grow-1 py-2" style="border: 1px solid; max-width: 33.33%;">
+            <button class="btn rounded-pill flex-grow-1 py-2" style="border: 1px solid #4A7043; color: #4A7043; max-width: 33.33%;">
                 Explore More <i class="bi bi-arrow-right"></i>
             </button>
         </div>
@@ -50,34 +53,34 @@
                     <img src="~/img/CandyAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 4">
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
-                    <img src="~/img/MilkAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 4">
+                    <img src="~/img/MilkAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 5">
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
-                    <img src="~/img/BreadAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 4">
+                    <img src="~/img/BreadAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 6">
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
-                    <img src="~/img/EggAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 4">
+                    <img src="~/img/EggAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 7">
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
-                    <img src="~/img/CakeAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 1">
+                    <img src="~/img/CakeAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 8">
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
-                    <img src="~/img/RiceAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 2">
+                    <img src="~/img/RiceAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 9">
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
-                    <img src="~/img/SugarAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 3">
+                    <img src="~/img/SugarAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 10">
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
-                    <img src="~/img/SpiceAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 4">
+                    <img src="~/img/SpiceAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 11">
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
-                    <img src="~/img/IcecreamAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 4">
+                    <img src="~/img/IcecreamAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 12">
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
-                    <img src="~/img/TeaAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 4">
+                    <img src="~/img/TeaAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 13">
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
-                    <img src="~/img/CoffeeAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 4">
+                    <img src="~/img/CoffeeAd.jpg" class="d-block w-100 img-fluid" alt="Fresh Grocery 14">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#groceryCarousel" data-bs-slide="prev">
@@ -92,86 +95,77 @@
     </div>
 </div>
 
-<!-- Service Highlights: Free Shipping, Returns, Secure Payment, Offers -->
-<div class="row py-3 d-flex align-items-center justify-content-center" style="background-color: var(--brown-weak-color);">
+<!-- Service Highlights -->
+<div class="row mb-5 py-4 d-flex align-items-center justify-content-center" style="background-color: #E6E9E1;">
     <div class="col-3 d-flex align-items-center py-1 justify-content-center">
         <img src="~/img/free-shipping.png" style="width: 50px; height: 50px; margin-right: 10px;" />
         <div class="d-flex flex-column">
-            <p class="mb-0 fw-bold" style="font-size: 20px;">Free shipping</p>
+            <p class="mb-0 fw-bold" style="font-size: 20px; color: #4A7043;">Free shipping</p>
             <p class="mb-0 text-muted" style="font-size: 10px;">On all orders over $49.00</p>
         </div>
     </div>
-
     <div class="col-3 d-flex align-items-center py-1 justify-content-center">
         <img src="~/img/money.png" style="width: 50px; height: 50px; margin-right: 10px;" />
         <div class="d-flex flex-column">
-            <p class="mb-0 fw-bold" style="font-size: 20px;">15 days returns</p>
+            <p class="mb-0 fw-bold" style="font-size: 20px; color: #4A7043;">15 days returns</p>
             <p class="mb-0 text-muted" style="font-size: 10px;">Moneyback guarantee</p>
         </div>
     </div>
-
     <div class="col-3 d-flex align-items-center py-1 justify-content-center">
         <img src="~/img/paypalcard.png" style="width: 50px; height: 50px; margin-right: 10px;" />
         <div class="d-flex flex-column">
-            <p class="mb-0 fw-bold" style="font-size: 20px;">Secure checkout</p>
+            <p class="mb-0 fw-bold" style="font-size: 20px; color: #4A7043;">Secure checkout</p>
             <p class="mb-0 text-muted" style="font-size: 10px;">Protected by Paypal</p>
         </div>
     </div>
-
     <div class="col-3 d-flex align-items-center py-1 justify-content-center">
         <img src="~/img/sale.png" style="width: 50px; height: 50px; margin-right: 10px;" />
         <div class="d-flex flex-column">
-            <p class="mb-0 fw-bold" style="font-size: 20px;">Offer & gift here</p>
+            <p class="mb-0 fw-bold" style="font-size: 20px; color: #4A7043;">Offer & gift here</p>
             <p class="mb-0 text-muted" style="font-size: 10px;">On all orders over</p>
         </div>
     </div>
 </div>
 
-<!--Image-->
-<div class="d-flex justify-content-evenly" style="margin-top: 20px; margin-bottom: 40px;">
-    <!--Image Decoration-->
-    <div class="d-flex flex-column align-items-center mt-3">
-        <p style="font-weight: bold;" class="p-0 m-0">Fresh Fruit</p>
-        <div style="border-radius: 50%; background-color: #FFB703; width: 140px; height: 140px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 10px solid #E63946;">
-            <img src="../img/fruits.png" width="70%" height="70%" />
-        </div>
-    </div>
-
-    <div class="d-flex flex-column align-items-center mt-3">
-        <p style="font-weight: bold;" class="p-0 m-0">Organic Vegetables</p>
-        <div style="border-radius: 50%; background-color: #A7C957; width: 140px; height: 140px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 10px solid #6A994E; ">
-            <img src="../img/vegetable.png" width="70%" height="70%" />
-        </div>
-    </div>
-
-    <div class="d-flex flex-column align-items-center mt-3">
-        <p style="font-weight: bold;" class="p-0 m-0">Premium Meat</p>
-        <div style="border-radius: 50%; background-color: #D62828; width: 140px; height: 140px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 10px solid #023047; ">
-            <img src="../img/meat.png" width="70%" height="70%" />
-        </div>
-    </div>
-
-    <div class="d-flex flex-column align-items-center mt-3">
-        <p style="font-weight: bold;" class="p-0 m-0">Bakery & Pastries</p>
-        <div style="border-radius: 50%; background-color: #F6D6AD; width: 140px; height: 140px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 10px solid #D4A373; ">
-            <img src="../img/bread.png" width="70%" height="70%" />
-        </div>
-    </div>
-
-    <div class="d-flex flex-column align-items-center mt-3">
-        <p style="font-weight: bold;" class="p-0 m-0">Snacks & Sweets</p>
-        <div style="border-radius: 50%; background-color: #FFBA08; width: 140px; height: 140px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 10px solid #9B2226; ">
-            <img src="../img/candies.png" width="70%" height="70%" />
-        </div>
-    </div>
-
-    <div class="d-flex flex-column align-items-center mt-3">
-        <p style="font-weight: bold;" class="p-0 m-0">Dairy & Beverages</p>
-        <div style="border-radius: 50%; background-color: #F5F3F4; width: 140px; height: 140px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 10px solid #4895EF; ">
-            <img src="../img/milk.png" width="70%" height="70%" />
-        </div>
-    </div>
-</div>
+@* <!-- Image (Category Circles) --> *@
+@* <div class="d-flex justify-content-evenly" style="margin-top: 20px; margin-bottom: 40px;"> *@
+@*     <div class="d-flex flex-column align-items-center mt-3"> *@
+@*         <p style="font-weight: bold;" class="p-0 m-0">Fresh Fruit</p> *@
+@*         <div style="border-radius: 50%; background-color: #FFB703; width: 140px; height: 140px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 10px solid #E63946;"> *@
+@*             <img src="../img/fruits.png" width="70%" height="70%" /> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div class="d-flex flex-column align-items-center mt-3"> *@
+@*         <p style="font-weight: bold;" class="p-0 m-0">Organic Vegetables</p> *@
+@*         <div style="border-radius: 50%; background-color: #A7C957; width: 140px; height: 140px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 10px solid #6A994E;"> *@
+@*             <img src="../img/vegetable.png" width="70%" height="70%" /> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div class="d-flex flex-column align-items-center mt-3"> *@
+@*         <p style="font-weight: bold;" class="p-0 m-0">Premium Meat</p> *@
+@*         <div style="border-radius: 50%; background-color: #D62828; width: 140px; height: 140px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 10px solid #023047;"> *@
+@*             <img src="../img/meat.png" width="70%" height="70%" /> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div class="d-flex flex-column align-items-center mt-3"> *@
+@*         <p style="font-weight: bold;" class="p-0 m-0">Bakery & Pastries</p> *@
+@*         <div style="border-radius: 50%; background-color: #F6D6AD; width: 140px; height: 140px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 10px solid #D4A373;"> *@
+@*             <img src="../img/bread.png" width="70%" height="70%" /> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div class="d-flex flex-column align-items-center mt-3"> *@
+@*         <p style="font-weight: bold;" class="p-0 m-0">Snacks & Sweets</p> *@
+@*         <div style="border-radius: 50%; background-color: #FFBA08; width: 140px; height: 140px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 10px solid #9B2226;"> *@
+@*             <img src="../img/candies.png" width="70%" height="70%" /> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div class="d-flex flex-column align-items-center mt-3"> *@
+@*         <p style="font-weight: bold;" class="p-0 m-0">Dairy & Beverages</p> *@
+@*         <div style="border-radius: 50%; background-color: #F5F3F4; width: 140px; height: 140px; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 10px solid #4895EF;"> *@
+@*             <img src="../img/milk.png" width="70%" height="70%" /> *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@
 
 <!-- Categories and Product -->
 <div class="row">
@@ -197,15 +191,15 @@
     <div id="product-container" class="d-flex flex-wrap justify-content-start col-9">
         <!-- Search Box -->
         <div class="col-12 mb-3">
-            <div class="input-group d-flex justify-content-start align-items-center" style="width: 100%;">
+            <div class="input-group d-flex justify-content-start align-items-center" style="width: 100%; max-width: 600px;">
                 <input type="text" id="product-search" class="form-control custom-search-input" placeholder="Search products..."
-                       style="background-color: white; border: 1px solid #6D7B30; color: #333;">
+                       style="background-color: #E6E9E1; border: 1px solid #6D7B30; color: #333; border-radius: 20px 0 0 20px; padding: 12px 16px; font-size: 16px;">
                 <button class="btn custom-search-btn" type="button" id="search-btn"
-                        style="background-color: white; border: 1px solid #6D7B30; color: #333;">
+                        style="background-color: #6D7B30; border: none; color: white; border-radius: 0 20px 20px 0; padding: 12px 16px;">
                     <i class="bi bi-search"></i>
                 </button>
                 <button class="btn custom-reset-btn ms-2" type="button" id="reset-search-btn"
-                        style="background-color: #E6DACE; border: 1px solid #6D7B30; color: #333;">
+                        style="background-color: #E6E9E1; border: 1px solid #6D7B30; color: #333; border-radius: 20px; padding: 12px 16px;">
                     <i class="bi bi-x-circle"></i> Reset
                 </button>
             </div>
@@ -217,9 +211,8 @@
             </div>
         </div>
 
-        <!-- Products container - this will be filled dynamically by JavaScript -->
+        <!-- Products container -->
         <div id="products-display-area" class="d-flex flex-wrap w-100 justify-content-start">
-            <!-- Initial empty state message - will be replaced when products load -->
             @if (homeViewModel == null || homeViewModel.Products == null || !homeViewModel.Products.Any())
             {
                 <div class="not-found-container">
@@ -233,19 +226,13 @@
     <!-- Pagination Controls -->
     <div class="col-9 offset-3 d-flex justify-content-center mt-4">
         <nav aria-label="Product pagination">
-            <ul class="pagination" id="pagination-controls">
-                <!-- Pagination buttons will be added dynamically -->
-            </ul>
+            <ul class="pagination" id="pagination-controls"></ul>
         </nav>
     </div>
 </div>
 
 <style>
-    .custom-reset-btn:hover {
-        background-color: #d9c5b2 !important;
-        color: #333 !important;
-    }
-
+    /* Carousel */
     .carousel-inner {
         border-radius: 10px;
         overflow: hidden;
@@ -271,6 +258,7 @@
         height: 30px;
     }
 
+    /* Pagination */
     .pagination .page-link {
         color: #6D7B30;
         border-radius: 5px;
@@ -280,7 +268,7 @@
 
         .pagination .page-link:hover {
             background-color: #E6DACE;
-            color: #314401;
+            color: #4A7043;
         }
 
     .pagination .active .page-link {
@@ -295,24 +283,23 @@
         cursor: default;
     }
 
-    .category-icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px;
-    }
-
-    /* Custom Search Styles */
+    /* Search Styles */
     .custom-search-input:focus {
         box-shadow: 0 0 0 0.25rem rgba(109, 123, 48, 0.25);
         border-color: #6D7B30;
     }
 
     .custom-search-btn:hover {
-        background-color: #6D7B30 !important;
+        background-color: #4A7043 !important;
         color: white !important;
     }
 
-    /* Make category items clickable */
+    .custom-reset-btn:hover {
+        background-color: #D9C5B2 !important;
+        color: #333 !important;
+    }
+
+    /* Category Items */
     .category-item {
         cursor: pointer;
         transition: background-color 0.2s ease;
@@ -327,7 +314,7 @@
             font-weight: bold;
         }
 
-    /* New Not Found Styles */
+    /* Not Found Styles */
     .not-found-container {
         width: 100%;
         display: flex;
@@ -394,109 +381,139 @@
 
 @section Scripts {
     <style>
-        /* Đảm bảo container chứa panel không làm ảnh hưởng bố cục */
+        /* Product Card */
         .card {
             position: relative;
-            overflow: visible; /* Cho phép panel trồi ra ngoài */
+            overflow: visible;
+            border-radius: 20px;
+            max-width: 250px;
+            height: 305px;
+            margin-left: $
+
+        {
+            marginLeft
         }
 
-        /* Panel trồi ra */
+        px;
+        margin-bottom: $ {
+            marginBottom
+        }
+
+        px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img-top {
+            background-color: #EDEDED;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 0;
+        }
+
+        /* Hover Panel */
         .hover-panel {
             position: absolute;
             top: 0;
-            left: 0; /* Neo vào cạnh trái */
-            width: 50px; /* Chiều rộng nhỏ gọn */
-            height: 100%; /* Cao bằng thẻ card */
+            left: 0;
+            width: 50px;
+            height: 100%;
             background-color: #ffffff;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Bóng ở bên phải */
-            transform: translateX(-100%); /* Ẩn hoàn toàn bên trái */
-            opacity: 0; /* Vô hình */
-            transition: transform 0.3s ease, opacity 0.3s ease; /* Hiệu ứng mượt */
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 10px; /* Khoảng cách giữa các phần tử */
-            z-index: 0; /* Nằm sau khi ẩn */
+            gap: 10px;
+            z-index: 0;
         }
 
-        /* Trồi ra và hiện khi hover */
         .card:hover .hover-panel {
-            transform: translateX(calc(-100% - 10px)); /* Trồi ra bên trái, cách 10px */
-            opacity: 1; /* Hiện rõ */
-            z-index: 10; /* Lên trên khi hover */
+            transform: translateX(calc(-100% - 10px));
+            opacity: 1;
+            z-index: 10;
         }
 
-        /* Nút giỏ hàng */
+        /* Cart Button */
         .cart-btn {
-            background-color: #E86D1F;
+            background-color: #80B500;
             color: white;
             border: none;
             border-radius: 5px;
             padding: 6px;
             cursor: pointer;
             font-size: 14px;
-            transition: background-color 0.2s, transform 0.2s; /* Transition cho phóng to */
-            position: relative; /* Để định vị ảnh sản phẩm */
+            transition: background-color 0.2s, transform 0.2s;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
             .cart-btn:hover {
-                background-color: #d65e1a;
+                background-color: #6A9300;
             }
 
-        /* Hiệu ứng phóng to nút giỏ hàng */
         .cart-btn-animating {
-            transform: scale(1.5); /* Phóng to 50% */
+            transform: scale(1.5);
         }
 
-        /* Ảnh sản phẩm */
         .product-icon {
             position: absolute;
-            width: 20px; /* Kích thước nhỏ để vừa panel */
+            width: 20px;
             height: 20px;
-            opacity: 0; /* Ẩn mặc định */
-            transform: translateY(0); /* Ở vị trí ban đầu */
-            transition: opacity 0.3s ease; /* Transition cho opacity */
-            object-fit: cover; /* Đảm bảo ảnh không méo */
+            opacity: 0;
+            transform: translateY(0);
+            transition: opacity 0.3s ease;
+            object-fit: cover;
         }
 
-        /* Hiệu ứng ảnh sản phẩm trồi lên rồi chui xuống */
         .product-icon-active {
-            animation: productAnimation 0.6s ease-in-out; /* Animation 0.6s */
+            animation: productAnimation 0.6s ease-in-out;
         }
 
-        /* Keyframes cho ảnh sản phẩm */
         @@keyframes productAnimation {
-            0% {
-                opacity: 0;
-                transform: translateY(0);
-            }
+            0%
 
-            25% {
-                opacity: 1;
-                transform: translateY(-20px); /* Trồi lên 20px */
-            }
-
-            50% {
-                opacity: 1;
-                transform: translateY(-20px);
-            }
-
-            75% {
-                opacity: 0;
-                transform: translateY(0); /* Chui xuống */
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateY(0);
-            }
+        {
+            opacity: 0;
+            transform: translateY(0);
         }
 
-        /* Thanh tăng giảm số lượng */
+        25% {
+            opacity: 1;
+            transform: translateY(-20px);
+        }
+
+        50% {
+            opacity: 1;
+            transform: translateY(-20px);
+        }
+
+        75% {
+            opacity: 0;
+            transform: translateY(0);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translateY(0);
+        }
+
+        }
+
+        /* Quantity Controls */
         .quantity-control {
             display: flex;
             flex-direction: column;
@@ -520,7 +537,7 @@
         }
 
             .quantity-btn:hover {
-                background-color: #6a9300;
+                background-color: #6A9300;
             }
 
         .quantity-input {
@@ -532,7 +549,6 @@
             font-size: 14px;
         }
 
-            /* Vô hiệu hóa mũi tên mặc định của input number */
             .quantity-input::-webkit-inner-spin-button,
             .quantity-input::-webkit-outer-spin-button {
                 -webkit-appearance: none;
@@ -540,166 +556,132 @@
             }
 
         .quantity-input {
-            -moz-appearance: textfield; /* Firefox */
+            -moz-appearance: textfield;
         }
     </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const productsPerPage = 20; // Max products per page
-            const cardsPerRow = 4; // Cards per row
+            const productsPerPage = 20;
+            const cardsPerRow = 4;
             let currentPage = 1;
-            let currentCategory = 'all'; // Default to show all products
+            let currentCategory = 'all';
 
-            // Get product container
             const productContainer = document.getElementById("product-container");
             const paginationControls = document.getElementById("pagination-controls");
             const searchResultsLabel = document.getElementById('search-results-label');
             const categoryResultsLabel = document.getElementById('category-results-label');
             const categoryNameSpan = document.getElementById('category-name');
 
-            // Store catalogs data in JavaScript
             const catalogs = [
         @if (homeViewModel != null && homeViewModel.Catalogs != null && homeViewModel.Catalogs.Any())
         {
             foreach (var catalog in homeViewModel.Catalogs)
             {
                 <text>
-                                {
-                                    id: "@catalog.CatalogID",
-                                    name: "@catalog.CatalogName"
-                                },
+                                    { id: "@catalog.CatalogID", name: "@catalog.CatalogName" },
                 </text>
             }
         }
             ];
 
-            // Thêm dữ liệu sản phẩm thực từ model
             const products = [
         @if (homeViewModel != null && homeViewModel.Products != null && homeViewModel.Products.Any())
         {
             foreach (var product in homeViewModel.Products)
             {
+                var firstImagePath = product.Images != null && product.Images.Any()
+                    ? product.Images.First().ImagePath
+                    : "/images/products/default.jpg";
                 <text>
-                                {
-                                    id: "@product.ProductID",
-                                    name: "@product.ProductName",
-                                    description: "@(product.ProductDescription?.Replace("\n", "\\n").Replace("\"", "\\\""))",
-                                    price: @product.Price,
-                                    stock: @product.StockQuantity,
-                                    categoryId: "@product.CatalogID",
-                                    mfgDate: "@product.MFGDate.ToString("yyyy-MM-dd")",
-                                    expDate: "@product.EXPDate.ToString("yyyy-MM-dd")",
-                                    imageUrl: "../img/—Pngtree—red fresh tomato with green_8933861.png",
-                                    averageStar: @product.AverageRating
-                                },
+                                    {
+                                        id: "@product.ProductID",
+                                        name: "@product.ProductName",
+                                        description: "@(product.ProductDescription?.Replace("\n", "\\n").Replace("\"", "\\\""))",
+                                        price: @product.Price,
+                                        unit: "@product.Unit",
+                                        stock: @product.StockQuantity,
+                                        categoryId: "@product.CatalogID",
+                                        mfgDate: "@product.MFGDate.ToString("yyyy-MM-dd")",
+                                        expDate: "@product.EXPDate.ToString("yyyy-MM-dd")",
+                                        imageUrl: "@firstImagePath",
+                                        averageStar: @product.AverageRating
+                                    },
                 </text>
             }
         }
             ];
 
-            // Calculate margins
             const containerWidth = productContainer.offsetWidth;
-            const cardWidth = 200; // Chiều rộng mỗi thẻ
+            const cardWidth = 200;
             const totalCardWidth = cardWidth * cardsPerRow;
             const marginLeft = (containerWidth - totalCardWidth) / (cardsPerRow + 1);
             const marginBottom = marginLeft / 2;
 
-            // Function to create not found element
             function createNotFoundElement(message) {
                 const container = document.createElement('div');
                 container.className = 'not-found-container';
-
                 const xElement = document.createElement('div');
                 xElement.className = 'not-found-x';
                 xElement.innerHTML = '×';
-
                 const textElement = document.createElement('p');
                 textElement.className = 'not-found-text';
                 textElement.textContent = message;
-
                 container.appendChild(xElement);
                 container.appendChild(textElement);
-
-                // Add shake animation on hover
                 xElement.addEventListener('mouseenter', () => {
                     xElement.style.animation = 'shake 0.5s ease-in-out';
                 });
-
                 xElement.addEventListener('mouseleave', () => {
                     xElement.style.animation = 'pulse 2s infinite';
                 });
-
                 return container;
             }
 
-            // Filter products by category ID
             function filterProductsByCategory(categoryId) {
-                // Reset active state of all category items
                 document.querySelectorAll('.category-item').forEach(item => {
                     item.classList.remove('active');
                 });
-
-                // Set active state to clicked category
                 document.querySelector(`.category-item[data-catalog-id="${categoryId}"]`).classList.add('active');
-
-                // Update current category
                 currentCategory = categoryId;
-
-                // Hide search results label
                 searchResultsLabel.style.display = 'none';
-
-                // Show category results label with the category name
                 if (categoryId === 'all') {
                     categoryResultsLabel.style.display = 'none';
                     displayProducts(1);
                     renderPagination();
                 } else {
-                    // Find the catalog name for display
                     const catalog = catalogs.find(cat => cat.id === categoryId);
                     if (catalog) {
                         categoryNameSpan.textContent = catalog.name;
                         categoryResultsLabel.style.display = 'block';
-
-                        // Filter products by the selected category
                         const filteredProducts = products.filter(product => product.categoryId === categoryId);
                         displayFilteredProducts(filteredProducts, `No products found in ${catalog.name} category`);
                     }
                 }
             }
 
-            // Display filtered products without pagination
             function displayFilteredProducts(filteredProducts, notFoundMessage) {
                 const productsDisplayArea = document.getElementById('products-display-area');
                 productsDisplayArea.innerHTML = '';
-
                 if (filteredProducts.length === 0) {
-                    // Display custom "not found" element
-                    productsDisplayArea.appendChild(createNotFoundElement(notFoundMessage || 'No products found'));
-
-                    // Hide pagination
+                    productsDisplayArea.appendChild(createNotFoundElement(notFoundMessage));
                     paginationControls.innerHTML = '';
                     return;
                 }
-
-                // Create product cards for filtered products
                 filteredProducts.forEach(product => {
-                    // Create stars HTML
                     let starsHtml = '';
                     for (let i = 0; i < 5; i++) {
                         if (i < Math.floor(product.averageStar)) {
-                            starsHtml += '<span style="color: #FFD700;">★</span>'; // Full star
+                            starsHtml += '<span style="color: #FFD700;">★</span>';
                         } else if (i < Math.ceil(product.averageStar) && i >= Math.floor(product.averageStar)) {
-                            starsHtml += '<span style="color: #FFD700;">★</span>'; // Half star - display as full
+                            starsHtml += '<span style="color: #FFD700;">★</span>';
                         } else {
-                            starsHtml += '<span style="color: #C0C0C0;">★</span>'; // Empty star
+                            starsHtml += '<span style="color: #C0C0C0;">★</span>';
                         }
                     }
-
                     const productCard = document.createElement('div');
                     productCard.className = 'card text-center';
                     productCard.style = `border-radius: 20px; max-width: 250px; height: 305px; margin-left: ${marginLeft}px; margin-bottom: ${marginBottom}px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);`;
-
                     productCard.innerHTML = `
                         <img src="${product.imageUrl}"
                              style="background-color: #EDEDED; border-top-left-radius: 20px; border-top-right-radius: 20px; height: 200px; width: 100%; object-fit: cover;"
@@ -710,16 +692,15 @@
                             </span>
                             <h6 class="card-title" style="font-weight: bold; font-size: 14px;">${product.name}</h6>
                             <p class="d-flex justify-content-center" style="font-size: 14px;">
-                                <span class="fw-bold" style="color: #80B500;">${(product.price).toLocaleString('vi-VN')}đ</span>
+                                <span class="fw-bold" style="color: #6D7B30;">${(product.price).toLocaleString('vi-VN')}đ / ${product.unit}</span>
                             </p>
                             <form action="/Product/Details" method="post" style="margin-top: auto;">
                                 <input type="hidden" name="id" value="${product.id}">
-                                <button type="submit" class="fw-bold w-100" style="background-color: #E86D1F; border: none; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; color: white; font-size: 14px; padding: 5px 10px;">
+                                <button type="submit" class="fw-bold w-100" style="background-color: #80B500; border: none; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; color: white; font-size: 14px; padding: 5px 10px;">
                                     Details
                                 </button>
                             </form>
                         </div>
-                        <!-- Panel trồi ra khi hover -->
                         <div class="hover-panel">
                             <div class="quantity-control">
                                 <button class="quantity-btn increase" data-product-id="${product.id}">+</button>
@@ -732,54 +713,37 @@
                             </button>
                         </div>
                     `;
-
                     productsDisplayArea.appendChild(productCard);
                 });
-
-                // Hide pagination for filtered products
                 paginationControls.innerHTML = '';
-
-                // Add event handlers
                 addQuantityControls();
                 addCartButtonEvents();
             }
 
-            // Hiển thị sản phẩm với margin tính toán
             function displayProducts(page) {
-                // Get the products display area
                 const productsDisplayArea = document.getElementById('products-display-area');
-
-                // Clear previous products
                 productsDisplayArea.innerHTML = '';
-
                 const start = (page - 1) * productsPerPage;
                 const end = Math.min(start + productsPerPage, products.length);
                 const paginatedProducts = products.slice(start, end);
-
                 if (paginatedProducts.length === 0) {
-                    // Display custom "not found" element for empty products
                     productsDisplayArea.appendChild(createNotFoundElement('No products available'));
                     return;
                 }
-
-                // Create product cards and add them to the display area
                 paginatedProducts.forEach(product => {
-                    // Tạo HTML hiển thị đánh giá sao
                     let starsHtml = '';
                     for (let i = 0; i < 5; i++) {
                         if (i < Math.floor(product.averageStar)) {
-                            starsHtml += '<span style="color: #FFD700;">★</span>'; // Ngôi sao đầy
+                            starsHtml += '<span style="color: #FFD700;">★</span>';
                         } else if (i < Math.ceil(product.averageStar) && i >= Math.floor(product.averageStar)) {
-                            starsHtml += '<span style="color: #FFD700;">★</span>'; // Ngôi sao nửa - hiển thị đầy
+                            starsHtml += '<span style="color: #FFD700;">★</span>';
                         } else {
-                            starsHtml += '<span style="color: #C0C0C0;">★</span>'; // Ngôi sao rỗng
+                            starsHtml += '<span style="color: #C0C0C0;">★</span>';
                         }
                     }
-
                     const productCard = document.createElement('div');
                     productCard.className = 'card text-center';
                     productCard.style = `border-radius: 20px; max-width: 250px; height: 305px; margin-left: ${marginLeft}px; margin-bottom: ${marginBottom}px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);`;
-
                     productCard.innerHTML = `
                         <img src="${product.imageUrl}"
                              style="background-color: #EDEDED; border-top-left-radius: 20px; border-top-right-radius: 20px; height: 200px; width: 100%; object-fit: cover;"
@@ -790,16 +754,15 @@
                             </span>
                             <h6 class="card-title" style="font-weight: bold; font-size: 14px;">${product.name}</h6>
                             <p class="d-flex justify-content-center" style="font-size: 14px;">
-                                <span class="fw-bold" style="color: #80B500;">${(product.price).toLocaleString('vi-VN')}đ</span>
+                                <span class="fw-bold" style="color: #6D7B30;">${(product.price).toLocaleString('vi-VN')}đ / ${product.unit}</span>
                             </p>
                             <form action="/Product/Details" method="post" style="margin-top: auto;">
                                 <input type="hidden" name="id" value="${product.id}">
-                                <button type="submit" class="fw-bold w-100" style="background-color: #E86D1F; border: none; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; color: white; font-size: 14px; padding: 5px 10px;">
+                                <button type="submit" class="fw-bold w-100" style="background-color: #80B500; border: none; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; color: white; font-size: 14px; padding: 5px 10px;">
                                     Details
                                 </button>
                             </form>
                         </div>
-                        <!-- Panel trồi ra khi hover -->
                         <div class="hover-panel">
                             <div class="quantity-control">
                                 <button class="quantity-btn increase" data-product-id="${product.id}">+</button>
@@ -812,16 +775,12 @@
                             </button>
                         </div>
                     `;
-
                     productsDisplayArea.appendChild(productCard);
                 });
-
-                // Thêm sự kiện cho các nút sau khi render
                 addQuantityControls();
                 addCartButtonEvents();
             }
 
-            // Product search functionality
             function setupSearchFunctionality() {
                 const searchInput = document.getElementById('product-search');
                 const searchButton = document.getElementById('search-btn');
@@ -829,77 +788,47 @@
                 const searchTermSpan = document.getElementById('search-term');
                 const productsDisplayArea = document.getElementById('products-display-area');
 
-                // Function to perform search
                 function performSearch() {
                     const searchTerm = searchInput.value.trim();
-
                     if (searchTerm === '') {
-                        // If search box is empty, display all products
                         resetSearch();
                         return;
                     }
-
-                    // Reset active state of all category items
                     document.querySelectorAll('.category-item').forEach(item => {
                         item.classList.remove('active');
                     });
-
-                    // Set "All Products" as active
                     document.querySelector('.category-item[data-catalog-id="all"]').classList.add('active');
-
-                    // Hide category results label
                     categoryResultsLabel.style.display = 'none';
-
-                    // Filter products based on search term (using original products array)
                     const filteredProducts = products.filter(product =>
                         product.name.toLowerCase().includes(searchTerm.toLowerCase())
                     );
-
-                    // Clear the products display area
                     productsDisplayArea.innerHTML = '';
-
-                    // Display search results label
                     searchResultsLabel.style.display = 'block';
                     searchTermSpan.textContent = searchTerm;
-
-                    // Display filtered products
                     if (filteredProducts.length === 0) {
-                        // Display custom "not found" element for search
                         productsDisplayArea.appendChild(createNotFoundElement(`No results found for '${searchTerm}'`));
-
-                        // Hide pagination during search results
                         paginationControls.innerHTML = '';
                     } else {
-                        // Display filtered products using the existing function
                         displayFilteredProducts(filteredProducts);
                     }
                 }
 
-                // Function to reset search and show all products
                 function resetSearch() {
                     searchInput.value = '';
                     searchResultsLabel.style.display = 'none';
                     categoryResultsLabel.style.display = 'none';
-
-                    // Reset active category
                     document.querySelectorAll('.category-item').forEach(item => {
                         item.classList.remove('active');
                     });
                     document.querySelector('.category-item[data-catalog-id="all"]').classList.add('active');
-
-                    currentPage = 1; // Reset to first page
-                    currentCategory = 'all'; // Reset to all products
+                    currentPage = 1;
+                    currentCategory = 'all';
                     displayProducts(currentPage);
                     renderPagination();
                 }
 
-                // Search button click event
                 searchButton.addEventListener('click', performSearch);
-
-                // Reset button click event
                 resetSearchBtn.addEventListener('click', resetSearch);
-
-                // Search on Enter key press
                 searchInput.addEventListener('keyup', function(event) {
                     if (event.key === 'Enter') {
                         performSearch();
@@ -907,31 +836,23 @@
                 });
             }
 
-            // Set up category filter functionality
             function setupCategoryFilterFunctionality() {
                 const categoryItems = document.querySelectorAll('.category-item');
-
                 categoryItems.forEach(item => {
                     item.addEventListener('click', function() {
                         const categoryId = this.getAttribute('data-catalog-id');
                         filterProductsByCategory(categoryId);
-
-                        // Reset search box and hide search results label
                         document.getElementById('product-search').value = '';
                         searchResultsLabel.style.display = 'none';
                     });
                 });
-
-                // Set "All Products" as active by default
                 document.querySelector('.category-item[data-catalog-id="all"]').classList.add('active');
             }
 
-            // Function to handle quantity controls
             function addQuantityControls() {
                 const decreaseButtons = document.querySelectorAll('.quantity-btn.decrease');
                 const increaseButtons = document.querySelectorAll('.quantity-btn.increase');
                 const quantityInputs = document.querySelectorAll('.quantity-input');
-
                 decreaseButtons.forEach(button => {
                     button.addEventListener('click', () => {
                         const input = button.parentElement.querySelector('.quantity-input');
@@ -941,7 +862,6 @@
                         }
                     });
                 });
-
                 increaseButtons.forEach(button => {
                     button.addEventListener('click', () => {
                         const input = button.parentElement.querySelector('.quantity-input');
@@ -949,7 +869,6 @@
                         input.value = value + 1;
                     });
                 });
-
                 quantityInputs.forEach(input => {
                     input.addEventListener('input', () => {
                         let value = parseInt(input.value);
@@ -960,13 +879,11 @@
                 });
             }
 
-            // Function to handle cart button animations
             function addCartButtonEvents() {
                 const cartButtons = document.querySelectorAll('.cart-btn');
                 cartButtons.forEach(button => {
                     button.addEventListener('click', (e) => {
                         e.preventDefault();
-                        // Giữ nguyên hiệu ứng
                         button.classList.add('cart-btn-animating');
                         const productIcon = button.querySelector('.product-icon');
                         productIcon.classList.add('product-icon-active');
@@ -974,54 +891,37 @@
                             button.classList.remove('cart-btn-animating');
                             productIcon.classList.remove('product-icon-active');
                         }, 600);
-
-                        // Lấy thông tin sản phẩm
                         const productId = button.getAttribute('data-product-id');
                         const quantityInput = button.parentElement.querySelector('.quantity-input');
                         const quantity = parseInt(quantityInput.value);
-
-                        // Gửi request với query parameters
                         fetch(`/Cart/AddToCart?productId=${productId}&quantity=${quantity}`, {
                             method: 'POST'
                         })
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                // Cập nhật số lượng trên icon giỏ hàng
                                 document.getElementById('cart-count').textContent = data.cartItemCount;
                                 document.getElementById('tablet-cart-count').textContent = data.cartItemCount;
                                 document.getElementById('mobile-cart-count').textContent = data.cartItemCount;
-
-                                // Hiển thị thông báo thành công (nếu có)
-                                // alert('Đã thêm vào giỏ hàng!');
-                            } else {
-                                // alert(data.message || 'Không thể thêm vào giỏ hàng');
                             }
                         })
                         .catch(error => {
                             console.error('Error:', error);
-                            // alert('Đã xảy ra lỗi khi thêm vào giỏ hàng');
                         });
                     });
                 });
             }
 
-            // Render pagination
             function renderPagination() {
                 paginationControls.innerHTML = '';
                 const totalPages = Math.ceil(products.length / productsPerPage);
-
-                if (totalPages <= 1) return; // Không cần phân trang nếu chỉ có 1 trang
-
-                // Previous button
+                if (totalPages <= 1) return;
                 const prevItem = `
                     <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
                         <a class="page-link" href="#" data-page="${currentPage - 1}">Previous</a>
                     </li>
                 `;
                 paginationControls.innerHTML += prevItem;
-
-                // Page numbers
                 for (let i = 1; i <= totalPages; i++) {
                     const pageItem = `
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
@@ -1030,48 +930,36 @@
                     `;
                     paginationControls.innerHTML += pageItem;
                 }
-
-                // Next button
                 const nextItem = `
                     <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
                         <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a>
                     </li>
                 `;
                 paginationControls.innerHTML += nextItem;
-
-                // Thêm sự kiện cho các nút phân trang
                 document.querySelectorAll('.page-link').forEach(link => {
                     link.addEventListener('click', function(e) {
                         e.preventDefault();
                         if (this.parentElement.classList.contains('disabled')) return;
-
                         const page = parseInt(this.getAttribute('data-page'));
                         currentPage = page;
                         displayProducts(page);
                         renderPagination();
-
-                        // Scroll to product container
                         window.scrollTo({ top: productContainer.offsetTop - 50, behavior: 'smooth' });
                     });
                 });
             }
 
-            // Initialize the page
             displayProducts(1);
             renderPagination();
             setupSearchFunctionality();
             setupCategoryFilterFunctionality();
 
-            // Handle window resize
             window.addEventListener('resize', function() {
-                // Recalculate margins
                 const containerWidth = productContainer.offsetWidth;
                 const cardWidth = 200;
                 const totalCardWidth = cardWidth * cardsPerRow;
                 const newMarginLeft = (containerWidth - totalCardWidth) / (cardsPerRow + 1);
                 const newMarginBottom = newMarginLeft / 2;
-
-                // Update margins
                 document.querySelectorAll('.card').forEach(card => {
                     if (window.innerWidth > 991.98) {
                         card.style.marginLeft = `${newMarginLeft}px`;
@@ -1082,10 +970,8 @@
                 });
             });
 
-            // Make categories collapsible on mobile
             const categoryHeader = document.querySelector('.list-group-item.category-header');
             const categoryItems = document.querySelectorAll('.list-group-item:not(.category-header)');
-
             if (categoryHeader && window.innerWidth <= 991.98) {
                 categoryHeader.addEventListener('click', function() {
                     categoryItems.forEach(item => {
@@ -1096,8 +982,6 @@
                         }
                     });
                 });
-
-                // Initially hide on mobile
                 if (window.innerWidth <= 767.98) {
                     categoryItems.forEach(item => {
                         item.style.display = 'none';
@@ -1108,282 +992,303 @@
     </script>
 
     <style>
-        /* Responsive styles */
         @@media (max-width: 991.98px) {
-            /* Banner section */
-            .row .col-6 {
-                flex: 0 0 100%;
-                max-width: 100%;
-                margin-bottom: 20px;
-            }
-                /* Banner text */
-                .row .col-6 p[style*="font-size: 42px"] {
-                    font-size: 36px !important;
-                    text-align: center;
-                }
+            .row .col-6
 
-                .row .col-6 p.pb-2 {
-                    max-width: 100% !important;
-                    text-align: center;
-                }
-                /* Banner buttons - tablet */
-                .row .col-6 .d-flex.gap-3 {
-                    justify-content: center;
-                    width: 100%;
-                    max-width: 500px;
-                    margin: 0 auto;
-                }
-
-                    .row .col-6 .d-flex.gap-3 .btn {
-                        max-width: 45% !important; /* Tăng chiều rộng nút */
-                        padding: 10px 15px !important; /* Tăng padding */
-                        font-size: 16px !important; /* Tăng cỡ chữ */
-                        font-weight: bold;
-                    }
-            /* Service highlights */
-            .row .col-3 {
-                flex: 0 0 50%;
-                max-width: 50%;
-                margin-bottom: 15px;
-            }
-                /* Service title and subtitle */
-                .row .col-3 p[style*="font-size: 20px"] {
-                    font-size: 18px !important;
-                }
-
-                .row .col-3 p[style*="font-size: 10px"] {
-                    font-size: 9px !important;
-                }
-            /* Category circles */
-            .d-flex.justify-content-evenly {
-                flex-wrap: wrap !important;
-            }
-
-                .d-flex.justify-content-evenly > div {
-                    flex: 0 0 33.33%;
-                    margin-bottom: 20px;
-                }
-
-                    .d-flex.justify-content-evenly > div div[style*="border-radius: 50%"] {
-                        width: 120px !important;
-                        height: 120px !important;
-                        border-width: 8px !important;
-                    }
-            /* Categories and products */
-            .row .col-3[style*="padding-left: 30px"] {
-                flex: 0 0 100%;
-                max-width: 100%;
-                margin-bottom: 20px;
-            }
-
-            .row #product-container {
-                flex: 0 0 100%;
-                max-width: 100%;
-            }
-            /* Pagination */
-            .row .col-9.d-flex.justify-content-center {
-                flex: 0 0 100%;
-                max-width: 100%;
-            }
-            /* Carousel */
-            .carousel-inner {
-                height: 400px !important;
-            }
-
-            .carousel-item img {
-                height: 400px !important;
-            }
-            /* Search Box Responsive */
-            .custom-search-input {
-                max-width: 100% !important;
-            }
+        {
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
         }
 
-        @@media (max-width: 767.98px) {
-            /* Banner text */
-            .row .col-6 p[style*="font-size: 42px"] {
-                font-size: 28px !important;
-            }
+        .row .col-6 p[style*="font-size: 42px"] {
+            font-size: 36px !important;
+            text-align: center;
+        }
 
-            .row .col-6 p.pb-2 {
-                font-size: 14px !important;
-                line-height: 1.6 !important;
-            }
-            /* Banner buttons - mobile */
-            .row .col-6 .d-flex.gap-3 {
-                max-width: 400px;
-            }
+        .row .col-6 p.pb-2 {
+            max-width: 100% !important;
+            text-align: center;
+        }
 
-                .row .col-6 .d-flex.gap-3 .btn {
-                    font-size: 14px !important;
-                    padding: 8px 12px !important;
-                }
-            /* Service icons */
-            .row .col-3 img[style*="width: 50px"] {
-                width: 40px !important;
-                height: 40px !important;
-            }
-            /* Service text */
-            .row .col-3 p[style*="font-size: 20px"] {
+        .row .col-6 .d-flex.gap-3 {
+            justify-content: center;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+            .row .col-6 .d-flex.gap-3 .btn {
+                max-width: 45% !important;
+                padding: 10px 15px !important;
                 font-size: 16px !important;
+                font-weight: bold;
             }
-            /* Category circles */
+
+        .row .col-3 {
+            flex: 0 0 50%;
+            max-width: 50%;
+            margin-bottom: 15px;
+        }
+
+            .row .col-3 p[style*="font-size: 20px"] {
+                font-size: 18px !important;
+            }
+
+            .row .col-3 p[style*="font-size: 10px"] {
+                font-size: 9px !important;
+            }
+
+        .d-flex.justify-content-evenly {
+            flex-wrap: wrap !important;
+        }
+
             .d-flex.justify-content-evenly > div {
-                flex: 0 0 50%;
+                flex: 0 0 33.33%;
+                margin-bottom: 20px;
             }
 
                 .d-flex.justify-content-evenly > div div[style*="border-radius: 50%"] {
-                    width: 100px !important;
-                    height: 100px !important;
-                    border-width: 6px !important;
+                    width: 120px !important;
+                    height: 120px !important;
+                    border-width: 8px !important;
                 }
 
-                .d-flex.justify-content-evenly > div p[style*="font-weight: bold"] {
-                    font-size: 12px;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    max-width: 100px;
-                    margin: 0 auto !important;
-                }
-            /* Make product cards responsive */
-            .card {
-                margin-left: 10px !important;
-                margin-right: 10px !important;
-            }
-            /* Carousel */
-            .carousel-inner {
-                height: 300px !important;
-            }
-
-            .carousel-item img {
-                height: 300px !important;
-            }
+        .row .col-3[style*="padding-left: 30px"] {
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
         }
 
-        @@media (max-width: 575.98px) {
-            /* Banner text */
-            .row .col-6 p[style*="font-size: 42px"] {
-                font-size: 24px !important;
-            }
-            /* Banner buttons - small mobile */
-            .row .col-6 .d-flex.gap-3 {
-                max-width: 300px;
-                gap: 10px !important;
-            }
-
-                .row .col-6 .d-flex.gap-3 .btn {
-                    max-width: 48% !important;
-                    font-size: 12px !important;
-                    padding: 8px 10px !important;
-                    white-space: nowrap;
-                }
-                    /* Ẩn icon mũi tên trên điện thoại nhỏ */
-                    .row .col-6 .d-flex.gap-3 .btn i {
-                        display: none;
-                    }
-            /* Category circles */
-            .d-flex.justify-content-evenly > div div[style*="border-radius: 50%"] {
-                width: 80px !important;
-                height: 80px !important;
-                border-width: 4px !important;
-            }
-
-            .d-flex.justify-content-evenly > div p[style*="font-weight: bold"] {
-                font-size: 10px;
-                max-width: 80px;
-            }
-            /* Carousel */
-            .carousel-inner {
-                height: 200px !important;
-            }
-
-            .carousel-item img {
-                height: 200px !important;
-            }
-            /* Not found smaller on mobile */
-            .not-found-x {
-                font-size: 60px;
-            }
-
-            .not-found-text {
-                font-size: 18px;
-            }
+        .row #product-container {
+            flex: 0 0 100%;
+            max-width: 100%;
         }
 
-        /* Product grid system for responsive display */
-        @@media (max-width: 991.98px) {
-            /* Override the fixed positioning */
-            #product-container {
-                display: flex !important;
-                flex-wrap: wrap !important;
-                justify-content: center !important;
-            }
+        .row .col-9.d-flex.justify-content-center {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
 
-                #product-container .card {
-                    max-width: 220px !important;
-                    margin: 10px !important;
-                }
+        .carousel-inner {
+            height: 400px !important;
+        }
+
+        .carousel-item img {
+            height: 400px !important;
+        }
+
+        .custom-search-input {
+            font-size: 14px !important;
+            padding: 10px 14px !important;
+        }
+
+        .custom-search-btn, .custom-reset-btn {
+            padding: 10px 14px !important;
+            font-size: 14px !important;
+        }
+
         }
 
         @@media (max-width: 767.98px) {
-            #product-container .card {
-                max-width: 200px !important;
+            .row .col-6 p[style*="font-size: 42px"]
+
+        {
+            font-size: 28px !important;
+        }
+
+        .row .col-6 p.pb-2 {
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+        }
+
+        .row .col-6 .d-flex.gap-3 {
+            max-width: 400px;
+        }
+
+            .row .col-6 .d-flex.gap-3 .btn {
+                font-size: 14px !important;
+                padding: 8px 12px !important;
             }
 
-                #product-container .card .card-img-top {
-                    height: 180px !important;
-                }
+        .row .col-3 img[style*="width: 50px"] {
+            width: 40px !important;
+            height: 40px !important;
+        }
 
-                #product-container .card .card-title {
-                    font-size: 12px !important;
-                }
+        .row .col-3 p[style*="font-size: 20px"] {
+            font-size: 16px !important;
+        }
 
-                #product-container .card p {
-                    font-size: 12px !important;
-                }
+        .d-flex.justify-content-evenly > div {
+            flex: 0 0 50%;
+        }
 
-                #product-container .card .text-warning {
-                    font-size: 14px !important;
-                    letter-spacing: 3px !important;
-                }
+            .d-flex.justify-content-evenly > div div[style*="border-radius: 50%"] {
+                width: 100px !important;
+                height: 100px !important;
+                border-width: 6px !important;
+            }
+
+            .d-flex.justify-content-evenly > div p[style*="font-weight: bold"] {
+                font-size: 12px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100px;
+                margin: 0 auto !important;
+            }
+
+        .card {
+            margin-left: 10px !important;
+            margin-right: 10px !important;
+        }
+
+        .carousel-inner {
+            height: 300px !important;
+        }
+
+        .carousel-item img {
+            height: 300px !important;
+        }
+
         }
 
         @@media (max-width: 575.98px) {
-            #product-container .card {
-                max-width: 160px !important;
-                height: 280px !important;
-            }
+            .row .col-6 p[style*="font-size: 42px"]
 
-                #product-container .card .card-img-top {
-                    height: 150px !important;
-                }
-
-                #product-container .card .text-warning {
-                    font-size: 12px !important;
-                    letter-spacing: 2px !important;
-                }
+        {
+            font-size: 24px !important;
         }
 
-        /* Accordion for categories on mobile */
-        @@media (max-width: 991.98px) {
-            #category-list {
-                margin-bottom: 20px;
+        .row .col-6 .d-flex.gap-3 {
+            max-width: 300px;
+            gap: 10px !important;
+        }
+
+            .row .col-6 .d-flex.gap-3 .btn {
+                max-width: 48% !important;
+                font-size: 12px !important;
+                padding: 8px 10px !important;
+                white-space: nowrap;
             }
 
-                #category-list .list-group-item.category-header {
-                    cursor: pointer;
-                }
-            /* Pagination adjusted */
-            .pagination .page-link {
-                padding: 0.4rem 0.75rem;
-            }
-            /* Simplified pagination for mobile */
-            @@media (max-width: 575.98px) {
-                .pagination li:not(.active):not(:first-child):not(:last-child):not(:nth-child(2)):not(:nth-last-child(2)) {
+                .row .col-6 .d-flex.gap-3 .btn i {
                     display: none;
                 }
-            }
+
+        .d-flex.justify-content-evenly > div div[style*="border-radius: 50%"] {
+            width: 80px !important;
+            height: 80px !important;
+            border-width: 4px !important;
+        }
+
+        .d-flex.justify-content-evenly > div p[style*="font-weight: bold"] {
+            font-size: 10px;
+            max-width: 80px;
+        }
+
+        .carousel-inner {
+            height: 200px !important;
+        }
+
+        .carousel-item img {
+            height: 200px !important;
+        }
+
+        .not-found-x {
+            font-size: 60px;
+        }
+
+        .not-found-text {
+            font-size: 18px;
+        }
+
+        }
+
+        @@media (max-width: 991.98px) {
+            #product-container
+
+        {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+        }
+
+        #product-container .card {
+            max-width: 220px !important;
+            margin: 10px !important;
+        }
+
+        }
+
+        @@media (max-width: 767.98px) {
+            #product-container .card
+
+        {
+            max-width: 200px !important;
+        }
+
+        #product-container .card .card-img-top {
+            height: 180px !important;
+        }
+
+        #product-container .card .card-title {
+            font-size: 12px !important;
+        }
+
+        #product-container .card p {
+            font-size: 12px !important;
+        }
+
+        #product-container .card .text-warning {
+            font-size: 14px !important;
+            letter-spacing: 3px !important;
+        }
+
+        }
+
+        @@media (max-width: 575.98px) {
+            #product-container .card
+
+        {
+            max-width: 160px !important;
+            height: 280px !important;
+        }
+
+        #product-container .card .card-img-top {
+            height: 150px !important;
+        }
+
+        #product-container .card .text-warning {
+            font-size: 12px !important;
+            letter-spacing: 2px !important;
+        }
+
+        }
+
+        @@media (max-width: 991.98px) {
+            #category-list
+
+        {
+            margin-bottom: 20px;
+        }
+
+        #category-list .list-group-item.category-header {
+            cursor: pointer;
+        }
+
+        .pagination .page-link {
+            padding: 0.4rem 0.75rem;
+        }
+        @@media (max-width: 575.98px) {
+            .pagination li:not(.active):not(:first-child):not(:last-child):not(:nth-child(2)):not(:nth-last-child(2))
+
+        {
+            display: none;
+        }
+
+        }
         }
     </style>
 }

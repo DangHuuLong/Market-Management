@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PBL3_HK4.Entity;
 using PBL3_HK4.Interface;
 using PBL3_HK4.Models;
@@ -18,10 +19,12 @@ namespace PBL3_HK4.Controllers
         private readonly IAdminService _adminService;
         private readonly IBillService _billService;
         private readonly IBillDetailService _billDetailService;
+        private readonly IProductImageService _productImageService;
 
 
-        public AdminController(IBillService billService, IBillDetailService billDetailService, ICustomerService customerService, IProductService productService, IDiscountService discountService, ICatalogService catalogService, IAdminService adminService)
+        public AdminController(IProductImageService productImageService,IBillService billService, IBillDetailService billDetailService, ICustomerService customerService, IProductService productService, IDiscountService discountService, ICatalogService catalogService, IAdminService adminService)
         {
+            _productImageService = productImageService;
             _billDetailService = billDetailService;
             _billService = billService;
             _customerService = customerService;
@@ -144,14 +147,19 @@ namespace PBL3_HK4.Controllers
             var viewModel = new ProductViewModel
             {
                 Catalogs = await _catalogService.GetAllCatalogsAsync(),
-                Products = await _productService.GetAllProductsAsync()
+                Products = await _productService.GetAllProductsAsync(),
+                ProductImages = await _productImageService.GetAllImages()
             };
+
+            // Gán ProductImages cho Products
+            viewModel.AssignImagesToProducts();
+
             return View("Product", viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct(string productName, double price, int stockQuantity, Guid catalogID,
-    DateTime mfgDate, DateTime expDate, string productDescription = null)
+        public async Task<IActionResult> CreateProduct(string productName, double price, string unit, int stockQuantity, Guid catalogID, 
+            DateTime mfgDate, DateTime expDate, List<IFormFile> imgfile, string productDescription = null)
         {
             Product newProduct = new Product
             {
@@ -159,33 +167,81 @@ namespace PBL3_HK4.Controllers
                 ProductName = productName,
                 ProductDescription = productDescription,
                 Price = price,
+                Unit = unit,
                 StockQuantity = stockQuantity,
                 CatalogID = catalogID,
                 MFGDate = mfgDate,
                 EXPDate = expDate
             };
             await _productService.AddProductAsync(newProduct);
+            if (imgfile != null && imgfile.Count > 0)
+            {
+                foreach (var img in imgfile)
+                {
+                    await _productImageService.SaveImageAsync(img, newProduct.ProductID);
+                }
+            }
             return RedirectToAction("Product");
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateProduct(Guid id, string productName, double price, int stockQuantity,
-            Guid catalogID, DateTime mfgDate, DateTime expDate, string productDescription = null)
+        public async Task<IActionResult> UpdateProduct(Guid id, string productName, double price, string unit, int stockQuantity,
+    Guid catalogID, DateTime mfgDate, DateTime expDate, string productDescription = null,
+    List<IFormFile> imgfile = null, List<string> deletedImageIds = null)
         {
-            // Lấy sản phẩm hiện có từ database
+            if (string.IsNullOrWhiteSpace(productName) || price <= 0 || string.IsNullOrWhiteSpace(unit) || stockQuantity < 0)
+            {
+                var viewModel = new ProductViewModel
+                {
+                    Catalogs = await _catalogService.GetAllCatalogsAsync(),
+                    Products = new List<Product> { await _productService.GetProductByIdAsync(id) },
+                    ProductImages = await _productImageService.GetAllImages()
+                };
+                viewModel.AssignImagesToProducts();
+                return View("Product", viewModel);
+            }
             var existingProduct = await _productService.GetProductByIdAsync(id);
+            if (existingProduct == null)
+            {
+                return NotFound("Sản phẩm không tồn tại.");
+            }
 
-            // Cập nhật thông tin sản phẩm
             existingProduct.ProductName = productName;
             existingProduct.ProductDescription = productDescription;
             existingProduct.Price = price;
+            existingProduct.Unit = unit;
             existingProduct.StockQuantity = stockQuantity;
             existingProduct.CatalogID = catalogID;
             existingProduct.MFGDate = mfgDate;
             existingProduct.EXPDate = expDate;
 
-            // Lưu thay đổi
             await _productService.UpdateProductAsync(existingProduct);
+
+            if (deletedImageIds != null && deletedImageIds.Any())
+            {
+                foreach (var imageId in deletedImageIds)
+                {
+                    if (Guid.TryParse(imageId, out Guid guidImageId))
+                    {
+                        await _productImageService.DeleteImageAsync(guidImageId);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Invalid Guid format for imageId: {imageId}");
+                    }
+                }
+            }
+
+            if (imgfile != null && imgfile.Any())
+            {
+                foreach (var img in imgfile)
+                {
+                    if (img != null && img.Length > 0)
+                    {
+                        await _productImageService.SaveImageAsync(img, id);
+                    }
+                }
+            }
 
             return RedirectToAction("Product");
         }
@@ -193,7 +249,15 @@ namespace PBL3_HK4.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteProduct(Guid id)
         {
+            var productImages = await _productImageService.GetAllImagesByProductId(id);
+            foreach (var image in productImages)
+            {
+                await _productImageService.DeleteImageAsync(image.ImageID);
+            }
+
             await _productService.DeleteProductAsync(id);
+            
+
             return RedirectToAction("Product");
         }
 

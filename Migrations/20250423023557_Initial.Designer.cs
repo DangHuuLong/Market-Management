@@ -12,8 +12,8 @@ using PBL3_HK4.Entity;
 namespace PBL3_HK4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250422004155_AddProductImage")]
-    partial class AddProductImage
+    [Migration("20250423023557_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,6 +74,9 @@ namespace PBL3_HK4.Migrations
 
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
                     b.HasKey("BillDetailID");
 

@@ -4,58 +4,54 @@
 }
 
 <div class="container my-5">
-    <h1 class="text-center mb-5" style="color: #314401; font-weight: bold;">Support Center</h1>
+    <h1 class="text-center mb-5" style="color: #228B22; font-weight: bold;">Support Center</h1>
 
-    <!-- Contact Form -->
     <div class="row mb-5">
         <div class="col-12">
-            <h3 class="mb-4" style="color: #314401;">Get in Touch</h3>
+            <h3 class="mb-4" style="color: #38543A;">Get in Touch</h3>
             <form id="supportForm" novalidate>
                 <div class="mb-3">
-                    <label for="name" class="form-label" style="color: #333;">Name</label>
+                    <label for="name" class="form-label" style="color: #495057;">Name</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" pattern="[A-Za-z\s]+" title="Name can only contain letters and spaces" required>
                     <div class="invalid-feedback">Please enter a valid name (letters and spaces only).</div>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label" style="color: #333;">Email</label>
+                    <label for="email" class="form-label" style="color: #495057;">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
                     <div class="invalid-feedback">Please enter a valid email address.</div>
                 </div>
                 <div class="mb-3">
-                    <label for="message" class="form-label" style="color: #333;">Message</label>
+                    <label for="message" class="form-label" style="color: #495057;">Message</label>
                     <textarea class="form-control" id="message" name="message" rows="5" placeholder="Tell us how we can help" required></textarea>
                     <div class="invalid-feedback">Please enter your message.</div>
                 </div>
-                <button type="submit" class="btn rounded-pill py-2" style="background-color: #6D7B30; color: white; width: 200px;">Send Message</button>
+                <button type="submit" class="btn rounded-pill py-2" style="background-color: #38543A; color: white; width: 180px; font-weight: 500;">Send Message</button>
             </form>
         </div>
     </div>
 
-    <!-- Contact Info -->
     <div class="row mb-5">
-        <div class="col-12 text-center" style="background-color: #F5F5F5; padding: 30px; border-radius: 10px;">
-            <h3 class="mb-4" style="color: #314401;">Contact Us</h3>
-            <p style="color: #333; font-size: 1.1rem;">
-                <i class="bi bi-telephone-fill me-2"></i> +84 123 456 789
+        <div class="col-12 text-center" style="background-color: #f0fff0; padding: 30px; border-radius: 10px; border: 1px solid #e0eee0;">
+            <h3 class="mb-4" style="color: #38543A;">Contact Us</h3>
+            <p style="color: #495057; font-size: 1.1rem;">
+                <i class="bi bi-telephone-fill me-2" style="color: #38543A;"></i> +84 123 456 789
             </p>
-            <p style="color: #333; font-size: 1.1rem;">
-                <i class="bi bi-envelope-fill me-2"></i> organicgrocery@gmail.com
+            <p style="color: #495057; font-size: 1.1rem;">
+                <i class="bi bi-envelope-fill me-2" style="color: #38543A;"></i> organicgrocery@gmail.com
             </p>
-            <p style="color: #333; font-size: 1.1rem;">
-                <i class="bi bi-clock-fill me-2"></i> 6:00 AM - 12:00 PM
+            <p style="color: #495057; font-size: 1.1rem;">
+                <i class="bi bi-clock-fill me-2" style="color: #38543A;"></i> 6:00 AM - 12:00 PM
             </p>
-            <p style="color: #333; font-size: 1.1rem;">
-                <i class="bi bi-geo-alt-fill me-2"></i> 54 Nguyễn Lương Bằng
+            <p style="color: #495057; font-size: 1.1rem;">
+                <i class="bi bi-geo-alt-fill me-2" style="color: #38543A;"></i> 54 Nguyễn Lương Bằng
             </p>
         </div>
     </div>
 
-    <!-- FAQ Section -->
     <div class="row">
         <div class="col-12">
-            <h3 class="mb-4 text-center" style="color: #314401;">Frequently Asked Questions</h3>
+            <h3 class="mb-4 text-center" style="color: #38543A;">Frequently Asked Questions</h3>
             <div class="accordion" id="faqAccordion">
-                <!-- FAQs will be dynamically added via JavaScript -->
             </div>
         </div>
     </div>
@@ -63,8 +59,8 @@
 
 <style>
     .form-control:focus, .form-select:focus {
-        border-color: #6D7B30;
-        box-shadow: 0 0 5px rgba(109, 123, 48, 0.3);
+        border-color: #38543A;
+        box-shadow: 0 0 5px rgba(56, 84, 58, 0.5);
     }
 
     .invalid-feedback {
@@ -79,14 +75,31 @@
             display: block;
         }
 
-    .accordion-button:not(.collapsed) {
-        background-color: #E8F0D7;
-        color: #314401;
+    .accordion-item {
+        border: 1px solid #8FBC8F; /* Xanh lá cây nhạt cho viền */
+        margin-bottom: 10px;
+        border-radius: 0.25rem;
     }
 
-    .accordion-button:focus {
-        box-shadow: none;
-        border-color: #6D7B30;
+    .accordion-button {
+        background-color: #f0fff0; /* Xanh lơ nhạt */
+        color: #495057; /* Xám trung tính */
+        font-weight: 500;
+    }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #e0eee0; /* Xanh lơ nhạt hơn */
+            color: #228B22; /* Xanh lá cây trung tính */
+            box-shadow: none;
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: #38543A;
+        }
+
+    .accordion-body {
+        color: #495057; /* Xám trung tính */
     }
 </style>
 
@@ -107,7 +120,7 @@
                     icon: 'success',
                     title: 'Message Sent!',
                     text: 'Thank you for contacting us. We will get back to you soon.',
-                    confirmButtonColor: '#6D7B30'
+                    confirmButtonColor: '#38543A'
                 });
                 form.reset();
                 form.classList.remove('was-validated');
@@ -120,13 +133,13 @@
             {
                 id: 'faq1',
                 question: 'How do I track my order?',
-                answer: 'You can track your order by visiting the <a href="/Order">Order</a> page and entering your order ID. We’ll also send updates via email.',
+                answer: 'You can track your order by visiting the <a href="/Order" style="color: #38543A; text-decoration: underline;">Order</a> page and entering your order ID. We’ll also send updates via email.',
                 isOpen: true
             },
             {
                 id: 'faq2',
                 question: 'What is your return policy?',
-                answer: 'We accept returns within 7 days for perishable items if they are defective. Contact us at organicgrocery@gmail.com for assistance.',
+                answer: 'We accept returns within 7 days for perishable items if they are defective. Contact us at <a href="mailto:organicgrocery@gmail.com" style="color: #38543A; text-decoration: underline;">organicgrocery@gmail.com</a> for assistance.',
                 isOpen: false
             },
             {
@@ -158,7 +171,6 @@
         faqs.forEach(faq => {
             const accordionItem = document.createElement('div');
             accordionItem.className = 'accordion-item';
-            accordionItem.style.border = '1px solid #6D7B30';
 
             const header = document.createElement('h2');
             header.className = 'accordion-header';
@@ -166,8 +178,8 @@
             const button = document.createElement('button');
             button.className = `accordion-button ${faq.isOpen ? '' : 'collapsed'}`;
             button.type = 'button';
-            button.style.backgroundColor = '#F5F5F5';
-            button.style.color = '#333';
+            button.style.backgroundColor = '#f0fff0';
+            button.style.color = '#495057';
             button.setAttribute('data-bs-toggle', 'collapse');
             button.setAttribute('data-bs-target', `#${faq.id}`);
             button.textContent = faq.question;
@@ -179,7 +191,7 @@
 
             const body = document.createElement('div');
             body.className = 'accordion-body';
-            body.style.color = '#333';
+            body.style.color = '#495057';
             body.innerHTML = faq.answer;
 
             header.appendChild(button);

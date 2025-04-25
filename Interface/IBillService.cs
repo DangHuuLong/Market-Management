@@ -25,5 +25,6 @@ namespace PBL3_HK4.Interface
         public Task<IEnumerable<Bill>> GetUnconfirmedBillAsync();
         public Task UpdateBillConfirmedAsync(Guid billId);
         public Task UpdateBillCanceledAsync(Guid billId);
+        public Task UpdateBillReceivedAsync(Guid billId);
     }
 }

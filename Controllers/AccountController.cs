@@ -131,11 +131,6 @@ namespace PBL3_HK4.Controllers
             }
         }
 
-        public IActionResult Signout()
-        {
-            return View();
-        }
-
         public async Task<IActionResult> SignOut()
         {
             // Xóa thông tin giỏ hàng khỏi session
@@ -144,7 +139,7 @@ namespace PBL3_HK4.Controllers
 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await _accountService.Logout();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Main", "Account");
         }
 
         [HttpPost]

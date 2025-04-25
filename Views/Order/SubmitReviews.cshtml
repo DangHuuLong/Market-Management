@@ -1,0 +1,232 @@
+﻿@{
+    ViewData["Title"] = "Thank You for Your Review!";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Organic Grocery</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden; /* Hide overflowing flowers initially */
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+            position: relative; /* Needed for absolute positioning of icons */
+            overflow: visible; /* Allow icons to appear outside container */
+            z-index: 1; /* Ensure container is above falling elements */
+        }
+
+        .header {
+            color: #2e7d32; /* Green color */
+            font-size: 24px;
+            margin-bottom: 20px;
+            margin-top: 60px; /* Space for bouncing icons */
+        }
+
+        .message {
+            font-size: 16px;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #7abf63; /* Organic green */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn:hover {
+                background-color: #689f50; /* Darker green on hover */
+            }
+
+        /* Bouncing Icons Styling (copied from your example) */
+        .food-icons {
+            position: absolute;
+            top: -60px; /* Position above the container */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%; /* Cover the width of the container's parent for positioning */
+            height: 60px;
+            pointer-events: none; /* Allow clicks to pass through */
+        }
+
+        .food-icon {
+            font-size: 30px;
+            position: relative;
+            animation: bounce calc(1.5s + var(--random) * 0.5s) ease-in-out infinite;
+            margin: 0 5px; /* Add some spacing between icons */
+        }
+
+            /* Define variables for animation offsets and randomness (copied from your example) */
+            .food-icon:nth-child(1) {
+                --index: 0;
+                --random: 0.1;
+            }
+
+            .food-icon:nth-child(2) {
+                --index: 1;
+                --random: 0.4;
+            }
+
+            .food-icon:nth-child(3) {
+                --index: 2;
+                --random: 0.7;
+            }
+
+            .food-icon:nth-child(4) {
+                --index: 3;
+                --random: 0.2;
+            }
+
+            .food-icon:nth-child(5) {
+                --index: 4;
+                --random: 0.6;
+            }
+
+            .food-icon:nth-child(6) {
+                --index: 5;
+                --random: 0.3;
+            }
+
+            .food-icon:nth-child(7) {
+                --index: 6;
+                --random: 0.8;
+            }
+
+            .food-icon:nth-child(8) {
+                --index: 7;
+                --random: 0.5;
+            }
+
+
+        /* Keyframes for Bouncing Animation (adjusted to be relative to their position, not absolute) */
+        @@keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(calc(-20px - var(--random) * 20px));
+            }
+        }
+
+
+        /* Falling Flower Styling (copied from your example) */
+        .flower {
+            position: fixed; /* Use fixed so it falls across the whole viewport */
+            top: -20px; /* Start slightly above viewport */
+            font-size: 20px;
+            animation: fall linear forwards;
+            pointer-events: none;
+            z-index: 0; /* Ensure flowers are behind the container */
+            color: #e57373; /* Pink color for flowers */
+        }
+
+        @@keyframes fall {
+            0% {
+                transform: translateY(0vh) rotate(0deg); /* Start at the top */
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(105vh) rotate(360deg); /* Fall beyond the bottom */
+                opacity: 0.5; /* Slightly fade out */
+            }
+        }
+
+        /* Responsive adjustments (copied from your example) */
+        @@media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+
+            .header {
+                font-size: 20px;
+                margin-top: 50px;
+            }
+
+            .food-icon {
+                font-size: 25px;
+            }
+            /* Adjust bounce keyframes for smaller screens */
+            @@keyframes bounce {
+                0%, 100% {
+                    transform: translateY(0);
+                }
+
+                50% {
+                    transform: translateY(calc(-15px - var(--random) * 15px));
+                }
+            }
+
+            .flower {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="food-icons">
+            <span class="food-icon">✅</span> @* Using a checkmark icon *@
+            <span class="food-icon">👍</span> @* Using a thumbs-up icon *@
+            <span class="food-icon">⭐</span> @* Using a star icon *@
+            <span class="food-icon">😊</span> @* Using a smiley icon *@
+            <span class="food-icon">💚</span> @* Using a green heart icon *@
+            <span class="food-icon">🍎</span>
+            <span class="food-icon">🥕</span> @* Changed some food icons to be more review/organic related *@
+            <span class="food-icon">🥦</span>
+        </div>
+        <div class="header">Thank You for Your Review!</div>
+        <p class="message">Thank you for taking the time to share your feedback with us. Your reviews help us improve!</p>
+        @* You might want to link back to the product list or home page *@
+        <a href="@Url.Action("Index", "Home")" class="btn">Continue Shopping</a>
+    </div>
+
+    <script>
+        // Falling Flower Animation Script (copied from your example)
+        function createFlower() {
+            const flower = document.createElement('span');
+            flower.className = 'flower';
+            flower.innerHTML = '🌸'; // Or use a different character like '🌿' for organic feel
+            flower.style.left = Math.random() * 100 + 'vw';
+            flower.style.animationDuration = Math.random() * 3 + 2 + 's'; // Random duration between 2s and 5s
+            flower.style.opacity = Math.random() * 0.5 + 0.5; // Random starting opacity
+            document.body.appendChild(flower);
+            // Remove flower after animation finishes (longer than max duration)
+            setTimeout(() => flower.remove(), 6000);
+        }
+
+        // Create a new flower every 75 milliseconds
+        setInterval(createFlower, 75);
+    </script>
+</body>
+</html>

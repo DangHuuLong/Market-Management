@@ -74,7 +74,8 @@ namespace PBL3_HK4.Migrations
                     Price = table.Column<double>(type: "float", nullable: false),
                     StockQuantity = table.Column<int>(type: "int", nullable: false),
                     MFGDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EXPDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    EXPDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Unit = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,7 +97,7 @@ namespace PBL3_HK4.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     TotalPrice = table.Column<double>(type: "float", nullable: false),
-                    Confirm = table.Column<bool>(type: "bit", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,6 +124,25 @@ namespace PBL3_HK4.Migrations
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "UserID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductImages",
+                columns: table => new
+                {
+                    ImageID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductImages", x => x.ImageID);
+                    table.ForeignKey(
+                        name: "FK_ProductImages_Products_ProductID",
+                        column: x => x.ProductID,
+                        principalTable: "Products",
+                        principalColumn: "ProductID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,11 +176,12 @@ namespace PBL3_HK4.Migrations
                 columns: table => new
                 {
                     BillDetailID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BillID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     DiscountID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: true),
-                    Price = table.Column<double>(type: "float", nullable: true)
+                    Price = table.Column<double>(type: "float", nullable: true),
+                    Total = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -179,7 +200,8 @@ namespace PBL3_HK4.Migrations
                         name: "FK_BillDetails_Products_ProductID",
                         column: x => x.ProductID,
                         principalTable: "Products",
-                        principalColumn: "ProductID");
+                        principalColumn: "ProductID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -239,6 +261,11 @@ namespace PBL3_HK4.Migrations
                 column: "ProductID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductImages_ProductID",
+                table: "ProductImages",
+                column: "ProductID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CatalogID",
                 table: "Products",
                 column: "CatalogID");
@@ -269,6 +296,9 @@ namespace PBL3_HK4.Migrations
 
             migrationBuilder.DropTable(
                 name: "CartItems");
+
+            migrationBuilder.DropTable(
+                name: "ProductImages");
 
             migrationBuilder.DropTable(
                 name: "Reviews");

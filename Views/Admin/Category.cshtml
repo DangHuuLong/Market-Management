@@ -14,12 +14,31 @@
         </button>
     </div>
 
+    <!-- Search Section -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control" id="search-category" placeholder="Search by category name...">
+                <button class="btn btn-outline-secondary" type="button" id="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-outline-secondary" type="button" id="clear-filters">
+                    <i class="fas fa-times"></i> <span class="d-none d-sm-inline">Clear Search</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Bảng dữ liệu -->
     <div class="table-responsive">
         <table class="table table-striped table-hover" id="category-table">
             <thead class="table-light">
                 <tr>
-                    <th width="15%">ID</th>
+                    <!-- Removed ID column -->
                     <th>Name</th>
                     <th width="20%">Actions</th>
                 </tr>
@@ -68,16 +87,13 @@
     }
 
     @@keyframes fadeIn {
-        from
+        from {
+            opacity: 0;
+        }
 
-    {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-
+        to {
+            opacity: 1;
+        }
     }
 
     .modal-content {
@@ -85,18 +101,15 @@
     }
 
     @@keyframes slideDown {
-        from
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
 
-    {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
     }
 
     /* Close button hover effect */
@@ -120,87 +133,96 @@
         padding: 0.25rem 0.5rem;
     }
 
+    /* Search Styling */
+    #search-category::placeholder {
+        opacity: 0.7;
+    }
+
     /* Responsive Styles */
+    @@media (max-width: 991.98px) {
+        .row.mb-4 {
+            margin-bottom: 1rem !important;
+        }
+
+        .col-md-6:first-child {
+            margin-bottom: 0.5rem;
+        }
+    }
+
     @@media (max-width: 768px) {
-        #category-table th, #category-table td
+        #category-table th, #category-table td {
+            padding: 0.5rem;
+        }
 
-    {
-        padding: 0.5rem;
-    }
+        #category-table .btn-sm {
+            padding: 0.25rem 0.4rem;
+        }
 
-    #category-table .btn-sm {
-        padding: 0.25rem 0.4rem;
-    }
+        .modal-content {
+            padding: 15px !important;
+        }
 
-    .modal-content {
-        padding: 15px !important;
-    }
-
+        .d-flex.justify-content-end {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
     }
 
     @@media (max-width: 576px) {
-        #category-table th:first-child, #category-table td:first-child
+        #category-table th:last-child,
+        #category-table td:last-child {
+            width: 25% !important;
+        }
 
-    {
-        width: 25% !important;
-    }
+        .pagination .page-link {
+            padding: 0.375rem 0.5rem;
+        }
 
-    #category-table th:last-child,
-    #category-table td:last-child {
-        width: 25% !important;
-    }
+        .pagination .page-item:not(.active):not(:first-child):not(:last-child) {
+            display: none;
+        }
 
-    .pagination .page-link {
-        padding: 0.375rem 0.5rem;
-    }
+        .pagination .page-item.active {
+            display: block;
+        }
+        /* Compact modals on small screens */
+        .modal-content {
+            padding: 10px !important;
+        }
 
-    .pagination .page-item:not(.active):not(:first-child):not(:last-child) {
-        display: none;
-    }
+        .modal-header {
+            padding-bottom: 5px !important;
+            margin-bottom: 10px !important;
+        }
 
-    .pagination .page-item.active {
-        display: block;
-    }
+        .modal-footer {
+            padding-top: 5px !important;
+            margin-top: 10px !important;
+        }
 
-    /* Compact modals on small screens */
-    .modal-content {
-        padding: 10px !important;
-    }
+        .form-group.row {
+            margin-bottom: 0.5rem !important;
+        }
+        /* Adjust labels and inputs for small screens */
+        .form-group.row {
+            flex-direction: column;
+            align-items: flex-start !important;
+        }
 
-    .modal-header {
-        padding-bottom: 5px !important;
-        margin-bottom: 10px !important;
-    }
+        .col-form-label {
+            padding-bottom: 0.25rem;
+            padding-top: 0;
+        }
 
-    .modal-footer {
-        padding-top: 5px !important;
-        margin-top: 10px !important;
-    }
+        .col-sm-3 {
+            width: 100%;
+            margin-bottom: 0.25rem;
+        }
 
-    .form-group.row {
-        margin-bottom: 0.5rem !important;
-    }
-
-    /* Adjust labels and inputs for small screens */
-    .form-group.row {
-        flex-direction: column;
-        align-items: flex-start !important;
-    }
-
-    .col-form-label {
-        padding-bottom: 0.25rem;
-        padding-top: 0;
-    }
-
-    .col-sm-3 {
-        width: 100%;
-        margin-bottom: 0.25rem;
-    }
-
-    .col-sm-9 {
-        width: 100%;
-    }
-
+        .col-sm-9 {
+            width: 100%;
+        }
     }
 </style>
 
@@ -216,6 +238,8 @@
     // Pagination variables
     let currentPage = 1;
     let itemsPerPage = 10;
+    let searchTerm = '';
+    let filteredCategories = [...categories];
 
     // Adjust items per page based on screen size
     function adjustItemsPerPage() {
@@ -226,7 +250,32 @@
         } else {
             itemsPerPage = 10;
         }
-        renderCategoryTable(categories, currentPage);
+        renderCategoryTable(filteredCategories, currentPage);
+    }
+
+    // Function for searching categories
+    function searchCategories() {
+        searchTerm = document.getElementById('search-category').value.trim().toLowerCase();
+        currentPage = 1;
+
+        if (searchTerm) {
+            filteredCategories = categories.filter(category =>
+                category.name.toLowerCase().includes(searchTerm)
+            );
+        } else {
+            filteredCategories = [...categories];
+        }
+
+        renderCategoryTable(filteredCategories, currentPage);
+    }
+
+    // Function to clear search filters
+    function clearFilters() {
+        document.getElementById('search-category').value = '';
+        searchTerm = '';
+        currentPage = 1;
+        filteredCategories = [...categories];
+        renderCategoryTable(filteredCategories, currentPage);
     }
 
     // Function to render table data with pagination
@@ -248,23 +297,34 @@
             return;
         }
 
-        // Render table rows
-        paginatedData.forEach(category => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${category.id}</td>
-                <td>${category.name}</td>
-                <td>
-                    <button class="btn btn-sm btn-link text-dark me-2" onclick="viewCategory('${category.id}')">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                    <button class="btn btn-sm btn-link text-danger" onclick="deleteCategory('${category.id}')">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </td>
+        // Render table rows - removed ID column
+        if (paginatedData.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="2" class="text-center py-4">
+                        <div class="alert alert-info mb-0">
+                            No categories found matching your search. Try adjusting your criteria.
+                        </div>
+                    </td>
+                </tr>
             `;
-            tbody.appendChild(row);
-        });
+        } else {
+            paginatedData.forEach(category => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${category.name}</td>
+                    <td>
+                        <button class="btn btn-sm btn-link text-dark me-2" onclick="viewCategory('${category.id}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-link text-danger" onclick="deleteCategory('${category.id}')">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
 
         // Render pagination controls if needed
         if (data.length > itemsPerPage) {
@@ -355,9 +415,9 @@
 
     // Function to handle page changes
     function changePage(page) {
-        if (page < 1 || page > Math.ceil(categories.length / itemsPerPage)) return;
+        if (page < 1 || page > Math.ceil(filteredCategories.length / itemsPerPage)) return;
         currentPage = page;
-        renderCategoryTable(categories, page);
+        renderCategoryTable(filteredCategories, page);
     }
 
     // View/Edit category modal with inline inputs
@@ -394,26 +454,14 @@
         modalContent.style.overflowY = 'auto';
         modalContent.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
 
-        // Create form layout based on screen size
+        // Create form layout based on screen size - removed ID field
         const formLayout = isMobile ?
             `<div class="form-group mb-3">
-                <label class="form-label" style="font-weight: 500; color: #2E8B57; display: block;">ID</label>
-                <input type="text" class="form-control" id="category-id" name="id" value="${category.id}"
-                       readonly style="background-color: #f8f9fa; cursor: not-allowed;">
-            </div>
-            <div class="form-group mb-3">
                 <label class="form-label" style="font-weight: 500; color: #2E8B57; display: block;">Name</label>
                 <input type="text" class="form-control" id="category-name" name="name" value="${category.name}"
                        disabled style="background-color: #f8f9fa; cursor: not-allowed;">
             </div>` :
             `<div class="form-group row mb-3" style="display: flex; align-items: center;">
-                <label class="col-sm-3 col-form-label" style="font-weight: 500; color: #2E8B57;">ID</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="category-id" name="id" value="${category.id}"
-                           readonly style="background-color: #f8f9fa; cursor: not-allowed;">
-                </div>
-            </div>
-            <div class="form-group row mb-3" style="display: flex; align-items: center;">
                 <label class="col-sm-3 col-form-label" style="font-weight: 500; color: #2E8B57;">Name</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="category-name" name="name" value="${category.name}"
@@ -421,12 +469,13 @@
                 </div>
             </div>`;
 
-        // Create form with responsive layout
+        // Create form with responsive layout - add hidden ID field
         modalContent.innerHTML = `
             <div class="modal-header" style="border-bottom: 1px solid #dee2e6; margin-bottom: 20px; padding-bottom: 10px;">
                 <h3 class="modal-title" style="color: #2E8B57; margin: 0; font-size: ${isMobile ? '1.5rem' : '1.75rem'};">Category Details</h3>
             </div>
             <form id="editCategoryForm" action="UpdateCategory" method="post">
+                <input type="hidden" id="category-id" name="id" value="${category.id}">
                 <div class="modal-body">
                     ${formLayout}
                 </div>
@@ -569,7 +618,12 @@
             const index = categories.findIndex(c => c.id === id);
             if (index !== -1) {
                 categories.splice(index, 1);
-                renderCategoryTable(categories, currentPage);
+                // Also remove from filtered categories if present
+                const filteredIndex = filteredCategories.findIndex(c => c.id === id);
+                if (filteredIndex !== -1) {
+                    filteredCategories.splice(filteredIndex, 1);
+                }
+                renderCategoryTable(filteredCategories, currentPage);
             }
 
             closeModal();
@@ -616,15 +670,9 @@
         modalContent.style.overflowY = 'auto';
         modalContent.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
 
-        // Create form layout based on screen size
+        // Create form layout based on screen size - removed visible ID field
         const formLayout = isMobile ?
             `<div class="form-group mb-3">
-                <label class="form-label" style="font-weight: 500; color: #2E8B57; display: block;">ID</label>
-                <input type="text" class="form-control" id="new-category-id"
-                       value="(Auto-generated)" disabled
-                       style="background-color: #f8f9fa; cursor: not-allowed;">
-            </div>
-            <div class="form-group mb-3">
                 <label class="form-label" style="font-weight: 500; color: #2E8B57; display: flex; align-items: center;">
                     Name <span style="color: #dc3545; margin-left: 5px;">*</span>
                 </label>
@@ -633,14 +681,6 @@
                        style="background-color: white; cursor: text;">
             </div>` :
             `<div class="form-group row mb-3" style="display: flex; align-items: center;">
-                <label class="col-sm-3 col-form-label" style="font-weight: 500; color: #2E8B57;">ID</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="new-category-id"
-                           value="(Auto-generated)" disabled
-                           style="background-color: #f8f9fa; cursor: not-allowed;">
-                </div>
-            </div>
-            <div class="form-group row mb-3" style="display: flex; align-items: center;">
                 <label class="col-sm-3 col-form-label" style="font-weight: 500; color: #2E8B57; display: flex; align-items: center;">
                     Name <span style="color: #dc3545; margin-left: 5px;">*</span>
                 </label>
@@ -700,6 +740,24 @@
 
         // Add New Category button event listener
         document.getElementById('add-category-btn').addEventListener('click', addNewCategory);
+
+        // Setup search functionality
+        const searchInput = document.getElementById('search-category');
+        const searchBtn = document.getElementById('search-btn');
+        const clearFiltersBtn = document.getElementById('clear-filters');
+
+        // Search on button click
+        searchBtn.addEventListener('click', searchCategories);
+
+        // Search on Enter key press
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                searchCategories();
+            }
+        });
+
+        // Clear filters button
+        clearFiltersBtn.addEventListener('click', clearFilters);
 
         // Listen for window resize to adjust responsive elements
         window.addEventListener('resize', function() {

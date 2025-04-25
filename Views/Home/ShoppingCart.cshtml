@@ -8,363 +8,287 @@
     ICollection<CartItem> cartItems = shoppingCart.Items ?? new List<CartItem>();
 }
 
-<!-- Thêm token CSRF ở đầu file -->
 @Html.AntiForgeryToken()
 
 <style>
     .cart-container {
-        margin: 30px 0;
+        margin: 30px auto;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 960px;
+        padding: 20px;
+        background-color: #f8f9fa; /* Xám nhạt */
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .cart-header {
         font-size: 28px;
         font-weight: bold;
+        color: #6B8E23; /* Xanh ô liu đậm */
         margin-bottom: 25px;
+        text-align: center;
     }
 
     .item-count {
-        color: #80B500;
+        color: #80B500; /* Xanh lá tươi */
         font-weight: bold;
     }
 
     .cart-item {
-        background-color: #f9f9f9;
-        border-radius: 15px;
+        background-color: #fff;
+        border-radius: 8px;
         padding: 15px;
         margin-bottom: 15px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
         .cart-item:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+            border-color: #d1d8e0;
         }
 
     .item-image {
         max-width: 80px;
         margin-right: 15px;
-        border-radius: 10px;
+        border-radius: 6px;
+    }
+
+    .item-details {
+        flex-grow: 1;
     }
 
     .item-name {
         font-weight: 500;
         font-size: 16px;
-        margin-top: 20px;
+        color: #343a40;
+        margin-bottom: 5px;
     }
 
     .item-price {
-        color: #94A84E;
-        font-weight: 500;
-        margin-top: 20px;
+        color: #80B500; /* Xanh lá tươi */
+        font-weight: bold;
+        font-size: 16px;
     }
 
     .quantity-controls {
         display: flex;
         align-items: center;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        overflow: hidden;
     }
 
     .btn-quantity {
-        background-color: white;
-        border: 1px solid #ddd;
-        width: 35px;
-        height: 35px;
+        background-color: #fff;
+        border: none;
+        width: 30px;
+        height: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: background-color 0.2s;
+        font-size: 16px;
+        color: #495057;
     }
 
         .btn-quantity:hover {
-            background-color: #f5f5f5;
+            background-color: #e9ecef;
         }
 
-        .btn-quantity.minus {
-            border-top-left-radius: 8px;
-            border-bottom-left-radius: 8px;
-        }
-
-        .btn-quantity.plus {
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
+        .btn-quantity:focus {
+            outline: none;
         }
 
     .quantity-value {
-        border-top: 1px solid #ddd;
-        border-bottom: 1px solid #ddd;
         width: 40px;
-        height: 35px;
+        height: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 500;
+        font-size: 16px;
+        color: #495057;
+        border-left: 1px solid #ced4da;
+        border-right: 1px solid #ced4da;
     }
 
     .btn-remove {
         color: #dc3545;
         cursor: pointer;
         font-size: 20px;
-        transition: all 0.2s;
+        transition: color 0.2s;
         background: none;
         border: none;
         padding: 0;
+        margin-left: 15px;
     }
 
         .btn-remove:hover {
             color: #c82333;
         }
 
+        .btn-remove:focus {
+            outline: none;
+        }
+
     .total-section {
-        padding: 10px 0;
-        margin-top: 10px;
+        padding-top: 20px;
+        margin-top: 20px;
+        border-top: 1px solid #e9ecef;
     }
 
     .total-text {
-        font-size: 28px;
+        font-size: 20px;
         font-weight: bold;
+        color: #343a40;
     }
 
     .total-amount {
-        font-size: 28px;
+        font-size: 22px;
         font-weight: bold;
-        color: #80B500;
+        color: #80B500; /* Xanh lá tươi */
     }
 
     .btn-action {
-        padding: 12px 20px;
-        border-radius: 8px;
+        padding: 10px 20px;
+        border-radius: 6px;
         font-weight: 500;
         text-align: center;
-        margin: 10px 5px;
+        margin: 5px;
         cursor: pointer;
-        transition: all 0.3s;
+        transition: background-color 0.2s;
         text-decoration: none;
-        display: block;
+        display: inline-block;
     }
 
     .btn-checkout {
-        background-color: #80B500;
+        background-color: #80B500; /* Xanh lá tươi */
         color: white;
+        border: 1px solid #80B500;
     }
 
         .btn-checkout:hover {
             background-color: #729f00;
-            color: white;
+            border-color: #668c00;
         }
 
     .btn-continue {
-        background-color: #E86D1F;
+        background-color: #007bff;
         color: white;
+        border: 1px solid #007bff;
     }
 
         .btn-continue:hover {
-            background-color: #d15e15;
-            color: white;
+            background-color: #0056b3;
+            border-color: #004494;
         }
 
-    /* Responsive styles for tablet */
-    @@media (max-width: 991px) {
-        .col-md-6.d-flex {
-            margin-bottom: 10px;
-        }
-
-        .cart-header {
-            font-size: 24px;
-            text-align: center;
-        }
-
-        .item-name {
-            margin-top: 5px;
-            font-size: 14px;
-        }
-
-        .item-price {
-            margin-top: 5px;
-            font-size: 14px;
-        }
-
-        .total-text, .total-amount {
-            font-size: 24px;
-        }
-    }
-
-    /* Responsive styles for mobile */
+    /* Responsive styles */
     @@media (max-width: 767px) {
-        .cart-item {
-            padding: 10px;
+        .cart-header {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
 
-        .cart-header {
-            font-size: 20px;
-            margin-bottom: 15px;
+        .cart-item {
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .item-image {
-            max-width: 60px;
+            margin-bottom: 10px;
+            margin-right: 0;
+            width: 60px;
         }
 
-        .item-name {
-            font-size: 14px;
-            margin-top: 0;
+        .item-details {
+            margin-bottom: 10px;
         }
 
-        .item-price {
-            margin-top: 0;
-            font-size: 14px;
+        .quantity-controls {
+            margin-bottom: 10px;
         }
 
-        .btn-quantity {
-            width: 30px;
-            height: 30px;
+        .btn-remove {
+            margin-left: 0;
         }
 
-        .quantity-value {
-            width: 30px;
-            height: 30px;
-            font-size: 14px;
-        }
-
-        .total-text, .total-amount {
-            font-size: 20px;
+        .total-section {
+            text-align: center;
         }
 
         .btn-action {
-            padding: 10px 15px;
-            font-size: 14px;
-        }
-        /* Stack items vertically on mobile */
-        .mobile-stack {
-            margin-bottom: 8px;
-        }
-
-        .mobile-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .mobile-center {
-            display: flex;
-            justify-content: center;
-        }
-
-        .mobile-right {
-            display: flex;
-            justify-content: flex-end;
+            width: 100%;
+            margin: 5px 0;
         }
     }
 </style>
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorMessage"]
-    </div>
-}
+<div class="cart-container">
+    <h1 class="cart-header">
+        Your Shopping Cart <span class="item-count">(@cartItems.Count)</span>
+    </h1>
 
-<div class="row mt-5">
-    <div class="col-lg-3 col-md-2 col-sm-1 d-none d-sm-block">
-        <!-- Left sidebar space -->
-    </div>
-    <div class="col-lg-6 col-md-8 col-sm-10 col-12">
-        <div class="cart-header">
-            You have <span class="item-count">@cartItems.Count</span> items in your cart
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
         </div>
+    }
 
-        @if (cartItems.Count == 0)
+    @if (cartItems.Count == 0)
+    {
+        <div class="text-center my-5">
+            <h4>Your cart is empty</h4>
+            <a asp-controller="Home" asp-action="Index" class="btn-action btn-continue mt-3">Continue Shopping</a>
+        </div>
+    }
+    else
+    {
+        @foreach (CartItem cartItem in cartItems)
         {
-            <div class="text-center my-5">
-                <h4>Your cart is empty</h4>
-                <a asp-controller="Home" asp-action="Index" class="btn-action btn-continue mt-3 d-inline-block">Continue Shopping</a>
+            var product = shoppingCartViewModel.GetProductByCartId(cartItem.ProductID);
+            var imagePath = product.Images != null && product.Images.Any()
+            ? product.Images.First().ImagePath
+            : "/images/products/default.jpg";
+
+            <div class="cart-item">
+                <img src="@imagePath" class="item-image" alt="@product.ProductName" />
+                <div class="item-details">
+                    <div class="item-name">@product.ProductName</div>
+                    <div class="item-price"><span class="CostItem">@cartItem.Price</span> ₫ / @product.Unit</div>
+                </div>
+                <div class="quantity-controls">
+                    <button class="btn-quantity minus" onclick="updateQuantity('@cartItem.ItemID', false, this)">
+                        <i class="bi bi-dash"></i>
+                    </button>
+                    <div class="quantity-value Count">@cartItem.Quantity</div>
+                    <button class="btn-quantity plus" onclick="updateQuantity('@cartItem.ItemID', true, this)">
+                        <i class="bi bi-plus"></i>
+                    </button>
+                </div>
+                <button class="btn-remove" onclick="removeItem('@cartItem.ItemID', this)">
+                    <i class="bi bi-trash"></i>
+                </button>
             </div>
         }
-        else
-        {
-            @foreach (CartItem cartItem in cartItems)
-            {
-                var product = shoppingCartViewModel.GetProductByCartId(cartItem.ProductID);
 
-                <div class="cart-item">
-                    <div class="row align-items-center">
-                        <!-- Desktop and tablet view -->
-                        <div class="col-md-6 d-flex d-none d-md-flex">
-                            <img src="~/img/—Pngtree—red fresh tomato with green_8933861.png" class="item-image" alt="Tomato" />
-                            <div class="item-name">@product.ProductName</div>
-                        </div>
-                        <div class="col-md-2 d-none d-md-block">
-                            <div class="item-price"><span class="CostItem" style="font-size: 20px;">@cartItem.Price</span></div>
-                        </div>
-                        <div class="col-md-3 d-none d-md-block">
-                            <div class="quantity-controls">
-                                <div class="btn-quantity minus" onclick="updateQuantity('@cartItem.ItemID', false, this)">
-                                    <i class="bi bi-dash"></i>
-                                </div>
-                                <div class="quantity-value Count">@cartItem.Quantity</div>
-                                <div class="btn-quantity plus" onclick="updateQuantity('@cartItem.ItemID', true, this)">
-                                    <i class="bi bi-plus"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-1 text-end d-none d-md-block">
-                            <div class="btn-remove" onclick="removeItem('@cartItem.ItemID', this)">
-                                <i class="bi bi-trash"></i>
-                            </div>
-                        </div>
-
-                        <!-- Mobile view -->
-                        <div class="col-12 d-md-none">
-                            <div class="mobile-stack mobile-flex">
-                                <div class="d-flex align-items-center">
-                                    <img src="~/img/—Pngtree—red fresh tomato with green_8933861.png" class="item-image" alt="Tomato" />
-                                    <div class="item-name">@product.ProductName</div>
-                                </div>
-                                <div class="btn-remove" onclick="removeItem('@cartItem.ItemID', this)">
-                                    <i class="bi bi-trash"></i>
-                                </div>
-                            </div>
-                            <div class="mobile-stack mobile-flex">
-                                <div class="item-price"><span class="CostItem" style="font-size: 16px;">@cartItem.Price</span>$</div>
-                                <div class="quantity-controls">
-                                    <div class="btn-quantity minus" onclick="updateQuantity('@cartItem.ItemID', false, this)">
-                                        <i class="bi bi-dash"></i>
-                                    </div>
-                                    <div class="quantity-value Count">@cartItem.Quantity</div>
-                                    <div class="btn-quantity plus" onclick="updateQuantity('@cartItem.ItemID', true, this)">
-                                        <i class="bi bi-plus"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-
-            <hr class="mt-4 mb-4" style="border-top: 1px solid #ddd; opacity: 0.7;" />
-
-            <div class="total-section">
-                <div class="row">
-                    <div class="col-md-8 offset-md-2 col-12">
-                        <div class="d-flex justify-content-between mb-4">
-                            <span class="total-text">Total</span>
-                            <span class="total-amount"><span id="TotalCost">@shoppingCart.TotalAmount </span>₫</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <a asp-controller="Home" asp-action="OrderSummary" class="btn-action btn-checkout">Summary</a>
-                            </div>
-                            <div class="col-6">
-                                <a asp-controller="Home" asp-action="Index" class="btn-action btn-continue">Continue Shopping</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="total-section">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="total-text">Total:</span>
+                <span class="total-amount"><span id="TotalCost">@shoppingCart.TotalAmount</span> ₫</span>
             </div>
-        }
-    </div>
-    <div class="col-lg-3 col-md-2 col-sm-1 d-none d-sm-block">
-        <!-- Right sidebar space -->
-    </div>
+            <div class="d-flex justify-content-end">
+                <a asp-controller="Home" asp-action="OrderSummary" class="btn-action btn-checkout">Proceed to Checkout</a>
+                <a asp-controller="Home" asp-action="Index" class="btn-action btn-continue">Continue Shopping</a>
+            </div>
+        </div>
+    }
 </div>
 
 <script>
@@ -423,7 +347,7 @@
         });
     }
 
-        function removeItem(cartItemId, button) {
+    function removeItem(cartItemId, button) {
         if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
             // Lấy token CSRF
             const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
@@ -509,6 +433,6 @@
             total += price * quantity;
         });
 
-        document.getElementById('TotalCost').textContent = total.toFixed(2);
+        document.getElementById('TotalCost').textContent = total.toFixed(0);
     }
 </script>

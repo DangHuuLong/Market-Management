@@ -72,6 +72,9 @@ namespace PBL3_HK4.Migrations
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
                     b.HasKey("BillDetailID");
 
                     b.HasIndex("BillID");

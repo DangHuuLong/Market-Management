@@ -55,10 +55,6 @@ namespace PBL3_HK4.Service
         public async Task<IEnumerable<Review>> GetReviewsByProductIdAsync(Guid productId)
         {
             var listReview = await _context.Reviews.Where(r => r.ProductID == productId).ToListAsync();
-            if (listReview == null || listReview.Count == 0)
-            {
-                throw new KeyNotFoundException($"No review found for product ID {productId}");
-            }
             return listReview;
         }
 

@@ -13,16 +13,50 @@
         <h1 class="fs-2 fs-md-1 mb-0">Order Management</h1>
     </div>
 
+    <!-- Search and Filter Section -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control" id="search-customer" placeholder="Search by customer name...">
+                <button class="btn btn-outline-secondary" type="button" id="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-end">
+                <select class="form-select me-2" id="status-filter" style="max-width: 200px;">
+                    <option value="">All Statuses</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Canceled">Canceled</option>
+                    <option value="Received">Received</option>
+                </select>
+                <button class="btn btn-outline-secondary" type="button" id="clear-filters">
+                    <i class="fas fa-times"></i> <span class="d-none d-sm-inline">Clear Filters</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Bảng dữ liệu -->
     <div class="table-responsive">
         <table class="table table-striped table-hover" id="order-table">
             <thead class="table-light">
                 <tr>
-                    <th>ID</th>
                     <th>Customer Name</th>
                     <th class="d-none d-md-table-cell">Phone Number</th>
                     <th class="d-none d-md-table-cell">Email</th>
-                    <th>Status</th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Order Date
+                        <div class="sort-controls d-inline-block">
+                            <i class="fas fa-sort-up sort-icon" data-field="orderDate" data-direction="asc"></i>
+                            <i class="fas fa-sort-down sort-icon" data-field="orderDate" data-direction="desc"></i>
+                        </div>
+                    </th>
                     <th>Total</th>
                     <th>Actions</th>
                 </tr>
@@ -57,6 +91,31 @@
 
         .page-link:hover {
             color: #357ABD;
+        }
+
+    /* Search styling */
+    #search-customer::placeholder {
+        opacity: 0.7;
+    }
+
+    /* Sorting icons styling */
+    .sort-controls {
+        margin-left: 5px;
+        display: inline-flex;
+        flex-direction: column;
+        vertical-align: middle;
+        line-height: 0;
+    }
+
+    .sort-icon {
+        cursor: pointer;
+        font-size: 10px;
+        color: #aaa;
+        margin: -2px 0;
+    }
+
+        .sort-icon:hover, .sort-icon.active {
+            color: #4A90E2;
         }
 
     .full-screen-overlay {
@@ -241,65 +300,93 @@
 
     /* Responsive styles */
     @@media (max-width: 991.98px) {
-        .order-container {
-            max-width: calc(100% - 2rem);
-        }
+        .order-container
+
+    {
+        max-width: calc(100% - 2rem);
+    }
+
     }
 
     @@media (max-width: 767.98px) {
-        h1 {
-            font-size: 1.75rem;
+        h1
+
+    {
+        font-size: 1.75rem;
+    }
+
+    .order-summary-header {
+        padding: 1rem;
+    }
+
+        .order-summary-header h3 {
+            font-size: 1.25rem;
         }
 
-        .order-summary-header {
-            padding: 1rem;
-        }
+    .order-details {
+        padding: 1rem;
+    }
 
-            .order-summary-header h3 {
-                font-size: 1.25rem;
-            }
+    .btn-close-modal {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
 
-        .order-details {
-            padding: 1rem;
-        }
+    .total-row {
+        font-size: 1rem;
+    }
 
-        .btn-close-modal {
-            font-size: 0.9rem;
-            padding: 0.5rem 1rem;
-        }
+    .btn-confirm, .btn-cancel, .btn-confirm-cancel, .btn-keep {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
 
-        .total-row {
-            font-size: 1rem;
-        }
+    .pagination .page-link {
+        padding: 0.375rem 0.5rem;
+    }
 
-        .btn-confirm, .btn-cancel, .btn-confirm-cancel, .btn-keep {
-            font-size: 0.9rem;
-            padding: 0.5rem;
-        }
+    .pagination .page-item:not(.active):not(:first-child):not(:last-child) {
+        display: none;
+    }
 
-        .pagination .page-link {
-            padding: 0.375rem 0.5rem;
-        }
+    .pagination .page-item.active {
+        display: block;
+    }
 
-        .pagination .page-item:not(.active):not(:first-child):not(:last-child) {
-            display: none;
-        }
+    .row.mb-4 {
+        margin-bottom: 1rem !important;
+    }
 
-        .pagination .page-item.active {
-            display: block;
-        }
+    .col-md-6:first-child {
+        margin-bottom: 0.5rem;
+    }
+
+    .d-flex.justify-content-end {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
     }
 
     @@media (max-width: 575.98px) {
-        .full-screen-overlay {
-            padding: 0;
-        }
+        .full-screen-overlay
 
-        .order-container {
-            border-radius: 0;
-            max-width: 100%;
-            border: none;
-        }
+    {
+        padding: 0;
+    }
+
+    .order-container {
+        border-radius: 0;
+        max-width: 100%;
+        border: none;
+    }
+
+    #status-filter {
+        flex-grow: 1;
+        max-width: none;
+    }
+
     }
 </style>
 
@@ -320,36 +407,58 @@
             Quantity = bd.Quantity,
             Price = bd.Price
         }).ToList();
-        // Tính ShippingDate: từ 3 đến 5 ngày sau Bill.Date
-        var randomDays = new Random().Next(3, 6); // Random từ 3 đến 5
-        var shippingDate = bill.Date.AddDays(randomDays);
+        var statusText = "";
+        var statusColor = "";
+        switch ((int)bill.Status)
+        {
+            case 0:
+                statusText = "Processing";
+                statusColor = "#FF9800"; // Orange
+                break;
+            case 1:
+                statusText = "Confirmed";
+                statusColor = "#80B500"; // Main green
+                break;
+            case 2:
+                statusText = "Canceled";
+                statusColor = "#d32f2f"; // Red
+                break;
+            case 3:
+                statusText = "Received";
+                statusColor = "#4CAF50"; // Green
+                break;
+            default:
+                statusText = "Unknown";
+                statusColor = "#6c757d"; // Gray
+                break;
+        }
         <text>
-                        {
-                            id: "@bill.BillID",
-                            customerName: "@(customer != null ? customer.Name : "Unknown")",
-                            phoneNumber: "@(customer != null ? customer.Phone : "N/A")",
-                            email: "@(customer != null ? customer.Email : "N/A")",
-                            status: "@(((int)bill.Status) == 0 ? "Processing" : ((int)bill.Status) == 1 ? "Confirmed" : "Canceled")",
-                            total: @bill.TotalPrice,
-                            address: "@Html.Raw(bill.Address ?? customer?.Address ?? "N/A")",
-                            orderDate: "@bill.Date.ToString("yyyy-MM-dd")",
-                            shippingDate: "@shippingDate.ToString("yyyy-MM-dd")",
-                            paymentDate: "@bill.Date.ToString("yyyy-MM-dd")",
-                            paymentStatus: "Paid",
-                            items: [
+                                    {
+                                        id: "@bill.BillID",
+                                        customerName: "@(customer != null ? customer.Name : "Unknown")",
+                                        phoneNumber: "@(customer != null ? customer.Phone : "N/A")",
+                                        email: "@(customer != null ? customer.Email : "N/A")",
+                                        status: "@statusText",
+                                        statusColor: "@statusColor",
+                                        total: @bill.TotalPrice,
+                                        address: "@Html.Raw(bill.Address ?? customer?.Address ?? "N/A")",
+                                        orderDate: "@bill.Date.ToString("yyyy-MM-dd")",
+                                        paymentDate: "@bill.Date.ToString("yyyy-MM-dd")",
+                                        paymentStatus: "@(bill.Status == PBL3_HK4.Entity.BillStatus.Cancelled ? "Refunded" : "Paid")",
+                                        items: [
             @foreach (var item in billDetailItems)
             {
                 var product = products.FirstOrDefault(p => p.ProductID == item.ProductID);
                 <text>
-                                                {
-                                                    name: "@(product != null ? product.ProductName : "Unknown")",
-                                                    quantity: @(item.Quantity ?? 0),
-                                                    price: @(item.Price ?? 0)
-                                                },
+                                                                        {
+                                                                            name: "@(product != null ? product.ProductName : "Unknown")",
+                                                                            quantity: @(item.Quantity ?? 0),
+                                                                            price: @(item.Price ?? 0)
+                                                                        },
                 </text>
             }
-                            ]
-                        },
+                                        ]
+                                    },
         </text>
     }
     ];
@@ -357,6 +466,11 @@
     // Pagination variables
     let currentPage = 1;
     let itemsPerPage = 10;
+    let searchTerm = '';
+    let selectedStatus = '';
+    let filteredOrders = [...orders];
+    let currentSortField = '';
+    let currentSortDirection = '';
 
     // Adjust items per page based on screen size
     function adjustItemsPerPage() {
@@ -367,14 +481,123 @@
         } else {
             itemsPerPage = 10;
         }
-        renderOrderTable(orders, currentPage);
+        renderOrderTable(filteredOrders, currentPage);
     }
 
     // Format date for display
     function formatDate(dateString) {
         if (!dateString) return 'N/A';
-        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        return new Date(dateString).toLocaleDateString('vi-VN', options);
+        // Parse the date and format it as dd-mm-yyyy
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    }
+
+    // Function for searching orders
+    function searchOrders() {
+        searchTerm = document.getElementById('search-customer').value.trim().toLowerCase();
+        currentPage = 1;
+        applyFilters();
+    }
+
+    // Function to apply status filter
+    function applyStatusFilter() {
+        selectedStatus = document.getElementById('status-filter').value;
+        currentPage = 1;
+        applyFilters();
+    }
+
+    // Apply all filters together
+    function applyFilters() {
+        filteredOrders = [...orders];
+
+        // Apply search by customer name
+        if (searchTerm) {
+            filteredOrders = filteredOrders.filter(order =>
+                order.customerName.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        // Apply status filter
+        if (selectedStatus) {
+            filteredOrders = filteredOrders.filter(order =>
+                order.status === selectedStatus
+            );
+        }
+
+        // Apply current sort if any
+        if (currentSortField && currentSortDirection) {
+            sortOrders(currentSortField, currentSortDirection, false);
+        } else {
+            renderOrderTable(filteredOrders, currentPage);
+        }
+    }
+
+    // Function to sort orders
+    function sortOrders(field, direction, resetPage = true) {
+        // Update active sort icon
+        document.querySelectorAll('.sort-icon').forEach(icon => {
+            if (icon.dataset.field === field && icon.dataset.direction === direction) {
+                icon.classList.add('active');
+            } else {
+                icon.classList.remove('active');
+            }
+        });
+
+        // Store current sort
+        currentSortField = field;
+        currentSortDirection = direction;
+
+        // If resetPage is true, go back to first page
+        if (resetPage) {
+            currentPage = 1;
+        }
+
+        // Sort the filtered orders
+        filteredOrders.sort((a, b) => {
+            let valueA, valueB;
+
+            if (field === 'orderDate') {
+                valueA = new Date(a[field]);
+                valueB = new Date(b[field]);
+            } else {
+                valueA = a[field].toLowerCase();
+                valueB = b[field].toLowerCase();
+            }
+
+            if (direction === 'asc') {
+                if (valueA < valueB) return -1;
+                if (valueA > valueB) return 1;
+                return 0;
+            } else {
+                if (valueA > valueB) return -1;
+                if (valueA < valueB) return 1;
+                return 0;
+            }
+        });
+
+        renderOrderTable(filteredOrders, currentPage);
+    }
+
+    // Function to clear filters
+    function clearFilters() {
+        document.getElementById('search-customer').value = '';
+        document.getElementById('status-filter').value = '';
+        searchTerm = '';
+        selectedStatus = '';
+        currentPage = 1;
+        currentSortField = '';
+        currentSortDirection = '';
+        filteredOrders = [...orders];
+
+        // Reset all sort icons
+        document.querySelectorAll('.sort-icon').forEach(icon => {
+            icon.classList.remove('active');
+        });
+
+        renderOrderTable(filteredOrders, currentPage);
     }
 
     // Render table data
@@ -395,49 +618,61 @@
             return;
         }
 
-        paginatedData.forEach(order => {
-            const row = document.createElement('tr');
-
-            // Check if mobile view
-            const isMobile = window.innerWidth <= 767.98;
-            if (isMobile) {
-                row.innerHTML = `
-                    <td>${order.id}</td>
-                    <td>
-                        ${order.customerName}
-                        <div class="small text-muted d-md-none">
-                            ${order.phoneNumber}
+        if (paginatedData.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="text-center py-4">
+                        <div class="alert alert-info mb-0">
+                            No orders found matching your criteria. Try adjusting your filters.
                         </div>
                     </td>
-                    <td>
-                        <span class="badge ${getBadgeClass(order.status)}">${order.status}</span>
-                    </td>
-                    <td>${formatNumber(order.total)}₫</td>
-                    <td>
-                        <button class="btn btn-sm btn-link text-dark" onclick="viewOrder('${order.id}')">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </td>
-                `;
-            } else {
-                row.innerHTML = `
-                    <td>${order.id}</td>
-                    <td>${order.customerName}</td>
-                    <td class="d-none d-md-table-cell">${order.phoneNumber}</td>
-                    <td class="d-none d-md-table-cell">${order.email}</td>
-                    <td>
-                        <span class="badge ${getBadgeClass(order.status)}">${order.status}</span>
-                    </td>
-                    <td>${formatNumber(order.total)}₫</td>
-                    <td>
-                        <button class="btn btn-sm btn-link text-dark" onclick="viewOrder('${order.id}')">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </td>
-                `;
-            }
-            tbody.appendChild(row);
-        });
+                </tr>
+            `;
+        } else {
+            paginatedData.forEach(order => {
+                const row = document.createElement('tr');
+
+                // Check if mobile view
+                const isMobile = window.innerWidth <= 767.98;
+                if (isMobile) {
+                    row.innerHTML = `
+                        <td>
+                            ${order.customerName}
+                            <div class="small text-muted d-md-none">
+                                ${order.phoneNumber}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge ${getBadgeClass(order.status)}">${order.status}</span>
+                        </td>
+                        <td>${formatDate(order.orderDate)}</td>
+                        <td>${formatNumber(order.total)}₫</td>
+                        <td>
+                            <button class="btn btn-sm btn-link text-dark" onclick="viewOrder('${order.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    `;
+                } else {
+                    row.innerHTML = `
+                        <td>${order.customerName}</td>
+                        <td class="d-none d-md-table-cell">${order.phoneNumber}</td>
+                        <td class="d-none d-md-table-cell">${order.email}</td>
+                        <td>
+                            <span class="badge ${getBadgeClass(order.status)}">${order.status}</span>
+                        </td>
+                        <td>${formatDate(order.orderDate)}</td>
+                        <td>${formatNumber(order.total)}₫</td>
+                        <td>
+                            <button class="btn btn-sm btn-link text-dark" onclick="viewOrder('${order.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    `;
+                }
+                tbody.appendChild(row);
+            });
+        }
 
         if (data.length > itemsPerPage) {
             renderPagination(totalPages, page);
@@ -453,6 +688,7 @@
             case 'Processing': return 'bg-warning text-dark';
             case 'Confirmed': return 'bg-success';
             case 'Canceled': return 'bg-danger';
+            case 'Received': return 'bg-info';
             default: return 'bg-secondary';
         }
     }
@@ -530,9 +766,9 @@
 
     // Change page
     function changePage(page) {
-        if (page < 1 || page > Math.ceil(orders.length / itemsPerPage)) return;
+        if (page < 1 || page > Math.ceil(filteredOrders.length / itemsPerPage)) return;
         currentPage = page;
-        renderOrderTable(orders, page);
+        renderOrderTable(filteredOrders, page);
     }
 
     // View order
@@ -557,6 +793,9 @@
                 </button>
             </div>
             <div class="order-details">
+                <!-- Hidden ID field -->
+                <input type="hidden" id="order-id" value="${order.id}">
+
                 <div class="row">
                     <div class="col-md-6 mb-4 mb-md-0">
                         <h4>Shipping Information</h4>
@@ -577,16 +816,12 @@
                             <p>${formatDate(order.orderDate)}</p>
                         </div>
                         <div class="detail-item">
-                            <label>Shipping Date</label>
-                            <p>${formatDate(order.shippingDate)}</p>
-                        </div>
-                        <div class="detail-item">
                             <label>Payment Date</label>
                             <p>${formatDate(order.paymentDate)}</p>
                         </div>
                         <div class="detail-item">
                             <label>Payment Status</label>
-                            <p>${order.status === 'Canceled' ? 'Refunded' : order.paymentStatus}</p>
+                            <p>${order.paymentStatus}</p>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -605,6 +840,9 @@
                         <div class="total-row">
                             <span>Total</span>
                             <span>${formatNumber(order.total)}₫</span>
+                        </div>
+                        <div class="mt-3">
+                            <p>Status: <span style="color: ${order.statusColor};">${order.status}</span></p>
                         </div>
                         <div id="actionButtonsContainer" style="${order.status !== 'Processing' ? 'display: none;' : ''}">
                             <div id="actionButtons" class="d-grid gap-3 mt-4">
@@ -687,10 +925,10 @@
             }
         })
         .finally(() => {
-            window.location.reload(); // Tải lại trang ngay sau khi gửi dữ liệu
+            window.location.reload();
         });
 
-        return false; // Ngăn form submit mặc định
+        return false;
     }
 
     // Handle cancel form submission with reason validation and reload page
@@ -713,16 +951,47 @@
             }
         })
         .finally(() => {
-            window.location.reload(); // Tải lại trang ngay sau khi gửi dữ liệu
+            window.location.reload();
         });
 
-        return false; // Ngăn form submit mặc định
+        return false;
     }
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
         adjustItemsPerPage();
         renderOrderTable(orders);
+
+        // Setup search functionality
+        const searchInput = document.getElementById('search-customer');
+        const searchBtn = document.getElementById('search-btn');
+        const statusFilter = document.getElementById('status-filter');
+        const clearFiltersBtn = document.getElementById('clear-filters');
+
+        // Search on button click
+        searchBtn.addEventListener('click', searchOrders);
+
+        // Search on Enter key press
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                searchOrders();
+            }
+        });
+
+        // Status filter change
+        statusFilter.addEventListener('change', applyStatusFilter);
+
+        // Clear filters button
+        clearFiltersBtn.addEventListener('click', clearFilters);
+
+        // Setup sorting functionality
+        document.querySelectorAll('.sort-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const field = this.dataset.field;
+                const direction = this.dataset.direction;
+                sortOrders(field, direction);
+            });
+        });
 
         // Listen for window resize
         window.addEventListener('resize', function() {
