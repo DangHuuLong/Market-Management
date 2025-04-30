@@ -1,6 +1,6 @@
 ﻿using global::PBL3_HK4.Entity;
-using global::PBL3_HK4.Interface;
 using Microsoft.AspNetCore.Mvc;
+using PBL3_HK4.Service.Interface;
 
 namespace PBL3_HK4.Controllers
 {

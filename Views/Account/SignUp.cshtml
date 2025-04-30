@@ -118,31 +118,25 @@
         }
 
         @@keyframes sway {
-            0%, 100%
+            0%, 100% {
+                transform: translateY(0) rotate(-20deg);
+            }
 
-        {
-            transform: translateY(0) rotate(-20deg);
-        }
-
-        50% {
-            transform: translateY(15px) rotate(-10deg);
-        }
-
+            50% {
+                transform: translateY(15px) rotate(-10deg);
+            }
         }
 
         @@keyframes fadeIn {
-            from
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
 
-        {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Form styling */
@@ -227,62 +221,53 @@
 
         /* Tablet styles */
         @@media (max-width: 991.98px) {
-            .signup-title
+            .signup-title {
+                font-size: 48px;
+                letter-spacing: 6px;
+            }
 
-        {
-            font-size: 48px;
-            letter-spacing: 6px;
-        }
-
-        .signup-container {
-            padding: 1.5rem;
-        }
-
+            .signup-container {
+                padding: 1.5rem;
+            }
         }
 
         /* Mobile styles */
         @@media (max-width: 767.98px) {
-            .signup-title
+            .signup-title {
+                font-size: 36px;
+                letter-spacing: 4px;
+            }
 
-        {
-            font-size: 36px;
-            letter-spacing: 4px;
-        }
+            .signup-container {
+                padding: 1rem;
+            }
 
-        .signup-container {
-            padding: 1rem;
-        }
+            .gender-options {
+                flex-direction: column;
+                gap: 10px;
+            }
 
-        .gender-options {
-            flex-direction: column;
-            gap: 10px;
-        }
+            .back-home {
+                display: flex;
+            }
 
-        .back-home {
-            display: flex;
-        }
-
-        .decorative-orchid {
-            font-size: 2rem;
-        }
-
+            .decorative-orchid {
+                font-size: 2rem;
+            }
         }
 
         /* Extra small devices */
         @@media (max-width: 575.98px) {
-            .signup-title
+            .signup-title {
+                font-size: 28px;
+                letter-spacing: 2px;
+                margin-bottom: 1rem !important;
+            }
 
-        {
-            font-size: 28px;
-            letter-spacing: 2px;
-            margin-bottom: 1rem !important;
-        }
-
-        .social-icons .btn {
-            width: 35px !important;
-            height: 35px !important;
-        }
-
+            .social-icons .btn {
+                width: 35px !important;
+                height: 35px !important;
+            }
         }
     </style>
 </head>
@@ -306,16 +291,16 @@
                         <div class="col-md-6 mb-3 mb-md-0">
                             <div class="form-floating">
                                 <input type="text" class="form-control form-field" id="floatingName" placeholder="Full Name" tabindex="1"
-                                       name="Name" pattern="^[a-zA-ZÀ-ỹ][a-zA-ZÀ-ỹ0-9\s]*$" required>
+                                       name="Name" pattern="^[a-zA-ZÀ-ỹ]+$" required>
                                 <label for="floatingName"><i class="bi bi-person-badge-fill me-2"></i>Full Name</label>
-                                <div class="invalid-feedback">Vui lòng nhập tên hợp lệ (không chứa số hoặc ký tự đặc biệt)</div>
+                                <div class="invalid-feedback">Tên chỉ được chứa chữ cái, không chứa số hoặc ký tự đặc biệt</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="email" class="form-control form-field" id="floatingEmail" placeholder="Email" tabindex="2"
                                        name="Email"
-                                       pattern="[a-zA-Z0-9._%+-]+\@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                                       pattern="[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                                        required>
                                 <label for="floatingEmail"><i class="bi bi-envelope-fill me-2"></i>Email</label>
                                 <div class="invalid-feedback">Vui lòng nhập email hợp lệ (ví dụ: example@domain.com)</div>
@@ -373,9 +358,9 @@
                         <div class="col-md-6 mb-3 mb-md-0">
                             <div class="form-floating">
                                 <input type="text" class="form-control form-field" id="floatingUsername" placeholder="User Name" tabindex="9"
-                                       name="UserName" pattern="^[a-zA-ZÀ-ỹ][a-zA-ZÀ-ỹ0-9\s]*$" required>
+                                       name="UserName" pattern="^[a-zA-ZÀ-ỹ]+$" required>
                                 <label for="floatingUsername"><i class="bi bi-person-fill me-2"></i>User Name</label>
-                                <div class="invalid-feedback">Tên đăng nhập phải bắt đầu bằng chữ cái và chỉ chứa chữ cái và số</div>
+                                <div class="invalid-feedback">Tên đăng nhập chỉ được chứa chữ cái, không chứa số hoặc ký tự đặc biệt</div>
                             </div>
                         </div>
                         <div class="col-md-6">

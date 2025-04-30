@@ -8,6 +8,25 @@
     IEnumerable<BillDetail> billDetails = customerOrderModelView.BillDetails;
     IEnumerable<Product> products = customerOrderModelView.Products;
 }
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<!-- Thêm form với CSRF token -->
+<form id="csrfForm">
+    @Html.AntiForgeryToken()
+</form>
 
 <div class="order-manage py-5">
     <div class="row mx-auto" style="max-width: 1200px;">
@@ -34,6 +53,7 @@
                             <li><a class="dropdown-item" href="#" onclick="filterOrders('Confirmed')">Confirmed</a></li>
                             <li><a class="dropdown-item" href="#" onclick="filterOrders('Cancelled')">Cancelled</a></li>
                             <li><a class="dropdown-item" href="#" onclick="filterOrders('Received')">Received</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterOrders('Reviewed')">Reviewed</a></li>
                         </ul>
                     </div>
                 </div>
@@ -423,123 +443,14 @@
     }
 
     @@keyframes slideIn {
-        from {
-            transform: translateY(-50px);
-            opacity: 0;
-        }
-
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    .modal-header {
-        background-color: #F5F7F3; /* Light green-gray */
-        padding: 15px 20px;
-        border-bottom: 1px solid #E6E9E1;
-    }
-
-    .modal-title {
-        font-weight: 600;
-        color: #2d3e40;
-    }
-
-    .modal-body {
-        padding: 20px;
-    }
-
-    .modal-footer {
-        padding: 15px 20px;
-        background-color: #F5F7F3;
-        border-top: 1px solid #E6E9E1;
-    }
-
-    .close {
-        color: #6c757d;
-        float: right;
-        font-size: 28px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-        .close:hover {
-            color: #2d3e40;
-        }
-
-    .list-group-item {
-        border: 1px solid #E6E9E1;
-        border-left: none;
-        border-right: none;
-    }
-
-        .list-group-item:first-child {
-            border-top: none;
-        }
-
-        .list-group-item:last-child {
-            border-bottom: none;
-        }
-
-    /* Responsive Styles */
-    @@media (max-width: 991px) {
-        .order-manage {
-            padding: 20px 0;
-        }
-
-        .order-title {
-            font-size: 1.75rem;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .search-filter-container {
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .order-table-scrollable {
-            overflow-x: auto;
-        }
-
-        .order-table {
-            min-width: 700px; /* Increased due to new column */
-        }
-
-        .modal-content {
-            width: 95%;
-            margin: 10% auto;
-        }
-    }
-
-    @@media (max-width: 767px) {
-        .order-title {
-            font-size: 1.5rem;
-        }
-
-        .search-container {
-            width: 200px;
-        }
-
-        .search-input {
-            padding: 8px 15px 8px 35px;
-            font-size: 0.85rem;
-        }
-
-        .filter-button {
-            padding: 8px 15px;
-            font-size: 0.85rem;
-        }
-
-        .order-table {
-            min-width: 600px;
-        }
-
-        .modal-content {
-            to
+        from
 
     {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    to {
         transform: translateY(0);
         opacity: 1;
     }
@@ -596,91 +507,100 @@
 
     /* Responsive Styles */
     @@media (max-width: 991px) {
-        .order-manage {
-            padding: 20px 0;
-        }
+        .order-manage
 
-        .order-title {
-            font-size: 1.75rem;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
+    {
+        padding: 20px 0;
+    }
 
-        .search-filter-container {
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
+    .order-title {
+        font-size: 1.75rem;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
 
-        .order-table-scrollable {
-            overflow-x: auto;
-        }
+    .search-filter-container {
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
 
-        .order-table {
-            min-width: 700px; /* Increased due to new column */
-        }
+    .order-table-scrollable {
+        overflow-x: auto;
+    }
 
-        .modal-content {
-            width: 95%;
-            margin: 10% auto;
-        }
+    .order-table {
+        min-width: 700px; /* Increased due to new column */
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+
     }
 
     @@media (max-width: 767px) {
-        .order-title {
-            font-size: 1.5rem;
-        }
+        .order-title
 
-        .search-container {
-            width: 200px;
-        }
+    {
+        font-size: 1.5rem;
+    }
 
-        .search-input {
-            padding: 8px 15px 8px 35px;
-            font-size: 0.85rem;
-        }
+    .search-container {
+        width: 200px;
+    }
 
-        .filter-button {
-            padding: 8px 15px;
-            font-size: 0.85rem;
-        }
+    .search-input {
+        padding: 8px 15px 8px 35px;
+        font-size: 0.85rem;
+    }
 
-        .order-table {
-            min-width: 600px;
-        }
+    .filter-button {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
 
-        .modal-content {
-            width: 98%;
-            margin: 5% auto;
-        }
+    .order-table {
+        min-width: 600px;
+    }
+
+    .modal-content {
+        width: 98%;
+        margin: 5% auto;
+    }
+
     }
 
     @@media (max-width: 575px) {
-        .order-table-container {
-            display: none;
-        }
+        .order-table-container
 
-        .order-cards-container {
-            display: block;
-        }
+    {
+        display: none;
+    }
 
-        .search-container {
-            width: 100%;
-        }
+    .order-cards-container {
+        display: block;
+    }
 
-        .pagination-container {
-            flex-wrap: wrap;
-        }
+    .search-container {
+        width: 100%;
+    }
 
-        .page-link {
-            padding: 6px 10px;
-            font-size: 0.85rem;
-        }
+    .pagination-container {
+        flex-wrap: wrap;
+    }
+
+    .page-link {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+
     }
 </style>
 
 @section Scripts {
     <script>
-        // Format number with dots as thousand separators
+                // Format number with dots as thousand separators
         function formatNumber(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
@@ -709,39 +629,44 @@
                     statusColor = "#d32f2f"; // Red
                     paymentStatus = "Refunded";
                     break;
-                case 3: // Received
+                case 3:
                     statusText = "Received";
-                    statusColor = "#2196F3"; // Blue (changed to sky blue)
+                    statusColor = "#2196F3"; // Blue
+                    paymentStatus = "Paid";
+                    break;
+                case 4:
+                    statusText = "Reviewed";
+                    statusColor = "#9C27B0"; // Purple
                     paymentStatus = "Paid";
                     break;
             }
             <text>
-                        {
-                            id: "@bill.BillID",
-                            name: "@(customer?.Name ?? "Customer")",
-                            phone: "@(customer?.Phone ?? "N/A")",
-                            email: "@(customer?.Email ?? "N/A")",
-                            address: "@Html.Raw(bill.Address ?? customer?.Address ?? "N/A")",
-                            status: "@statusText",
-                            statusColor: "@statusColor",
-                            total: formatNumber(@bill.TotalPrice),
-                            orderDate: "@bill.Date.ToString("dd-MM-yyyy")",
-                            paymentDate: "@bill.Date.ToString("dd-MM-yyyy")",
-                            paymentStatus: "@paymentStatus",
-                            items: [
+                                    {
+                                        id: "@bill.BillID",
+                                        name: "@(customer?.Name ?? "Customer")",
+                                        phone: "@(customer?.Phone ?? "N/A")",
+                                        email: "@(customer?.Email ?? "N/A")",
+                                        address: "@Html.Raw(bill.Address ?? customer?.Address ?? "N/A")",
+                                        status: "@statusText",
+                                        statusColor: "@statusColor",
+                                        total: formatNumber(@bill.TotalPrice),
+                                        orderDate: "@bill.Date.ToString("dd-MM-yyyy")",
+                                        paymentDate: "@bill.Date.ToString("dd-MM-yyyy")",
+                                        paymentStatus: "@paymentStatus",
+                                        items: [
                 @foreach (var detail in billDetails)
                 {
                     var product = products.FirstOrDefault(p => p.ProductID == detail.ProductID);
                     <text>
-                                            {
-                                                name: "@(product?.ProductName ?? "Unknown Product")",
-                                                quantity: @(detail.Quantity ?? 0),
-                                                price: formatNumber(@(detail.Price ?? 0))
-                                            },
+                                                                    {
+                                                                        name: "@(product?.ProductName ?? "Unknown Product")",
+                                                                        quantity: @(detail.Quantity ?? 0),
+                                                                        price: formatNumber(@(detail.Price ?? 0))
+                                                                    },
                     </text>
                 }
-                            ]
-                        },
+                                        ]
+                                    },
             </text>
         }
         ];
@@ -874,62 +799,6 @@
                         </div>
                     </div>
                 `;
-
-                document.getElementById('cancelButton').addEventListener('click', function() {
-                    document.getElementById('actionButtons').classList.add('d-none');
-                    document.getElementById('cancellationForm').classList.remove('d-none');
-                });
-
-                document.getElementById('keepOrderBtn').addEventListener('click', function() {
-                    document.getElementById('cancellationError').classList.add('d-none');
-                    document.getElementById('cancellationForm').classList.add('d-none');
-                    document.getElementById('actionButtons').classList.remove('d-none');
-                });
-
-                document.getElementById('confirmCancellationBtn').addEventListener('click', function() {
-                    const reason = document.getElementById('cancellationReason').value.trim();
-                    if (reason === '') {
-                        document.getElementById('cancellationError').classList.remove('d-none');
-                        return;
-                    }
-
-                    fetch('@Url.Action("CancelOrder", "Order")', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                        },
-                        body: new URLSearchParams({
-                            'billId': currentSelectedOrder.id,
-                            'reason': reason
-                        })
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            currentSelectedOrder.status = 'Cancelled';
-                            currentSelectedOrder.statusColor = '#d32f2f';
-                            currentSelectedOrder.paymentStatus = 'Refunded';
-
-                            const orderIndex = orders.findIndex(o => o.id === currentSelectedOrder.id);
-                            if (orderIndex !== -1) {
-                                orders[orderIndex] = currentSelectedOrder;
-                            }
-
-                            orderStatusText.textContent = 'CANCELLED';
-                            orderStatusLabel.style.backgroundColor = '#d32f2f';
-                            document.getElementById('floatingPaymentStatus').value = 'Refunded';
-                            actionButtonsContainer.innerHTML = '';
-                            renderOrders(currentFilteredOrders);
-                            alert('Order successfully cancelled');
-                        } else {
-                            alert('Failed to cancel order');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error cancelling order:', error);
-                        alert('An error occurred while cancelling the order');
-                    });
-                });
             } else if (status === 'Confirmed') {
                 actionButtonsContainer.innerHTML = `
                     <div id="actionButtons" class="d-grid gap-3">
@@ -938,51 +807,6 @@
                         </button>
                     </div>
                 `;
-
-                document.getElementById('receiveButton').addEventListener('click', function() {
-                    fetch('@Url.Action("ReceiveOrder", "Order")', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                        },
-                        body: new URLSearchParams({
-                            'billId': currentSelectedOrder.id
-                        })
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            currentSelectedOrder.status = 'Received';
-                            currentSelectedOrder.statusColor = '#2196F3';
-
-                            const orderIndex = orders.findIndex(o => o.id === currentSelectedOrder.id);
-                            if (orderIndex !== -1) {
-                                orders[orderIndex] = currentSelectedOrder;
-                            }
-
-                            orderStatusText.textContent = 'RECEIVED';
-                            orderStatusLabel.style.backgroundColor = '#2196F3';
-                            actionButtonsContainer.innerHTML = `
-                                <div id="actionButtons" class="d-grid gap-3">
-                                    <p class="text-success">Order has been received.</p>
-                                    <form action="@Url.Action("Reviews", "Order")" method="post">
-        @Html.AntiForgeryToken()
-                                        <input type="hidden" name="billId" value="${currentSelectedOrder.id}" />
-                                        <button type="submit" class="btn py-2 w-100 btn-primary">Review Order</button>
-                                    </form>
-                                </div>
-                            `;
-                            alert('Order marked as received');
-                            renderOrders(currentFilteredOrders);
-                        } else {
-                            alert('Failed to mark order as received');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error marking order as received:', error);
-                        alert('An error occurred while marking the order as received');
-                    });
-                });
             } else if (status === 'Received') {
                 if (!currentSelectedOrder || !currentSelectedOrder.id) {
                     console.error('Invalid or missing bill ID:', currentSelectedOrder);
@@ -1005,7 +829,100 @@
                         </form>
                     </div>
                 `;
+            } else if (status === 'Reviewed') {
+                actionButtonsContainer.innerHTML = `
+                    <div id="actionButtons" class="d-grid gap-3">
+                        <p class="text-success">Order has been received and reviewed.</p>
+                    </div>
+                `;
+            } else if (status === 'Cancelled') {
+                actionButtonsContainer.innerHTML = `
+                    <div id="actionButtons" class="d-grid gap-3">
+                        <p class="text-danger">Order has been cancelled.</p>
+                    </div>
+                `;
             }
+
+            // Add event listeners using event delegation
+            actionButtonsContainer.addEventListener('click', function(event) {
+                const target = event.target;
+
+                if (target.id === 'cancelButton') {
+                    document.getElementById('actionButtons').classList.add('d-none');
+                    document.getElementById('cancellationForm').classList.remove('d-none');
+                }
+
+                if (target.id === 'keepOrderBtn') {
+                    document.getElementById('cancellationError').classList.add('d-none');
+                    document.getElementById('cancellationForm').classList.add('d-none');
+                    document.getElementById('actionButtons').classList.remove('d-none');
+                }
+
+                        // Thay đổi phần xử lý nút Cancel
+                if (target.id === 'confirmCancellationBtn') {
+                    const reason = document.getElementById('cancellationReason').value.trim();
+                    if (reason === '') {
+                        document.getElementById('cancellationError').classList.remove('d-none');
+                        return;
+                    }
+
+                    // Tạo form để submit
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '@Url.Action("CancelOrder", "Order")';
+
+                    // Thêm CSRF token
+                    const csrfField = document.createElement('input');
+                    csrfField.type = 'hidden';
+                    csrfField.name = '__RequestVerificationToken';
+                    csrfField.value = document.querySelector('form#csrfForm input[name="__RequestVerificationToken"]').value;
+                    form.appendChild(csrfField);
+
+                    // Thêm billId
+                    const billIdField = document.createElement('input');
+                    billIdField.type = 'hidden';
+                    billIdField.name = 'billId';
+                    billIdField.value = currentSelectedOrder.id;
+                    form.appendChild(billIdField);
+
+                    // Thêm reason
+                    const reasonField = document.createElement('input');
+                    reasonField.type = 'hidden';
+                    reasonField.name = 'reason';
+                    reasonField.value = reason;
+                    form.appendChild(reasonField);
+
+                    // Thêm form vào document và submit
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+
+                // Thay đổi phần xử lý nút Received
+                if (target.id === 'receiveButton') {
+                    // Tạo form để submit
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '@Url.Action("ReceiveOrder", "Order")';
+
+                    // Thêm CSRF token
+                    const csrfField = document.createElement('input');
+                    csrfField.type = 'hidden';
+                    csrfField.name = '__RequestVerificationToken';
+                    csrfField.value = document.querySelector('form#csrfForm input[name="__RequestVerificationToken"]').value;
+                    form.appendChild(csrfField);
+
+                    // Thêm billId
+                    const billIdField = document.createElement('input');
+                    billIdField.type = 'hidden';
+                    billIdField.name = 'billId';
+                    billIdField.value = currentSelectedOrder.id;
+                    form.appendChild(billIdField);
+
+                    // Thêm form vào document và submit
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            }, { once: false }); // Use once: false to allow multiple clicks
         }
 
         function closeModal() {
@@ -1041,10 +958,15 @@
 
             console.log('Page orders:', pageOrders);
 
-            pageOrders.forEach(order => {
-                tbody.innerHTML += createOrderRow(order);
-                cardsContainer.innerHTML += createOrderCard(order);
-            });
+            if (pageOrders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4">No orders found</td></tr>`;
+                cardsContainer.innerHTML = `<div class="text-center py-4">No orders found</div>`;
+            } else {
+                pageOrders.forEach(order => {
+                    tbody.innerHTML += createOrderRow(order);
+                    cardsContainer.innerHTML += createOrderCard(order);
+                });
+            }
 
             updatePagination(filteredOrders.length);
         }
@@ -1062,7 +984,7 @@
 
             pagination.innerHTML = `
                 <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
-                    <a class="page-link" href="#" aria-label="Previous" onclick="changePage(${currentPage - 1})">
+                    <a class="page-link" href="#" aria-label="Previous" onclick="changePage(${currentPage - 1}); return false;">
                         <span aria-hidden="true">«</span>
                     </a>
                 </li>
@@ -1084,7 +1006,7 @@
             if (startPage > 1) {
                 pagination.innerHTML += `
                     <li class="page-item">
-                        <a class="page-link" href="#" onclick="changePage(1)">1</a>
+                        <a class="page-link" href="#" onclick="changePage(1); return false;">1</a>
                     </li>
                 `;
                 if (startPage > 2) {
@@ -1099,7 +1021,7 @@
             for (let i = startPage; i <= endPage; i++) {
                 pagination.innerHTML += `
                     <li class="page-item ${i === currentPage ? "active" : ""}">
-                        <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+                        <a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a>
                     </li>
                 `;
             }
@@ -1114,14 +1036,14 @@
                 }
                 pagination.innerHTML += `
                     <li class="page-item">
-                        <a class="page-link" href="#" onclick="changePage(${totalPages})">${totalPages}</a>
+                        <a class="page-link" href="#" onclick="changePage(${totalPages}); return false;">${totalPages}</a>
                     </li>
                 `;
             }
 
             pagination.innerHTML += `
                 <li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
-                    <a class="page-link" href="#" aria-label="Next" onclick="changePage(${currentPage + 1})">
+                    <a class="page-link" href="#" aria-label="Next" onclick="changePage(${currentPage + 1}); return false;">
                         <span aria-hidden="true">»</span>
                     </a>
                 </li>
@@ -1140,6 +1062,7 @@
             const filteredOrders = orders.filter(order =>
                 order.name.toLowerCase().includes(searchTerm) ||
                 order.email.toLowerCase().includes(searchTerm) ||
+                order.phone.toLowerCase().includes(searchTerm) ||
                 order.status.toLowerCase().includes(searchTerm)
             );
             currentPage = 1;
@@ -1148,7 +1071,7 @@
 
         window.filterOrders = function(filter) {
             let filteredOrders = orders;
-            if (filter === "Processing" || filter === "Confirmed" || filter === "Cancelled" || filter === "Received") {
+            if (filter === "Processing" || filter === "Confirmed" || filter === "Cancelled" || filter === "Received" || filter === "Reviewed") {
                 filteredOrders = orders.filter(order => order.status === filter);
             }
             currentPage = 1;
@@ -1179,8 +1102,28 @@
             }
         }
 
+        // Clean up previous event listeners to prevent duplicates
+        function removeAllEventListeners(element) {
+            if (!element) return;
+            const clone = element.cloneNode(true);
+            element.parentNode.replaceChild(clone, element);
+            return clone;
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, initializing orders...');
+
+            // Clear any existing event listeners to avoid duplicates
+            const searchInput = document.getElementById("searchInput");
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        searchOrders();
+                    }
+                });
+            }
+
             initOrders();
             window.addEventListener('resize', checkScreenSize);
         });

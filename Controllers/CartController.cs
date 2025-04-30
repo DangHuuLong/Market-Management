@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PBL3_HK4.Entity;
-using PBL3_HK4.Interface;
+using PBL3_HK4.Service.Interface;
 using System.Security.Claims;
 
 namespace PBL3_HK4.Controllers

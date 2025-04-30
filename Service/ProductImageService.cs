@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using PBL3_HK4.Entity;
-using PBL3_HK4.Interface;
+using PBL3_HK4.Service.Interface;
 
 namespace PBL3_HK4.Service
 {

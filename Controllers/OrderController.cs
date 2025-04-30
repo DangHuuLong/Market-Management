@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PBL3_HK4.Entity;
-using PBL3_HK4.Interface;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using PBL3_HK4.Models;
 using System;
 using PBL3_HK4.Service;
+using PBL3_HK4.Service.Interface;
 
 namespace PBL3_HK4.Controllers
 {
@@ -111,15 +111,17 @@ namespace PBL3_HK4.Controllers
             var bill = await _billService.GetBillByIdAsync(billId);
             if (bill == null)
             {
-                return Json(new { success = false, message = "Order not found." });
+                TempData["ErrorMessage"] = "Không tìm thấy đơn hàng.";
+                return RedirectToAction("Index");
             }
             if (bill.Status != BillStatus.Unconfirmed && bill.Status != BillStatus.Confirmed)
             {
-                return Json(new { success = false, message = "Order cannot be canceled in its current status." });
+                TempData["ErrorMessage"] = "Đơn hàng không thể hủy ở trạng thái hiện tại.";
+                return RedirectToAction("Index");
             }
-
             await _billService.UpdateBillCanceledAsync(billId);
-            return Json(new { success = true, message = "Order canceled successfully." });
+            TempData["SuccessMessage"] = "Đơn hàng đã được hủy thành công.";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -128,15 +130,17 @@ namespace PBL3_HK4.Controllers
             var bill = await _billService.GetBillByIdAsync(billId);
             if (bill == null)
             {
-                return Json(new { success = false, message = "Order not found." });
+                TempData["ErrorMessage"] = "Không tìm thấy đơn hàng.";
+                return RedirectToAction("Index");
             }
             if (bill.Status != BillStatus.Confirmed)
             {
-                return Json(new { success = false, message = "Order is not in Confirmed status." });
+                TempData["ErrorMessage"] = "Đơn hàng không ở trạng thái đã xác nhận.";
+                return RedirectToAction("Index");
             }
-
             await _billService.UpdateBillReceivedAsync(billId);
-            return Json(new { success = true, message = "Order marked as received successfully." });
+            TempData["SuccessMessage"] = "Đơn hàng đã được đánh dấu là đã nhận thành công.";
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Reviews(Guid billId)
@@ -174,6 +178,7 @@ namespace PBL3_HK4.Controllers
             {
                 Customer = customer,
                 Products = products,
+                BillId = billId,
             };
 
             return View(reviewsViewModel); 
@@ -181,7 +186,7 @@ namespace PBL3_HK4.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitReviews(List<Review> Reviews)
+        public async Task<IActionResult> SubmitReviews(List<Review> Reviews, Guid billId)
         {
             if (!ModelState.IsValid)
             {
@@ -190,6 +195,8 @@ namespace PBL3_HK4.Controllers
 
             try
             {
+                await _billService.UpdateBillReviewedAsync(billId);
+                
                 foreach (var review in Reviews)
                 {
                     review.ReviewID = Guid.NewGuid();

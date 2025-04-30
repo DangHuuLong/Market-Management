@@ -4,9 +4,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PBL3_HK4.Entity;
-using PBL3_HK4.Interface;
 using PBL3_HK4.Models;
 using PBL3_HK4.Service;
+using PBL3_HK4.Service.Interface;
 namespace PBL3_HK4.Controllers
 {
 

@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PBL3_HK4.Entity;
-using PBL3_HK4.Interface;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using PBL3_HK4.Models;
+using PBL3_HK4.Service.Interface;
 
 namespace PBL3_HK4.Controllers
 {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBL3_HK4.Interface
+namespace PBL3_HK4.Service.Interface
 {
     public interface IProductImageService
     {

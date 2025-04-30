@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PBL3_HK4.Interface;
 using PBL3_HK4.Entity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+using PBL3_HK4.Service.Interface;
 namespace PBL3_HK4.Service
 {
     public class PasswordHasher : IPasswordHasher

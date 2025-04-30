@@ -5,6 +5,7 @@
     ReviewsViewModel reviewsViewModel = Model as ReviewsViewModel;
     var customer = reviewsViewModel.Customer;
     var products = reviewsViewModel.Products;
+    var billId = reviewsViewModel.BillId;
 }
 
 <!DOCTYPE html>
@@ -112,6 +113,7 @@
         <form id="reviewForm" action="@Url.Action("SubmitReviews", "Order")" method="post">
             @Html.AntiForgeryToken()
             <input type="hidden" name="UserID" value="@customer?.UserID" />
+            <input type="hidden" name="BillId" value="@billId" /> 
             @if (products != null && products.Any())
             {
                 @for (int i = 0; i < products.Count(); i++)

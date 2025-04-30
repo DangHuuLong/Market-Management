@@ -28,6 +28,6 @@ namespace PBL3_HK4.Entity
         public string? Text { get; set; }
 
         [Required]
-        public DateTime CreateAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreateAt { get; set; } = DateTime.Now;
     }
 }

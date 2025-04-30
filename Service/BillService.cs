@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PBL3_HK4.Interface;
 using PBL3_HK4.Entity;
 using Microsoft.EntityFrameworkCore;
+using PBL3_HK4.Service.Interface;
 
 namespace PBL3_HK4.Service
 {
@@ -181,6 +181,17 @@ namespace PBL3_HK4.Service
                 throw new KeyNotFoundException($"Bill with ID {billId} not found.");
             }
             existingBill.Status = BillStatus.Received;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateBillReviewedAsync(Guid billId)
+        {
+            var existingBill = await _context.Bills.FirstOrDefaultAsync(b => b.BillID == billId);
+            if (existingBill == null)
+            {
+                throw new KeyNotFoundException($"Bill with ID {billId} not found.");
+            }
+            existingBill.Status = BillStatus.Reviewed;
             await _context.SaveChangesAsync();
         }
     }
