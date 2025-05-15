@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using PBL3_HK4.Entity;
+using PBL3_HK4.Interface;
 using PBL3_HK4.Models;
 using PBL3_HK4.Service;
 using PBL3_HK4.Service.Interface;
@@ -19,7 +20,8 @@ namespace PBL3_HK4.Controllers
         private readonly IDiscountService _discountService;
         private readonly IProductImageService _productImageService;
         private readonly IReviewService _reviewService;
-        public HomeController(IReviewService reviewService,IProductImageService productImageService, IDiscountService discountService,ICartItemService cartItemService,ICatalogService catalogService,IShoppingCartService shoppingCartService,IProductService productService, ICustomerService customerService, IBillService billService)
+        public readonly IBillDetailService _billDetailService;
+        public HomeController(IBillDetailService billDetailService,IReviewService reviewService,IProductImageService productImageService, IDiscountService discountService,ICartItemService cartItemService,ICatalogService catalogService,IShoppingCartService shoppingCartService,IProductService productService, ICustomerService customerService, IBillService billService)
         {
             _reviewService = reviewService;
             _productImageService = productImageService;
@@ -31,6 +33,7 @@ namespace PBL3_HK4.Controllers
             _productService = productService;
             _customerService = customerService;
             _discountService = discountService;
+            _billDetailService = billDetailService;
         }
 
         [Route("Home/Index")]
@@ -214,6 +217,23 @@ namespace PBL3_HK4.Controllers
             {
                 return Json(new { success = false, message = "An error occurred: " + ex.Message });
             }
+        }
+
+        public async Task<IActionResult> Notification()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = await _customerService.GetCustomerByIdAsync(new Guid(userId));
+            var bills = await _billService.GetBillByUserIdAsync(new Guid(userId));
+            var products = await _productService.GetAllProductsAsync();
+
+            CustomerOrderModelView customerOrderModelView = new CustomerOrderModelView
+            {
+                Customer = customer,
+                Bills = bills,
+                Products = products
+            };
+
+            return View(customerOrderModelView);
         }
     }
 }

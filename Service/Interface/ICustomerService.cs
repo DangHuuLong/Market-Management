@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBL3_HK4.Service.Interface
+namespace PBL3_HK4.Interface
 {
     public interface ICustomerService
     {
@@ -15,5 +15,8 @@ namespace PBL3_HK4.Service.Interface
         public Task<Customer> GetCustomerByIdAsync(Guid customerId);
         public Task<Customer> GetCustomerByUserNameAsync(string name);
         public Task<IEnumerable<Customer>> GetAllCustomerAsync();
+
+        public Task<User> GetUserByEmailAsync(string email);
+        public Task UpdateUserAsync(User user);
     }
 }

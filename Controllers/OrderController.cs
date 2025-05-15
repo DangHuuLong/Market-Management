@@ -11,6 +11,7 @@ using PBL3_HK4.Models;
 using System;
 using PBL3_HK4.Service;
 using PBL3_HK4.Service.Interface;
+using PBL3_HK4.Interface;
 
 namespace PBL3_HK4.Controllers
 {
@@ -111,16 +112,16 @@ namespace PBL3_HK4.Controllers
             var bill = await _billService.GetBillByIdAsync(billId);
             if (bill == null)
             {
-                TempData["ErrorMessage"] = "Không tìm thấy đơn hàng.";
+                TempData["ErrorMessage"] = "No order found.";
                 return RedirectToAction("Index");
             }
             if (bill.Status != BillStatus.Unconfirmed && bill.Status != BillStatus.Confirmed)
             {
-                TempData["ErrorMessage"] = "Đơn hàng không thể hủy ở trạng thái hiện tại.";
+                TempData["ErrorMessage"] = "Orders cannot be canceled in their current status.";
                 return RedirectToAction("Index");
             }
-            await _billService.UpdateBillCanceledAsync(billId);
-            TempData["SuccessMessage"] = "Đơn hàng đã được hủy thành công.";
+            await _billService.CancelBillAsync(billId,reason);
+            TempData["SuccessMessage"] = "Order has been canceled successfully.";
             return RedirectToAction("Index");
         }
 
@@ -130,16 +131,16 @@ namespace PBL3_HK4.Controllers
             var bill = await _billService.GetBillByIdAsync(billId);
             if (bill == null)
             {
-                TempData["ErrorMessage"] = "Không tìm thấy đơn hàng.";
+                TempData["ErrorMessage"] = "No order found.";
                 return RedirectToAction("Index");
             }
             if (bill.Status != BillStatus.Confirmed)
             {
-                TempData["ErrorMessage"] = "Đơn hàng không ở trạng thái đã xác nhận.";
+                TempData["ErrorMessage"] = "The order is not in confirmed status.";
                 return RedirectToAction("Index");
             }
             await _billService.UpdateBillReceivedAsync(billId);
-            TempData["SuccessMessage"] = "Đơn hàng đã được đánh dấu là đã nhận thành công.";
+            TempData["SuccessMessage"] = "The order has been marked as received successfully.";
             return RedirectToAction("Index");
         }
 
@@ -190,7 +191,7 @@ namespace PBL3_HK4.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("Dữ liệu đánh giá không hợp lệ.");
+                return BadRequest("Invalid rating data.");
             }
 
             try
@@ -211,7 +212,7 @@ namespace PBL3_HK4.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Lỗi khi lưu đánh giá.");
+                return StatusCode(500, "Error saving review.");
             }
         }
     }

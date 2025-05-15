@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PBL3_HK4.Entity;
+using PBL3_HK4.Interface;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -20,14 +21,16 @@ namespace PBL3_HK4.Controllers
         private readonly IAccountService _accountService;
         private readonly IShoppingCartService _shoppingCartService;
         private readonly ICartItemService _cartItemService;
+        private readonly IPasswordHasher _passwordHasher;
 
-        public AccountController(ICartItemService cartItemService, ICustomerService customerService, IAdminService adminService, IAccountService accountService, IShoppingCartService shoppingCartService)
+        public AccountController(ICartItemService cartItemService, ICustomerService customerService, IAdminService adminService, IAccountService accountService, IShoppingCartService shoppingCartService, IPasswordHasher passwordHasher)
         {
             _cartItemService = cartItemService;
             _customerService = customerService;
             _accountService = accountService;
             _adminService = adminService;
             _shoppingCartService = shoppingCartService;
+            _passwordHasher = passwordHasher;
         }
 
         public IActionResult Main()
@@ -45,10 +48,21 @@ namespace PBL3_HK4.Controllers
         {
             if (!ModelState.IsValid)
                 return View(customer);
+
+            var customers = await _customerService.GetAllCustomerAsync();
+            foreach (Customer cus in customers)
+            {
+                if (cus.Email == customer.Email)
+                {
+                    ModelState.AddModelError("Email", "This email is already in use. Please choose a different email.");
+                    return View(customer);
+                }
+            }
+
             try
             {
-                await _accountService.RegisterAsync(customer.Name, customer.Email, customer.Sex, customer.DateOfBirth, customer.UserName, customer.Phone,
-                  customer.PassWord, customer.Address);
+                await _accountService.RegisterAsync(customer.Name, customer.Email, customer.Sex, customer.DateOfBirth,
+                    customer.UserName, customer.Phone, customer.PassWord, customer.Address);
 
                 return RedirectToAction("SignIn", "Account");
             }
@@ -58,8 +72,6 @@ namespace PBL3_HK4.Controllers
                 return View(customer);
             }
         }
-
-
         public IActionResult SignIn()
         {
             return View();
@@ -78,7 +90,8 @@ namespace PBL3_HK4.Controllers
                 {
                     new Claim(ClaimTypes.Name, userLogin.UserName),
                     new Claim(ClaimTypes.NameIdentifier, userLogin.UserID.ToString()),
-                    new Claim(ClaimTypes.Role, userLogin.Role)
+                    new Claim(ClaimTypes.Role, userLogin.Role),
+                    new Claim(ClaimTypes.Email, userLogin.Email)
                 };
                 var role = User.FindFirstValue(ClaimTypes.Role);
                 var claimsIdentity = new ClaimsIdentity(
@@ -163,5 +176,38 @@ namespace PBL3_HK4.Controllers
                 return View();
             }
         }
+
+        public IActionResult SendCode()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendCode(string email)
+        {
+            var defiCode = await _accountService.GenerateVerificationCode();
+            await _accountService.SendPasswordResetEmailAsync(email, defiCode);
+            return View("ForgotPassword", email);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(string code, string newPassword, string email)
+        {
+            var user = await _customerService.GetUserByEmailAsync(email);
+            Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out Guid id);
+
+            if (code == user.VerificationCode && DateTime.UtcNow < user.VerificationCodeExpiry)
+            {
+                Customer newUser = new Customer()
+                {
+                    UserID = id,
+                    PassWord = _passwordHasher.HashPassword(newPassword)
+                };
+                await _customerService.UpdateCustomerAsync(newUser);
+                return View("SignIn");
+            }
+            return View("ForgotPassword", email);
+        }
+
     }
 }

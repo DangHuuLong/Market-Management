@@ -8,9 +8,11 @@
     IEnumerable<BillDetail> billDetails = customerOrderModelView.BillDetails;
     IEnumerable<Product> products = customerOrderModelView.Products;
 }
+
+<!-- TempData Messages -->
 @if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <div class="alert alert-success alert-dismissible fade show alert-bottom-left" role="alert">
         @TempData["SuccessMessage"]
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -18,12 +20,13 @@
 
 @if (TempData["ErrorMessage"] != null)
 {
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show alert-bottom-left" role="alert">
         @TempData["ErrorMessage"]
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
-<!-- Thêm form với CSRF token -->
+
+<!-- CSRF Form -->
 <form id="csrfForm">
     @Html.AntiForgeryToken()
 </form>
@@ -140,6 +143,10 @@
                         <input type="text" class="form-control required-field" id="floatingPaymentStatus" placeholder="Payment Status" name="" disabled>
                         <label for="floatingPaymentStatus">Payment Status</label>
                     </div>
+                    <div id="cancelReasonContainer" class="form-floating mb-3 d-none">
+                        <textarea class="form-control" id="floatingCancelReason" placeholder="Cancellation Reason" name="" style="resize: none; height: 120px" disabled></textarea>
+                        <label for="floatingCancelReason">Cancellation Reason</label>
+                    </div>
                 </div>
                 <div class="col-md-6 px-4">
                     <h4 class="fw-bold mb-4">Order Summary</h4>
@@ -173,6 +180,17 @@
         font-weight: 600;
         color: #80B500; /* Main green */
         margin-bottom: 0;
+    }
+
+    /* Alerts Positioning */
+    .alert-bottom-left {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1000;
+        min-width: 300px;
+        max-width: 400px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     /* Search and Filter */
@@ -595,12 +613,19 @@
         font-size: 0.85rem;
     }
 
+    .alert-bottom-left {
+        left: 10px;
+        right: 10px;
+        min-width: auto;
+        max-width: 100%;
+    }
+
     }
 </style>
 
 @section Scripts {
     <script>
-                // Format number with dots as thousand separators
+        // Format number with dots as thousand separators
         function formatNumber(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
@@ -641,32 +666,33 @@
                     break;
             }
             <text>
-                                    {
-                                        id: "@bill.BillID",
-                                        name: "@(customer?.Name ?? "Customer")",
-                                        phone: "@(customer?.Phone ?? "N/A")",
-                                        email: "@(customer?.Email ?? "N/A")",
-                                        address: "@Html.Raw(bill.Address ?? customer?.Address ?? "N/A")",
-                                        status: "@statusText",
-                                        statusColor: "@statusColor",
-                                        total: formatNumber(@bill.TotalPrice),
-                                        orderDate: "@bill.Date.ToString("dd-MM-yyyy")",
-                                        paymentDate: "@bill.Date.ToString("dd-MM-yyyy")",
-                                        paymentStatus: "@paymentStatus",
-                                        items: [
+                    {
+                        id: "@bill.BillID",
+                        name: "@(customer?.Name ?? "Customer")",
+                        phone: "@(customer?.Phone ?? "N/A")",
+                        email: "@(customer?.Email ?? "N/A")",
+                        address: "@Html.Raw(bill.Address ?? customer?.Address ?? "N/A")",
+                        status: "@statusText",
+                        statusColor: "@statusColor",
+                        total: formatNumber(@bill.TotalPrice),
+                        orderDate: "@bill.Date.ToString("dd-MM-yyyy")",
+                        paymentDate: "@bill.Date.ToString("dd-MM-yyyy")",
+                        paymentStatus: "@paymentStatus",
+                        cancellingReason: "@(bill.CancellingReason ?? "")",
+                        items: [
                 @foreach (var detail in billDetails)
                 {
                     var product = products.FirstOrDefault(p => p.ProductID == detail.ProductID);
                     <text>
-                                                                    {
-                                                                        name: "@(product?.ProductName ?? "Unknown Product")",
-                                                                        quantity: @(detail.Quantity ?? 0),
-                                                                        price: formatNumber(@(detail.Price ?? 0))
-                                                                    },
+                                {
+                                    name: "@(product?.ProductName ?? "Unknown Product")",
+                                    quantity: @(detail.Quantity ?? 0),
+                                    price: formatNumber(@(detail.Price ?? 0))
+                                },
                     </text>
                 }
-                                        ]
-                                    },
+                        ]
+                    },
             </text>
         }
         ];
@@ -687,6 +713,8 @@
         const actionButtonsContainer = document.getElementById('actionButtonsContainer');
         const orderItemsList = document.getElementById('orderItemsList');
         const modalOrderTotal = document.getElementById('modalOrderTotal');
+        const cancelReasonContainer = document.getElementById('cancelReasonContainer');
+        const cancelReasonInput = document.getElementById('floatingCancelReason');
 
         function createOrderRow(order) {
             return `
@@ -753,6 +781,15 @@
             document.getElementById('floatingOrderDate').value = currentSelectedOrder.orderDate;
             document.getElementById('floatingPaymentDate').value = currentSelectedOrder.paymentDate;
             document.getElementById('floatingPaymentStatus').value = currentSelectedOrder.paymentStatus;
+
+            // Handle cancellation reason
+            if (currentSelectedOrder.status === 'Cancelled' && currentSelectedOrder.cancellingReason) {
+                cancelReasonContainer.classList.remove('d-none');
+                cancelReasonInput.value = currentSelectedOrder.cancellingReason;
+            } else {
+                cancelReasonContainer.classList.add('d-none');
+                cancelReasonInput.value = '';
+            }
 
             orderStatusText.textContent = currentSelectedOrder.status.toUpperCase();
             orderStatusLabel.style.backgroundColor = currentSelectedOrder.statusColor;
@@ -858,7 +895,6 @@
                     document.getElementById('actionButtons').classList.remove('d-none');
                 }
 
-                        // Thay đổi phần xử lý nút Cancel
                 if (target.id === 'confirmCancellationBtn') {
                     const reason = document.getElementById('cancellationReason').value.trim();
                     if (reason === '') {
@@ -866,63 +902,62 @@
                         return;
                     }
 
-                    // Tạo form để submit
+                    // Create form to submit
                     const form = document.createElement('form');
                     form.method = 'POST';
                     form.action = '@Url.Action("CancelOrder", "Order")';
 
-                    // Thêm CSRF token
+                    // Add CSRF token
                     const csrfField = document.createElement('input');
                     csrfField.type = 'hidden';
                     csrfField.name = '__RequestVerificationToken';
                     csrfField.value = document.querySelector('form#csrfForm input[name="__RequestVerificationToken"]').value;
                     form.appendChild(csrfField);
 
-                    // Thêm billId
+                    // Add billId
                     const billIdField = document.createElement('input');
                     billIdField.type = 'hidden';
                     billIdField.name = 'billId';
                     billIdField.value = currentSelectedOrder.id;
                     form.appendChild(billIdField);
 
-                    // Thêm reason
+                    // Add reason
                     const reasonField = document.createElement('input');
                     reasonField.type = 'hidden';
                     reasonField.name = 'reason';
                     reasonField.value = reason;
                     form.appendChild(reasonField);
 
-                    // Thêm form vào document và submit
+                    // Add form to document and submit
                     document.body.appendChild(form);
                     form.submit();
                 }
 
-                // Thay đổi phần xử lý nút Received
                 if (target.id === 'receiveButton') {
-                    // Tạo form để submit
+                    // Create form to submit
                     const form = document.createElement('form');
                     form.method = 'POST';
                     form.action = '@Url.Action("ReceiveOrder", "Order")';
 
-                    // Thêm CSRF token
+                    // Add CSRF token
                     const csrfField = document.createElement('input');
                     csrfField.type = 'hidden';
                     csrfField.name = '__RequestVerificationToken';
                     csrfField.value = document.querySelector('form#csrfForm input[name="__RequestVerificationToken"]').value;
                     form.appendChild(csrfField);
 
-                    // Thêm billId
+                    // Add billId
                     const billIdField = document.createElement('input');
                     billIdField.type = 'hidden';
                     billIdField.name = 'billId';
                     billIdField.value = currentSelectedOrder.id;
                     form.appendChild(billIdField);
 
-                    // Thêm form vào document và submit
+                    // Add form to document and submit
                     document.body.appendChild(form);
                     form.submit();
                 }
-            }, { once: false }); // Use once: false to allow multiple clicks
+            }, { once: false });
         }
 
         function closeModal() {

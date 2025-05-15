@@ -32,9 +32,12 @@ namespace PBL3_HK4.Entity
 
         [StringLength(500)]
         public string? PassWord { get; set; }
-        public string? Role { get; set; } 
+        public string? Role { get; set; }
 
         [NotMapped]
         public string? NewPassWord { get; set; }
+
+        public string? VerificationCode { get; set; }
+        public DateTime? VerificationCodeExpiry { get; set; }
     }
 }

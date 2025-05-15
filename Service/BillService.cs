@@ -159,6 +159,7 @@ namespace PBL3_HK4.Service
             {
                 throw new KeyNotFoundException($"Bill with ID {billId} not found.");
             }
+            existingBill.Date = DateTime.Now;
             existingBill.Status = BillStatus.Confirmed;
             await _context.SaveChangesAsync();
         }
@@ -180,6 +181,7 @@ namespace PBL3_HK4.Service
             {
                 throw new KeyNotFoundException($"Bill with ID {billId} not found.");
             }
+            existingBill.Date = DateTime.Now;
             existingBill.Status = BillStatus.Received;
             await _context.SaveChangesAsync();
         }
@@ -191,8 +193,54 @@ namespace PBL3_HK4.Service
             {
                 throw new KeyNotFoundException($"Bill with ID {billId} not found.");
             }
+            existingBill.Date = DateTime.Now;
             existingBill.Status = BillStatus.Reviewed;
             await _context.SaveChangesAsync();
+        }
+
+        public async Task CancelBillAsync(Guid billid, string reason)
+        {
+            var bill = await _context.Bills.FirstOrDefaultAsync(b => b.BillID == billid);
+            if (bill == null)
+            {
+                throw new KeyNotFoundException("Bill not found");
+            }
+            if (bill.Status != BillStatus.Unconfirmed)
+            {
+                throw new InvalidOperationException("Only unconfirmed bill can be cancelled");
+            }
+            bill.Date = DateTime.Now;
+            bill.Status = BillStatus.Cancelled;
+            bill.CancellingReason = reason;
+            await _context.SaveChangesAsync();
+
+        }
+
+        public async Task NotifyBillStatusChangeAsync(Guid billid, BillStatus oldStatus)
+        {
+            var bill = await _context.Bills.FirstOrDefaultAsync(b => b.BillID == billid);
+            if (oldStatus == bill.Status)
+                return;
+
+            string notificationMessage = GenerateNotificationMessage(bill.Status);
+            DateTime currentTime = DateTime.Now;
+            bill.Date = currentTime;
+            Console.WriteLine(
+                 $"[Thông báo - {currentTime}] Trạng thái đơn hàng {bill.BillID} đã thay đổi từ {oldStatus} sang {bill.Status}.\n" +
+                $"Nội dung: {notificationMessage}"
+            );
+        }
+        private string GenerateNotificationMessage(BillStatus status)
+        {
+            return status switch
+            {
+                BillStatus.Unconfirmed => "Đơn hàng đang chờ xác nhận.",
+                BillStatus.Confirmed => "Đơn hàng của bạn đã được xác nhận.",
+                BillStatus.Cancelled => "Đơn hàng của bạn đã bị hủy.",
+                BillStatus.Received => "Đơn hàng của bạn đã được nhận.",
+                BillStatus.Reviewed => "Đơn hàng của bạn đã được đánh giá.",
+                _ => "Trạng thái đơn hàng đã thay đổi."
+            };
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using PBL3_HK4.Entity;
+using PBL3_HK4.Interface;
 using PBL3_HK4.Service;
 using PBL3_HK4.Service.Interface;
 

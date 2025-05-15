@@ -40,5 +40,8 @@ namespace PBL3_HK4.Entity
             set { }
         }
         public BillStatus Status { get; set; } = BillStatus.Unconfirmed;
+
+        [StringLength(500)]
+        public string? CancellingReason { get; set; }
     }
 }

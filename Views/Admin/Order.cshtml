@@ -1,4 +1,5 @@
-﻿@{
+﻿@using PBL3_HK4.Entity
+@{
     ViewData["Title"] = "Order Management";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     OrderManagementViewModel orderManagementViewModel = Model as OrderManagementViewModel;
@@ -31,6 +32,7 @@
                     <option value="Confirmed">Confirmed</option>
                     <option value="Canceled">Canceled</option>
                     <option value="Received">Received</option>
+                    <option value="Reviewed">Reviewed</option>
                 </select>
                 <button class="btn btn-outline-secondary" type="button" id="clear-filters">
                     <i class="fas fa-times"></i> <span class="d-none d-sm-inline">Clear Filters</span>
@@ -47,9 +49,7 @@
                     <th>Customer Name</th>
                     <th class="d-none d-md-table-cell">Phone Number</th>
                     <th class="d-none d-md-table-cell">Email</th>
-                    <th>
-                        Status
-                    </th>
+                    <th>Status</th>
                     <th>
                         Order Date
                         <div class="sort-controls d-inline-block">
@@ -186,7 +186,13 @@
 
         .order-details .detail-item {
             margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #000000; /* Black divider line */
         }
+
+            .order-details .detail-item:last-child {
+                border-bottom: none; /* No border for the last item */
+            }
 
             .order-details .detail-item label {
                 font-size: 0.9rem;
@@ -297,6 +303,12 @@
         .cancellation-form .text-danger {
             font-size: 0.85rem;
         }
+
+    /* Custom purple badge for Reviewed status */
+    .bg-purple {
+        background-color: #9C27B0 !important;
+        color: white !important;
+    }
 
     /* Responsive styles */
     @@media (max-width: 991.98px) {
@@ -427,38 +439,43 @@
                 statusText = "Received";
                 statusColor = "#4CAF50"; // Green
                 break;
+            case 4:
+                statusText = "Reviewed";
+                statusColor = "#9C27B0"; // Purple
+                break;
             default:
                 statusText = "Unknown";
                 statusColor = "#6c757d"; // Gray
                 break;
         }
         <text>
-                                    {
-                                        id: "@bill.BillID",
-                                        customerName: "@(customer != null ? customer.Name : "Unknown")",
-                                        phoneNumber: "@(customer != null ? customer.Phone : "N/A")",
-                                        email: "@(customer != null ? customer.Email : "N/A")",
-                                        status: "@statusText",
-                                        statusColor: "@statusColor",
-                                        total: @bill.TotalPrice,
-                                        address: "@Html.Raw(bill.Address ?? customer?.Address ?? "N/A")",
-                                        orderDate: "@bill.Date.ToString("yyyy-MM-dd")",
-                                        paymentDate: "@bill.Date.ToString("yyyy-MM-dd")",
-                                        paymentStatus: "@(bill.Status == PBL3_HK4.Entity.BillStatus.Cancelled ? "Refunded" : "Paid")",
-                                        items: [
+                {
+                    id: "@bill.BillID",
+                    customerName: "@(customer != null ? customer.Name : "Unknown")",
+                    phoneNumber: "@(customer != null ? customer.Phone : "N/A")",
+                    email: "@(customer != null ? customer.Email : "N/A")",
+                    status: "@statusText",
+                    statusColor: "@statusColor",
+                    total: @bill.TotalPrice,
+                    address: "@Html.Raw(bill.Address ?? customer?.Address ?? "N/A")",
+                    orderDate: "@bill.Date.ToString("yyyy-MM-dd")",
+                    paymentDate: "@bill.Date.ToString("yyyy-MM-dd")",
+                    paymentStatus: "@(bill.Status == PBL3_HK4.Entity.BillStatus.Cancelled ? "Refunded" : "Paid")",
+                    cancellingReason: "@(bill.CancellingReason ?? "")",
+                    items: [
             @foreach (var item in billDetailItems)
             {
                 var product = products.FirstOrDefault(p => p.ProductID == item.ProductID);
                 <text>
-                                                                        {
-                                                                            name: "@(product != null ? product.ProductName : "Unknown")",
-                                                                            quantity: @(item.Quantity ?? 0),
-                                                                            price: @(item.Price ?? 0)
-                                                                        },
+                            {
+                                name: "@(product != null ? product.ProductName : "Unknown")",
+                                quantity: @(item.Quantity ?? 0),
+                                price: @(item.Price ?? 0)
+                            },
                 </text>
             }
-                                        ]
-                                    },
+                    ]
+                },
         </text>
     }
     ];
@@ -689,6 +706,7 @@
             case 'Confirmed': return 'bg-success';
             case 'Canceled': return 'bg-danger';
             case 'Received': return 'bg-info';
+            case 'Reviewed': return 'bg-purple';
             default: return 'bg-secondary';
         }
     }
@@ -823,6 +841,10 @@
                             <label>Payment Status</label>
                             <p>${order.paymentStatus}</p>
                         </div>
+                        <div class="detail-item ${order.status !== 'Canceled' || !order.cancellingReason ? 'd-none' : ''}" id="cancelReasonContainer">
+                            <label>Cancellation Reason</label>
+                            <p>${order.cancellingReason}</p>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <h4>Order Items</h4>
@@ -844,30 +866,40 @@
                         <div class="mt-3">
                             <p>Status: <span style="color: ${order.statusColor};">${order.status}</span></p>
                         </div>
-                        <div id="actionButtonsContainer" style="${order.status !== 'Processing' ? 'display: none;' : ''}">
-                            <div id="actionButtons" class="d-grid gap-3 mt-4">
-                                <form id="confirmForm" method="post" action="/Admin/ConfirmOrder" onsubmit="handleFormSubmit(event)">
+                        <div id="actionButtonsContainer">
+                            ${order.status === 'Processing' ? `
+                                <div id="actionButtons" class="d-grid gap-3 mt-4">
+                                    <form id="confirmForm" method="post" action="/Admin/ConfirmOrder" onsubmit="handleFormSubmit(event)">
     @Html.AntiForgeryToken()
-                                    <input type="hidden" name="billId" value="${order.id}" />
-                                    <button type="submit" class="btn btn-confirm py-2 w-100">Confirm Order</button>
-                                </form>
-                                <button id="cancelButton" class="btn btn-cancel py-2 w-100">Cancel Order</button>
-                            </div>
-                            <div id="cancellationForm" class="cancellation-form d-none">
-                                <form id="cancelForm" method="post" action="/Admin/CancelOrder" onsubmit="return handleCancelFormSubmit(event)">
+                                        <input type="hidden" name="billId" value="${order.id}" />
+                                        <button type="submit" class="btn btn-confirm py-2 w-100">Confirm Order</button>
+                                    </form>
+                                    <button id="cancelButton" class="btn btn-cancel py-2 w-100">Cancel Order</button>
+                                </div>
+                                <div id="cancellationForm" class="cancellation-form d-none">
+                                    <form id="cancelForm" method="post" action="/Admin/CancelOrder" onsubmit="return handleCancelFormSubmit(event)">
     @Html.AntiForgeryToken()
-                                    <input type="hidden" name="billId" value="${order.id}" />
-                                    <div class="mb-3">
-                                        <label for="cancellationReason" class="form-label">Reason for Cancellation</label>
-                                        <textarea id="cancellationReason" name="reason" class="form-control" rows="3"></textarea>
-                                        <div id="cancellationError" class="text-danger mt-2 d-none">Please provide a reason for cancellation.</div>
-                                    </div>
-                                    <div class="d-grid gap-2 ${isMobile ? '' : 'd-md-flex'}">
-                                        <button type="submit" class="btn btn-confirm-cancel py-2 flex-grow-1">Confirm Cancellation</button>
-                                        <button type="button" id="keepOrderBtn" class="btn btn-keep py-2 flex-grow-1">Keep Order</button>
-                                    </div>
-                                </form>
-                            </div>
+                                        <input type="hidden" name="billId" value="${order.id}" />
+                                        <div class="mb-3">
+                                            <label for="cancellationReason" class="form-label">Reason for Cancellation</label>
+                                            <textarea id="cancellationReason" name="reason" class="form-control" rows="3"></textarea>
+                                            <div id="cancellationError" class="text-danger mt-2 d-none">Please provide a reason for cancellation.</div>
+                                        </div>
+                                        <div class="d-grid gap-2 ${isMobile ? '' : 'd-md-flex'}">
+                                            <button type="submit" class="btn btn-confirm-cancel py-2 flex-grow-1">Confirm Cancellation</button>
+                                            <button type="button" id="keepOrderBtn" class="btn btn-keep py-2 flex-grow-1">Keep Order</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            ` : order.status === 'Reviewed' ? `
+                                <div id="actionButtons" class="d-grid gap-3 mt-4">
+                                    <p class="text-success">Order has been received and reviewed.</p>
+                                </div>
+                            ` : order.status === 'Canceled' ? `
+                                <div id="actionButtons" class="d-grid gap-3 mt-4">
+                                    <p class="text-danger">Order has been cancelled.</p>
+                                </div>
+                            ` : ''}
                         </div>
                     </div>
                 </div>

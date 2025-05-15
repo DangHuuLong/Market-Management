@@ -1,0 +1,210 @@
+﻿@using PBL3_HK4.Entity
+@{
+    ViewData["Title"] = "Notification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    CustomerOrderModelView customerOrderModelView = Model as CustomerOrderModelView;
+    Customer customer = customerOrderModelView?.Customer;
+    IEnumerable<Bill> bills = customerOrderModelView?.Bills ?? new List<Bill>();
+    IEnumerable<BillDetail> billDetails = customerOrderModelView?.BillDetails ?? new List<BillDetail>();
+    IEnumerable<Product> products = customerOrderModelView?.Products ?? new List<Product>();
+}
+
+<div id="notification-content" class="container my-5">
+    @if (customer == null)
+    {
+        <div class="no-notifications">
+            Unable to load customer information. Please try again later.
+        </div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="fs-2 mb-0" style="color: #1b5e20; font-weight: 600;">Your Notifications</h1>
+        </div>
+
+        <!-- Notification List -->
+        <div id="notification-list" class="notification-list">
+            <!-- Notifications will be populated by JavaScript -->
+        </div>
+    }
+</div>
+
+<style>
+    .notification-list {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .notification-item {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        transition: transform 0.2s ease;
+    }
+
+        .notification-item:hover {
+            transform: translateY(-2px);
+        }
+
+    .notification-icon {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+
+    .notification-content {
+        flex-grow: 1;
+    }
+
+    .notification-message {
+        font-size: 1rem;
+        color: #333333;
+        margin: 0;
+    }
+
+    .notification-timestamp {
+        font-size: 0.85rem;
+        color: #6B7280;
+        margin-top: 0.25rem;
+    }
+
+    .notification-confirmed .notification-icon {
+        color: #4caf50; /* Green for Confirmed */
+    }
+
+    .notification-canceled .notification-icon {
+        color: #d32f2f; /* Red for Canceled */
+    }
+
+    .no-notifications {
+        text-align: center;
+        padding: 2rem;
+        background-color: #f5f7fa;
+        border-radius: 8px;
+        color: #6B7280;
+        font-size: 1rem;
+    }
+
+    /* Responsive styles */
+    @@media (max-width: 767.98px) {
+        .notification-item
+
+    {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .notification-icon {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .notification-message {
+        font-size: 0.95rem;
+    }
+
+    .notification-timestamp {
+        font-size: 0.8rem;
+    }
+
+    }
+
+    @@media (max-width: 575.98px) {
+        .notification-list
+
+    {
+        padding: 0 0.5rem;
+    }
+
+    }
+</style>
+
+<script>
+    // Format date and time as HH:mm DD/MM/YYYY
+    function formatDateTime(dateString) {
+        const date = new Date(dateString);
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${hours}:${minutes} ${day}/${month}/${year}`;
+    }
+
+    // Bill data from ViewModel
+    const bills = [
+    @foreach (var bill in bills)
+    {
+        var statusText = bill.Status == BillStatus.Confirmed ? "Confirmed" :
+                         bill.Status == BillStatus.Cancelled ? "Canceled" : bill.Status.ToString();
+        <text>
+                {
+                    id: "@bill.BillID",
+                    status: "@statusText",
+                    date: "@bill.Date.ToString("yyyy-MM-ddTHH:mm:ss")",
+                    cancellingReason: "@(bill.CancellingReason ?? "")"
+                },
+        </text>
+    }
+    ];
+
+    // Filter and sort notifications
+    function renderNotifications() {
+        const notificationList = document.getElementById('notification-list');
+        notificationList.innerHTML = '';
+
+        // Filter bills with status Confirmed or Canceled
+        const filteredBills = bills.filter(bill =>
+            bill.status === 'Confirmed' || bill.status === 'Canceled'
+        );
+
+        // Sort by date (newest first)
+        filteredBills.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        if (filteredBills.length === 0) {
+            notificationList.innerHTML = `
+                <div class="no-notifications">
+                    No notifications available.
+                </div>
+            `;
+            return;
+        }
+
+        filteredBills.forEach(bill => {
+            const notificationItem = document.createElement('div');
+            notificationItem.className = `notification-item notification-${bill.status.toLowerCase()}`;
+
+            // Determine icon and message based on status
+            let iconClass = '';
+            let message = '';
+
+            if (bill.status === 'Confirmed') {
+                iconClass = 'fas fa-check-circle';
+                message = `Your order has been confirmed. Please wait for delivery.`;
+            } else if (bill.status === 'Canceled') {
+                iconClass = 'fas fa-times-circle';
+                message = `Your order has been canceled, and the amount has been refunded.`;
+            }
+
+            notificationItem.innerHTML = `
+                <i class="${iconClass} notification-icon"></i>
+                <div class="notification-content">
+                    <p class="notification-message">${message}</p>
+                    <p class="notification-timestamp">${formatDateTime(bill.date)}</p>
+                </div>
+            `;
+
+            notificationList.appendChild(notificationItem);
+        });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        renderNotifications();
+    });
+</script>

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PBL3_HK4.Interface;
 using PBL3_HK4.Entity;
 using Microsoft.EntityFrameworkCore;
-using PBL3_HK4.Service.Interface;
 
 namespace PBL3_HK4.Service
 {
@@ -36,14 +36,26 @@ namespace PBL3_HK4.Service
             var existingCustomer = (Customer)(await _context.Users.FindAsync(customer.UserID));
             if (existingCustomer != null)
             {
-                existingCustomer.Name = customer.Name;
-                existingCustomer.Email = customer.Email;
-                existingCustomer.Phone = customer.Phone;
-                existingCustomer.DateOfBirth = customer.DateOfBirth;
-                existingCustomer.Sex = customer.Sex;
-                existingCustomer.Address = customer.Address;
-                
-                if (customer.PassWord != null) existingCustomer.PassWord = customer.PassWord;
+                if (customer.Name != null)
+                    existingCustomer.Name = customer.Name;
+
+                if (customer.Email != null)
+                    existingCustomer.Email = customer.Email;
+
+                if (customer.Phone != null)
+                    existingCustomer.Phone = customer.Phone;
+
+                if (customer.DateOfBirth != null)
+                    existingCustomer.DateOfBirth = customer.DateOfBirth;
+
+                if (customer.Sex != null)
+                    existingCustomer.Sex = customer.Sex;
+
+                if (customer.Address != null)
+                    existingCustomer.Address = customer.Address;
+
+                if (customer.PassWord != null)
+                    existingCustomer.PassWord = customer.PassWord;
             }
 
             await _context.SaveChangesAsync();
@@ -77,6 +89,29 @@ namespace PBL3_HK4.Service
                 throw new InvalidOperationException("No customer account created");
             }
             return customers;
+        }
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            var user = await _context.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
+            return user;
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            var existingCustomer = await _context.Users.FindAsync(user.UserID);
+            if (existingCustomer != null)
+            {
+                existingCustomer.Name = user.Name;
+                existingCustomer.Email = user.Email;
+                existingCustomer.Phone = user.Phone;
+                existingCustomer.DateOfBirth = user.DateOfBirth;
+                existingCustomer.Sex = user.Sex;
+
+                if (user.PassWord != null) existingCustomer.PassWord = user.PassWord;
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -32,6 +32,10 @@ namespace PBL3_HK4.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<string>("CancellingReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -312,6 +316,12 @@ namespace PBL3_HK4.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("VerificationCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("VerificationCodeExpiry")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("UserID");
 

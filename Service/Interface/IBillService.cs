@@ -27,5 +27,7 @@ namespace PBL3_HK4.Service.Interface
         public Task UpdateBillCanceledAsync(Guid billId);
         public Task UpdateBillReceivedAsync(Guid billId);
         public Task UpdateBillReviewedAsync(Guid billId);
+        public Task CancelBillAsync(Guid billid, string reason); // IBillService
+        public Task NotifyBillStatusChangeAsync(Guid billid, BillStatus oldStatus);
     }
 }

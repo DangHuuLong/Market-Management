@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PBL3_HK4.Entity;
+using PBL3_HK4.Interface;
 using PBL3_HK4.Models;
 using PBL3_HK4.Service;
 using PBL3_HK4.Service.Interface;
@@ -308,7 +309,7 @@ namespace PBL3_HK4.Controllers
         [HttpPost]
         public async Task<IActionResult> CancelOrder(Guid billId, string reason)
         {
-            await _billService.UpdateBillCanceledAsync(billId);
+            await _billService.CancelBillAsync(billId,reason);
             return RedirectToAction("OrderManagement", "Admin");
         }
 
@@ -326,6 +327,22 @@ namespace PBL3_HK4.Controllers
             userProfile = await _adminService.GetAdminByUserNameAsync(username);
             userProfile = (Admin)userProfile;
             return View("Profile", userProfile);
+        }
+
+        public async Task<IActionResult> Notification()
+        {
+            var bills = await _billService.GetAllBillsAsync();
+            var billDetails = await _billDetailService.GetAllBillDetailsAsync();
+            var customers = await _customerService.GetAllCustomerAsync();
+            var products = await _productService.GetAllProductsAsync();
+            OrderManagementViewModel orderManagementViewModel = new OrderManagementViewModel
+            {
+                Bills = bills,
+                BillDetails = billDetails,
+                Customers = customers,
+                Products = products
+            };
+            return View(orderManagementViewModel);
         }
     }
 }

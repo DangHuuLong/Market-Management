@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using PBL3_HK4.Models;
 using PBL3_HK4.Service.Interface;
+using PBL3_HK4.Interface;
 
 namespace PBL3_HK4.Controllers
 {
