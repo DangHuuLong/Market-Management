@@ -6,6 +6,14 @@ using PBL3_HK4.Interface;
 using PBL3_HK4.Models;
 using PBL3_HK4.Service;
 using PBL3_HK4.Service.Interface;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace PBL3_HK4.Controllers
 {
@@ -21,12 +29,13 @@ namespace PBL3_HK4.Controllers
         private readonly IProductImageService _productImageService;
         private readonly IReviewService _reviewService;
         public readonly IBillDetailService _billDetailService;
-        public HomeController(IBillDetailService billDetailService,IReviewService reviewService,IProductImageService productImageService, IDiscountService discountService,ICartItemService cartItemService,ICatalogService catalogService,IShoppingCartService shoppingCartService,IProductService productService, ICustomerService customerService, IBillService billService)
+        private readonly IVnPayService _vnPayService;
+        public HomeController(IBillDetailService billDetailService, IReviewService reviewService, IProductImageService productImageService, IDiscountService discountService, ICartItemService cartItemService, ICatalogService catalogService, IShoppingCartService shoppingCartService, IProductService productService, ICustomerService customerService, IBillService billService, IVnPayService vnPayService)
         {
             _reviewService = reviewService;
             _productImageService = productImageService;
             _cartItemService = cartItemService;
-            _billService = billService; 
+            _billService = billService;
             _customerService = customerService;
             _catalogService = catalogService;
             _shoppingCartService = shoppingCartService;
@@ -34,6 +43,7 @@ namespace PBL3_HK4.Controllers
             _customerService = customerService;
             _discountService = discountService;
             _billDetailService = billDetailService;
+            _vnPayService = vnPayService;
         }
 
         [Route("Home/Index")]
@@ -55,7 +65,7 @@ namespace PBL3_HK4.Controllers
             homeViewModel.AssignImagesToProducts();
             return View("Index", homeViewModel);
         }
-        
+
 
         public async Task<IActionResult> ShoppingCart()
         {
@@ -97,13 +107,12 @@ namespace PBL3_HK4.Controllers
                 ShoppingCart = cart,
                 Products = products,
                 Customer = customer,
-                Discounts = discounts  
+                Discounts = discounts
             };
 
 
             return View(orderSummaryViewModel);
         }
-
         public IActionResult AboutUs()
         {
             return View();
@@ -114,80 +123,7 @@ namespace PBL3_HK4.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CompleteOrder(string paymentMethod, Guid? discountId)
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customer = await _customerService.GetCustomerByIdAsync(new Guid(userId));
-            Bill bill = new Bill();
-            bill.BillID = Guid.NewGuid();
-            bill.UserID = new Guid(userId);
-            bill.Date = DateTime.Now;
-            bill.Address = customer.Address;
-            var cart = await _shoppingCartService.GetShoppingCartByCustomerIdAsync(new Guid(userId));
-            cart.Items = await _shoppingCartService.GetCartItemsByCartIDAsync(cart.CartID);
 
-            // Lấy thông tin discount trước vòng lặp nếu có
-            Discount discount = null;
-            if (discountId.HasValue)
-            {
-                discount = await _discountService.GetDiscountByIdAsync(discountId.Value);
-            }
-
-            bool inventoryError = false;
-            string productWithError = "";
-            int stockQuantity = 0;
-
-            foreach (var item in cart.Items)
-            {
-                var product = await _productService.GetProductByIdAsync(item.ProductID);
-                if (product.StockQuantity < item.Quantity)
-                {
-                    // Lưu thông tin sản phẩm lỗi
-                    productWithError = product.ProductName;
-                    stockQuantity = product.StockQuantity;
-                    inventoryError = true;
-                    break;
-                }
-
-                BillDetail billDetail = new BillDetail();
-                billDetail.BillDetailID = Guid.NewGuid();
-                billDetail.BillID = bill.BillID;
-                billDetail.ProductID = item.ProductID;
-                billDetail.Quantity = item.Quantity;
-                billDetail.Price = item.Price;
-
-                // Áp dụng discount (nếu có) cho tất cả sản phẩm
-                if (discount != null)
-                {
-                    billDetail.DiscountID = discount.DiscountID;
-                    billDetail.Total = (double)(billDetail.Quantity * billDetail.Price * (1 - discount.DiscountRate/100));
-                   
-                } else
-                {
-                    billDetail.Total = (double)(billDetail.Quantity * billDetail.Price);
-                }
-
-                bill.BillDetails.Add(billDetail);
-            }
-
-            if (inventoryError)
-            {
-                TempData["ErrorMessage"] = $"Product {productWithError} only has {stockQuantity} items in stock!";
-                TempData.Keep("ErrorMessage");
-                return RedirectToAction("OrderSummary");
-            }
-
-            var itemsToDelete = cart.Items.Select(item => item.ItemID).ToList();
-            foreach (var itemId in itemsToDelete)
-            {
-                await _cartItemService.DeleteCartItemAsync(itemId);
-            }
-
-            await _billService.AddBillAsync(bill);
-            HttpContext.Session.SetInt32("CartItemCount", 0);
-            TempData["SuccessMessage"] = "Your order has been placed successfully!";
-            return View();
-        }
 
         [HttpPost]
         public async Task<IActionResult> DeductPoints(Guid customerId)
@@ -235,5 +171,167 @@ namespace PBL3_HK4.Controllers
 
             return View(customerOrderModelView);
         }
+
+        public IActionResult CompleteOrder()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CompleteOrder(Guid? discountId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var cart = await _shoppingCartService.GetShoppingCartByCustomerIdAsync(new Guid(userId));
+            cart.Items = await _shoppingCartService.GetCartItemsByCartIDAsync(cart.CartID);
+
+            // Kiểm tra tồn kho
+            foreach (var item in cart.Items)
+            {
+                var product = await _productService.GetProductByIdAsync(item.ProductID);
+                if (product.StockQuantity < item.Quantity)
+                {
+                    TempData["ErrorMessage"] = $"Sản phẩm {product.ProductName} chỉ còn {product.StockQuantity} trong kho!";
+                    return RedirectToAction("OrderSummary");
+                }
+            }
+
+            // Tính tổng tiền và lưu cart vào session
+            double totalAmount = 0;
+            var tempItems = new List<TempCartItem>();
+            foreach (var item in cart.Items)
+            {
+                var discountRate = 0.0;
+                if (discountId.HasValue)
+                {
+                    var discount = await _discountService.GetDiscountByIdAsync(discountId.Value);
+                    discountRate = discount?.DiscountRate ?? 0;
+                }
+
+                var itemTotal = item.Quantity * item.Price * (1 - discountRate / 100.0);
+                totalAmount += itemTotal;
+
+                tempItems.Add(new TempCartItem
+                {
+                    ProductID = item.ProductID,
+                    Quantity = item.Quantity,
+                    Price = item.Price
+                });
+            }
+
+            var tempData = new TempBillData
+            {
+                DiscountId = discountId,
+                CartItems = tempItems,
+                TotalAmount = totalAmount
+            };
+
+            HttpContext.Session.SetString("PendingOrder", JsonConvert.SerializeObject(tempData));
+            return RedirectToAction("ProcessPayment", new { amount = totalAmount });
+        }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> ProcessPayment(double amount)
+        {
+            // Lấy user và thông tin
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = await _customerService.GetCustomerByIdAsync(new Guid(userId));
+
+            // Tạo PaymentInformationModel
+            var paymentModel = new PaymentInformationModel
+            {
+                Name = customer.Name,
+                OrderDescription = "Thanh toán đơn hàng",
+                Amount = amount,
+                OrderType = "bill"
+            };
+
+            // Tạo URL thanh toán
+            var paymentUrl = _vnPayService.CreatePaymentUrl(paymentModel, HttpContext);
+
+            // Chuyển hướng sang trang VNPAY
+            return Redirect(paymentUrl);
+        }
+        [HttpGet]
+        public async Task<IActionResult> VnPayReturn()
+        {
+            var response = _vnPayService.PaymentExecute(Request.Query);
+
+            if (!response.Success)
+            {
+                TempData["ErrorMessage"] = "Thanh toán thất bại hoặc bị hủy!";
+                return RedirectToAction("OrderSummary");
+            }
+
+            // Lấy dữ liệu từ Session
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = await _customerService.GetCustomerByIdAsync(new Guid(userId));
+            var cart = await _shoppingCartService.GetShoppingCartByCustomerIdAsync(new Guid(userId));
+            cart.Items = await _shoppingCartService.GetCartItemsByCartIDAsync(cart.CartID);
+
+            var jsonData = HttpContext.Session.GetString("PendingOrder");
+            if (string.IsNullOrEmpty(jsonData))
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy dữ liệu đơn hàng trong session.";
+                return RedirectToAction("OrderSummary");
+            }
+
+            var orderData = JsonConvert.DeserializeObject<TempBillData>(jsonData);
+
+            // Tạo Bill
+            var bill = new Bill
+            {
+                BillID = Guid.NewGuid(),
+                UserID = new Guid(userId),
+                Date = DateTime.Now,
+                Address = customer.Address,
+                BillDetails = new List<BillDetail>()
+            };
+
+            foreach (var item in orderData.CartItems)
+            {
+                var product = await _productService.GetProductByIdAsync(item.ProductID);
+                if (product.StockQuantity < item.Quantity)
+                {
+                    TempData["ErrorMessage"] = $"Sản phẩm {product.ProductName} không đủ tồn kho!";
+                    return RedirectToAction("OrderSummary");
+                }
+
+                // Trừ kho
+                await _productService.DecreaseStock(item.ProductID, item.Quantity);
+
+                var billDetail = new BillDetail
+                {
+                    BillDetailID = Guid.NewGuid(),
+                    BillID = bill.BillID,
+                    ProductID = item.ProductID,
+                    Quantity = item.Quantity,
+                    Price = item.Price,
+                    Total = item.Quantity * item.Price,
+                    DiscountID = orderData.DiscountId
+                };
+
+                bill.BillDetails.Add(billDetail);
+            }
+
+
+            await _billService.AddBillAsync(bill);
+
+
+            var itemsToDelete = cart.Items.Select(x => x.ItemID).ToList();
+            foreach (var id in itemsToDelete)
+            {
+                await _cartItemService.DeleteCartItemAsync(id);
+            }
+
+            HttpContext.Session.SetInt32("CartItemCount", 0);
+            HttpContext.Session.Remove("PendingOrder");
+
+            TempData["SuccessMessage"] = "Thanh toán thành công! Đơn hàng đã được tạo.";
+            return RedirectToAction("CompleteOrder");
+        }
+
+
     }
 }

@@ -18,6 +18,7 @@ namespace PBL3_HK4.Service.Interface
         public Task AddProductAsync(Product product);
         public Task UpdateProductAsync(Product product);
         public Task DeleteProductAsync(Guid productId);
+        public Task<bool> DecreaseStock(Guid productId, int quantity);
 
     }
 }

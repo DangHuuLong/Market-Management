@@ -460,3 +460,4 @@ D:\PBL3\pbl3\bin\Debug\net8.0\MailKit.dll
 D:\PBL3\pbl3\bin\Debug\net8.0\MimeKit.dll
 D:\PBL3\pbl3\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
 D:\PBL3\pbl3\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\PBL3\pbl3\bin\Debug\net8.0\Newtonsoft.Json.dll

@@ -26,8 +26,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
-
-
+builder.Services.AddScoped<IVnPayService, VnPayService>();
 builder.Services.AddHttpContextAccessor();
 
 // Thêm session

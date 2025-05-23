@@ -112,5 +112,20 @@ namespace PBL3_HK4.Service
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> DecreaseStock(Guid productId, int quantity)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null || product.StockQuantity < quantity)
+            {
+                return false; // Không tồn tại hoặc không đủ hàng
+            }
+
+            product.StockQuantity -= quantity;
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }
