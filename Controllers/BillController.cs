@@ -37,17 +37,17 @@ namespace PBL3_HK4.Controllers
         public async Task<IActionResult> UpdateBillAsync(Bill bill)
         {
             if (!ModelState.IsValid)
-                return View(); //Fix
+                return View(); 
             try
             {
                 await _billService.UpdateBillAsync(bill);
 
-                return RedirectToAction("Index", "Home"); //Fix
+                return RedirectToAction("Index", "Home"); 
             }
             catch (InvalidOperationException ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
-                return View(); //Fix
+                return View(); 
             }
         }
 
@@ -56,37 +56,11 @@ namespace PBL3_HK4.Controllers
         public async Task<IActionResult> DeleteBillAsync(Guid id)
         {
             if (!ModelState.IsValid)
-                return View(); //Fix
+                return View(); 
             await _billService.DeleteBillAsync(id);
 
-            return RedirectToAction("Index", "Home"); //Fix
+            return RedirectToAction("Index", "Home");
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[Route("/Revenue")]
-        //public async Task<IActionResult> RevenueByDateAsync(DateTime date)
-        //{
-        //    if (!ModelState.IsValid) return View(); //Fix
-        //    await _adminService.RevenueByDateAsync(date);
-        //    return RedirectToAction(); //Fix
-        //}
-
-        //[Authorize(Roles = "Admin")]
-        //[Route("/Revenue")]
-        //public async Task<IActionResult> RevenueByMonthAsync(int month, int year)
-        //{
-        //    if (!ModelState.IsValid) return View(); //Fix
-        //    await _adminService.RevenueByMonthAsync(month, year);
-        //    return RedirectToAction(); //Fix
-        //}
-
-        //[Authorize(Roles = "Admin")]
-        //[Route("/Revenue")]
-        //public async Task<IActionResult> RevenueByYearAsync(int year)
-        //{
-        //    if (!ModelState.IsValid) return View(); //Fix
-        //    await _adminService.RevenueByYearAsync(year);
-        //    return RedirectToAction(); //Fix
-        //}
     }
 }

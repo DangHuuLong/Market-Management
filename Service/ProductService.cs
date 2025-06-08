@@ -73,17 +73,6 @@ namespace PBL3_HK4.Service
             await _context.SaveChangesAsync();
         }
 
-        //public async Task UpdateProductAsync(Product product)
-        //{
-        //    var existingProduct = await _context.Products.FirstOrDefaultAsync(p => p.ProductID == product.ProductID);
-        //    if (existingProduct == null)
-        //    {
-        //        throw new KeyNotFoundException($"Product with ID:{product.ProductID} not found");
-        //    }
-        //    _context.Products.Update(product);
-        //    await _context.SaveChangesAsync();
-        //}
-
         public async Task UpdateProductAsync(Product product)
         {
             var existingProduct = await _context.Products.FirstOrDefaultAsync(p => p.ProductID == product.ProductID);
@@ -113,19 +102,6 @@ namespace PBL3_HK4.Service
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> DecreaseStock(Guid productId, int quantity)
-        {
-            var product = await _context.Products.FindAsync(productId);
-            if (product == null || product.StockQuantity < quantity)
-            {
-                return false; // Không tồn tại hoặc không đủ hàng
-            }
-
-            product.StockQuantity -= quantity;
-            _context.Products.Update(product);
-            await _context.SaveChangesAsync();
-
-            return true;
-        }
+        
     }
 }

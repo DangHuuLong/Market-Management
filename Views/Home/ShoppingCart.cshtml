@@ -395,34 +395,27 @@
         }
     }
 
-    // Hàm cập nhật số lượng giỏ hàng trên tất cả các thiết bị
     function updateCartCountBadges(count) {
-        // Cập nhật biểu tượng giỏ hàng trên desktop
         const desktopCartCount = document.getElementById('cart-count');
         if (desktopCartCount) {
             desktopCartCount.textContent = count;
         }
-
-        // Cập nhật biểu tượng giỏ hàng trên tablet
         const tabletCartCount = document.getElementById('tablet-cart-count');
         if (tabletCartCount) {
             tabletCartCount.textContent = count;
         }
 
-        // Cập nhật biểu tượng giỏ hàng trên mobile
         const mobileCartCount = document.getElementById('mobile-cart-count');
         if (mobileCartCount) {
             mobileCartCount.textContent = count;
         }
     }
 
-    // Update item count in header
     function updateItemCount() {
         const itemCount = document.querySelectorAll('.cart-item').length;
         document.querySelector('.item-count').textContent = itemCount;
     }
 
-    // Calculate total cost
     function calculateTotal() {
         let total = 0;
         const cartItems = document.querySelectorAll('.cart-item');

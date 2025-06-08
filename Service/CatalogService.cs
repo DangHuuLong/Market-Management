@@ -30,17 +30,6 @@ namespace PBL3_HK4.Service
             await _context.SaveChangesAsync();
         }
 
-        //public async Task UpdateCatalogAsync(Catalog catalog)
-        //{
-        //    var currentCatalog = await _context.Catalogs.FirstOrDefaultAsync(c => c.CatalogID == catalog.CatalogID);
-        //    if (currentCatalog == null)
-        //    {
-        //        throw new KeyNotFoundException($"Catalog with ID {catalog.CatalogID} not found.");
-        //    }
-        //    _context.Catalogs.Update(catalog);
-        //    await _context.SaveChangesAsync();
-        //}
-
         public async Task UpdateCatalogAsync(Catalog catalog)
         {
             var currentCatalog = await _context.Catalogs.FirstOrDefaultAsync(c => c.CatalogID == catalog.CatalogID);
@@ -92,10 +81,6 @@ namespace PBL3_HK4.Service
             }
             return listCatalog;
         }
-
-        //Task<IEnumerable<Catalog>> ICatalogService.GetAllCatalogsAsync()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        
     }
 }

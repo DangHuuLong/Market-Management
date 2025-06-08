@@ -313,20 +313,6 @@
                             </button>
                         </form>
 
-                        @* <div class="d-flex align-items-center my-3"> *@
-                        @*     <hr class="flex-grow-1"> *@
-                        @*     <span class="mx-3 text-muted">Or sign in with</span> *@
-                        @*     <hr class="flex-grow-1"> *@
-                        @* </div> *@
-
-                        <!-- Social Auth Buttons -->
-                        @* <div class="d-flex justify-content-center gap-3 mb-3"> *@
-                        @*     <button class="btn btn-outline-secondary"><i class="bi bi-google"></i></button> *@
-                        @*     <button class="btn btn-outline-secondary"><i class="bi bi-facebook"></i></button> *@
-                        @*     <button class="btn btn-outline-secondary"><i class="bi bi-instagram"></i></button> *@
-                        @*     <button class="btn btn-outline-secondary"><i class="bi bi-threads"></i></button> *@
-                        @* </div> *@
-
                         <div class="text-center">
                             <a asp-controller="Account" asp-action="Main" class="text-decoration-none text-success"><i class="bi bi-arrow-bar-left"></i></a>
                             Don't have an account?
@@ -377,17 +363,14 @@
     <!-- Script toggle password và xử lý form -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Lấy các phần tử DOM
             const loginForm = document.getElementById('loginForm');
             const usernameInput = document.getElementById('floatingInput');
             const passwordInput = document.getElementById('floatingPassword');
             const signInBtn = document.getElementById('signInBtn');
             const togglePassword = document.getElementById('togglePassword');
 
-            // Thiết lập focus ban đầu
             usernameInput.focus();
 
-            // 1. Xử lý hiển thị/ẩn mật khẩu
             togglePassword.addEventListener('click', function() {
                 if (passwordInput.type === 'password') {
                     passwordInput.type = 'text';
@@ -398,7 +381,6 @@
                 }
             });
 
-            // 2. Kiểm tra trạng thái input và cập nhật nút đăng nhập
             function checkInputs() {
                 const usernameValid = usernameInput.value.trim() !== '';
                 const passwordValid = passwordInput.value.trim() !== '';
@@ -410,7 +392,6 @@
                 }
             }
 
-            // 3. Xử lý phím Enter để chuyển trường và đăng nhập
             usernameInput.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter') {
                     event.preventDefault();
@@ -427,11 +408,9 @@
                 }
             });
 
-            // 4. Gắn sự kiện input để kiểm tra trạng thái
             usernameInput.addEventListener('input', checkInputs);
             passwordInput.addEventListener('input', checkInputs);
 
-            // 5. Khởi tạo trạng thái ban đầu
             checkInputs();
         });
     </script>

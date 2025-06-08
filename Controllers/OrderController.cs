@@ -74,7 +74,7 @@ namespace PBL3_HK4.Controllers
                 Address = customer.Address,
                 Date = DateTime.Now,
                 BillDetails = billDetails,
-                Status = BillStatus.Unconfirmed // Assuming initial status
+                Status = BillStatus.Unconfirmed 
             };
 
             await _billService.AddBillAsync(bill);

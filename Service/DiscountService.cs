@@ -61,17 +61,6 @@ namespace PBL3_HK4.Service
             await _context.SaveChangesAsync();
         }
 
-        //public async Task UpdateDiscountAsync(Discount discount)
-        //{
-        //   var existingDiscount = await _context.Discounts.FirstOrDefaultAsync(d => d.DiscountID == discount.DiscountID);
-        //    if (existingDiscount == null)
-        //    {
-        //        throw new KeyNotFoundException($"Discount with ID {discount.DiscountID} not found.");
-        //    }
-        //    _context.Discounts.Update(discount);
-        //    await _context.SaveChangesAsync();
-        //}
-
         public async Task UpdateDiscountAsync(Discount discount)
         {
             var existingDiscount = await _context.Discounts.FirstOrDefaultAsync(d => d.DiscountID == discount.DiscountID);

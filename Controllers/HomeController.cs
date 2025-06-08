@@ -184,7 +184,6 @@ namespace PBL3_HK4.Controllers
             var cart = await _shoppingCartService.GetShoppingCartByCustomerIdAsync(new Guid(userId));
             cart.Items = await _shoppingCartService.GetCartItemsByCartIDAsync(cart.CartID);
 
-            // Kiểm tra tồn kho
             foreach (var item in cart.Items)
             {
                 var product = await _productService.GetProductByIdAsync(item.ProductID);
@@ -195,7 +194,6 @@ namespace PBL3_HK4.Controllers
                 }
             }
 
-            // Tính tổng tiền và lưu cart vào session
             double totalAmount = 0;
             var tempItems = new List<TempCartItem>();
             foreach (var item in cart.Items)
@@ -234,11 +232,9 @@ namespace PBL3_HK4.Controllers
         [HttpGet]
         public async Task<IActionResult> ProcessPayment(double amount)
         {
-            // Lấy user và thông tin
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var customer = await _customerService.GetCustomerByIdAsync(new Guid(userId));
 
-            // Tạo PaymentInformationModel
             var paymentModel = new PaymentInformationModel
             {
                 Name = customer.Name,
@@ -246,11 +242,8 @@ namespace PBL3_HK4.Controllers
                 Amount = amount,
                 OrderType = "bill"
             };
-
-            // Tạo URL thanh toán
             var paymentUrl = _vnPayService.CreatePaymentUrl(paymentModel, HttpContext);
 
-            // Chuyển hướng sang trang VNPAY
             return Redirect(paymentUrl);
         }
         [HttpGet]
@@ -264,7 +257,6 @@ namespace PBL3_HK4.Controllers
                 return RedirectToAction("OrderSummary");
             }
 
-            // Lấy dữ liệu từ Session
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var customer = await _customerService.GetCustomerByIdAsync(new Guid(userId));
             var cart = await _shoppingCartService.GetShoppingCartByCustomerIdAsync(new Guid(userId));
@@ -279,7 +271,6 @@ namespace PBL3_HK4.Controllers
 
             var orderData = JsonConvert.DeserializeObject<TempBillData>(jsonData);
 
-            // Tạo Bill
             var bill = new Bill
             {
                 BillID = Guid.NewGuid(),
@@ -298,8 +289,6 @@ namespace PBL3_HK4.Controllers
                     return RedirectToAction("OrderSummary");
                 }
 
-                // Trừ kho
-                await _productService.DecreaseStock(item.ProductID, item.Quantity);
 
                 var billDetail = new BillDetail
                 {

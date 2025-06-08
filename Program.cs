@@ -8,11 +8,9 @@ using PBL3_HK4.Service.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Thêm DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Đăng ký các service với interface tương ứng
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
@@ -29,7 +27,6 @@ builder.Services.AddScoped<IProductImageService, ProductImageService>();
 builder.Services.AddScoped<IVnPayService, VnPayService>();
 builder.Services.AddHttpContextAccessor();
 
-// Thêm session
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -47,12 +44,10 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromHours(24);
     });
 
-// Thêm MVC
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Cấu hình pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -67,28 +62,23 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-// Sử dụng session
 app.UseSession();
 
-// Thêm middleware xác thực và phân quyền
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
-// Cấu hình endpoint routing
 app.MapControllerRoute(
    name: "default",
    pattern: "{controller=Account}/{action=Main}/{id?}");
 
-// Các đoạn code seed và migration vẫn giữ nguyên
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var dbContext = services.GetRequiredService<ApplicationDbContext>();
     var passwordHasher = services.GetRequiredService<IPasswordHasher>();
 
-    // Nếu chưa có user nào thì seed
     if (!dbContext.Users.Any())
     {
         var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "InputDatabase", "users.json");
@@ -111,17 +101,13 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
-// Check có tự tự update ko
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
-        context.Database.Migrate(); // Áp dụng migrations
-
-        // Nếu bạn cũng muốn seed data
-        // DbInitializer.Initialize(context);
+        context.Database.Migrate(); 
     }
     catch (Exception ex)
     {
@@ -129,9 +115,5 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred while migrating the database.");
     }
 }
-
-
-
-
 app.Run();
 

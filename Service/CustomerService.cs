@@ -33,7 +33,9 @@ namespace PBL3_HK4.Service
 
         public async Task UpdateCustomerAsync(Customer customer)
         {
-            var existingCustomer = (Customer)(await _context.Users.FindAsync(customer.UserID));
+            var existingCustomer = await _context.Users
+                                     .OfType<Customer>()
+                                     .FirstOrDefaultAsync(u => u.UserID == customer.UserID);
             if (existingCustomer != null)
             {
                 if (customer.Name != null)

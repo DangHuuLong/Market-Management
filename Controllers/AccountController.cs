@@ -85,7 +85,6 @@ namespace PBL3_HK4.Controllers
             try
             {
                 var userLogin = await _accountService.LoginAsync(user.UserName, user.PassWord);
-                // Tạo Claims để xác thực người dùng
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, userLogin.UserName),
@@ -108,33 +107,28 @@ namespace PBL3_HK4.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties
                 );
-                // Điều hướng dựa trên loại user
                 if (userLogin is Customer customer)
                 {
-                    // Lấy giỏ hàng và lưu vào session
                     var cart = await _shoppingCartService.GetShoppingCartByCustomerIdAsync(customer.UserID);
 
-                    // Lưu CartID vào session dưới dạng string vì CartID là Guid
                     HttpContext.Session.SetString("CartID", cart.CartID.ToString());
 
-                    // Lấy số lượng sản phẩm từ CartItemService
                     try
                     {
                         var cartItems = await _cartItemService.GetCartItemsByShoppingCartIdAsync(cart.CartID);
-                        int itemCount = cartItems.Count(); // Đếm số lượng loại sản phẩm
+                        int itemCount = cartItems.Count();
                         HttpContext.Session.SetInt32("CartItemCount", itemCount);
                     }
                     catch (KeyNotFoundException)
                     {
-                        // Nếu không có sản phẩm nào
                         HttpContext.Session.SetInt32("CartItemCount", 0);
                     }
 
-                    return RedirectToAction("Index", "Home"); // Giao diện của Customer
+                    return RedirectToAction("Index", "Home"); 
                 }
                 else
                 {
-                    return RedirectToAction("Home", "Admin"); // Giao diện của Admin
+                    return RedirectToAction("Home", "Admin"); 
                 }
             }
             catch (InvalidOperationException ex)
@@ -146,7 +140,6 @@ namespace PBL3_HK4.Controllers
 
         public async Task<IActionResult> SignOut()
         {
-            // Xóa thông tin giỏ hàng khỏi session
             HttpContext.Session.Remove("CartID");
             HttpContext.Session.Remove("CartItemCount");
 
@@ -200,7 +193,7 @@ namespace PBL3_HK4.Controllers
             {
                 Customer newUser = new Customer()
                 {
-                    UserID = id,
+                    UserID = user.UserID,
                     PassWord = _passwordHasher.HashPassword(newPassword)
                 };
                 await _customerService.UpdateCustomerAsync(newUser);

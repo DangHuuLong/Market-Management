@@ -46,20 +46,17 @@ namespace PBL3_HK4.Service
                 throw new KeyNotFoundException($"Admin with ID {admin.UserID} not found.");
             }
 
-            // Cập nhật các thuộc tính
             currentUser.Name = admin.Name;
             currentUser.Email = admin.Email;
             currentUser.Sex = admin.Sex;
             currentUser.Phone = admin.Phone;
             currentUser.DateOfBirth = admin.DateOfBirth;
-            // Không cập nhật Username và Password ở đây
 
             await _context.SaveChangesAsync();
         }
 
         public async Task<Admin> GetAdminByIdAsync(Guid adminId)
         {
-            // Truy vấn người dùng có Role = "Admin" thay vì dùng OfType
             var admin = await _context.Users
                 .Where(u => u.UserID == adminId && u.Role == "Admin")
                 .FirstOrDefaultAsync();
@@ -69,13 +66,11 @@ namespace PBL3_HK4.Service
                 throw new KeyNotFoundException($"Admin with ID {adminId} not found.");
             }
 
-            // Chuyển đổi User thành Admin (nếu User là Admin)
             return admin as Admin;
         }
 
         public async Task<Admin> GetAdminByUserNameAsync(string name)
         {
-            // Truy vấn người dùng có Role = "Admin" thay vì dùng OfType
             var admin = await _context.Users
                 .Where(u => u.UserName == name && u.Role == "Admin")
                 .FirstOrDefaultAsync();
@@ -85,14 +80,12 @@ namespace PBL3_HK4.Service
                 throw new KeyNotFoundException($"Admin with name {name} not found.");
             }
 
-            // Chuyển đổi User thành Admin (nếu User là Admin)
             if (admin is Admin)
             {
                 return admin as Admin;
             }
             else
             {
-                // Nếu cần, bạn có thể ánh xạ thủ công User thành Admin
                 Admin mappedAdmin = new Admin
                 {
                     UserID = admin.UserID,
@@ -104,7 +97,6 @@ namespace PBL3_HK4.Service
                     UserName = admin.UserName,
                     PassWord = admin.PassWord,
                     Role = admin.Role
-                    // Sao chép thêm các thuộc tính khác nếu cần
                 };
                 return mappedAdmin;
             }

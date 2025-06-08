@@ -274,16 +274,6 @@ H:\pbl3\obj\Debug\net8.0\ref\PBL3_HK4.dll
 H:\pbl3\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\PBL3\pbl3\bin\Debug\net8.0\appsettings.Development.json
 D:\PBL3\pbl3\bin\Debug\net8.0\appsettings.json
-D:\PBL3\pbl3\bin\Debug\net8.0\InputDatabase\BillDetails.json
-D:\PBL3\pbl3\bin\Debug\net8.0\InputDatabase\Bills.json
-D:\PBL3\pbl3\bin\Debug\net8.0\InputDatabase\CartItems.json
-D:\PBL3\pbl3\bin\Debug\net8.0\InputDatabase\Catalogs.json
-D:\PBL3\pbl3\bin\Debug\net8.0\InputDatabase\Customers.json
-D:\PBL3\pbl3\bin\Debug\net8.0\InputDatabase\Discounts.json
-D:\PBL3\pbl3\bin\Debug\net8.0\InputDatabase\Products.json
-D:\PBL3\pbl3\bin\Debug\net8.0\InputDatabase\Reviews.json
-D:\PBL3\pbl3\bin\Debug\net8.0\InputDatabase\ShoppingCarts.json
-D:\PBL3\pbl3\bin\Debug\net8.0\InputDatabase\Users.json
 D:\PBL3\pbl3\bin\Debug\net8.0\PBL3_HK4.staticwebassets.runtime.json
 D:\PBL3\pbl3\bin\Debug\net8.0\PBL3_HK4.staticwebassets.endpoints.json
 D:\PBL3\pbl3\bin\Debug\net8.0\PBL3_HK4.exe

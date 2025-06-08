@@ -41,7 +41,6 @@ namespace PBL3_HK4.Controllers
             product.Catalog = catalog;
             product.Reviews = (await _reviewService.GetReviewsByProductIdAsync(id)).ToList();
 
-            // Lấy tất cả ảnh cho các sản phẩm trong listProduct
             var allProductImages = await _productImageService.GetAllImages();
             foreach (var prod in listProduct)
             {
@@ -69,14 +68,14 @@ namespace PBL3_HK4.Controllers
         {
             if (imgfile == null || product == null)
             {
-                return View(); // show ra cai j
+                return View(); 
             }
             await _productService.AddProductAsync(product);
             foreach (var img in imgfile)
             {
                 await _productImageService.SaveImageAsync(img, product.ProductID);
             }
-            return RedirectToAction("Index"); // show ra full san pham
+            return RedirectToAction("Index"); 
         }
         public IActionResult Index()
         {
