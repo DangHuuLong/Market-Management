@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "13lvK4R44ZWKeRgpwtBPgBmDGnmKHbquiRwIMFQcOp4=",
+  "Hash": "hXxn5Z8PufCV9Hhp39xBNw7OidtHcOlBi0G8ElrmfaQ=",
   "Source": "PBL3_HK4",
   "BasePath": "_content/PBL3_HK4",
   "Mode": "Default",
@@ -876,27 +876,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\products\\b024e42a-0969-424b-b8bf-3022a6c78fa8-8ba47de6-2bc4-42e4-aa73-ab04a5544dd7.png"
-    },
-    {
-      "Identity": "D:\\PBL3\\pbl3\\wwwroot\\images\\products\\b024e42a-0969-424b-b8bf-3022a6c78fa8-b6d63425-6914-4567-9cdd-4785e5cbb5da.png",
-      "SourceId": "PBL3_HK4",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\PBL3\\pbl3\\wwwroot\\",
-      "BasePath": "_content/PBL3_HK4",
-      "RelativePath": "images/products/b024e42a-0969-424b-b8bf-3022a6c78fa8-b6d63425-6914-4567-9cdd-4785e5cbb5da#[.{fingerprint}]?.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "pa65sycm1f",
-      "Integrity": "36wZD+1SGz/CjUU/2MuFLt/jVMXl0D8nJhVb/cBXvdk=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\products\\b024e42a-0969-424b-b8bf-3022a6c78fa8-b6d63425-6914-4567-9cdd-4785e5cbb5da.png"
     },
     {
       "Identity": "D:\\PBL3\\pbl3\\wwwroot\\images\\products\\b43e1d8d-b029-4760-81e4-0f2fb12f1a33-253ec962-4e81-4d14-8327-80d1ea63dbc8.png",
@@ -7056,88 +7035,6 @@
         {
           "Name": "integrity",
           "Value": "sha256-WDaBcF1mXYKuFQoTlQq3VElTYeWXmnKnd+EytFitBoY="
-        }
-      ]
-    },
-    {
-      "Route": "images/products/b024e42a-0969-424b-b8bf-3022a6c78fa8-b6d63425-6914-4567-9cdd-4785e5cbb5da.pa65sycm1f.png",
-      "AssetFile": "D:\\PBL3\\pbl3\\wwwroot\\images\\products\\b024e42a-0969-424b-b8bf-3022a6c78fa8-b6d63425-6914-4567-9cdd-4785e5cbb5da.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "128051"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"36wZD+1SGz/CjUU/2MuFLt/jVMXl0D8nJhVb/cBXvdk=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 14 May 2025 03:25:03 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "pa65sycm1f"
-        },
-        {
-          "Name": "label",
-          "Value": "images/products/b024e42a-0969-424b-b8bf-3022a6c78fa8-b6d63425-6914-4567-9cdd-4785e5cbb5da.png"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-36wZD+1SGz/CjUU/2MuFLt/jVMXl0D8nJhVb/cBXvdk="
-        }
-      ]
-    },
-    {
-      "Route": "images/products/b024e42a-0969-424b-b8bf-3022a6c78fa8-b6d63425-6914-4567-9cdd-4785e5cbb5da.png",
-      "AssetFile": "D:\\PBL3\\pbl3\\wwwroot\\images\\products\\b024e42a-0969-424b-b8bf-3022a6c78fa8-b6d63425-6914-4567-9cdd-4785e5cbb5da.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "128051"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"36wZD+1SGz/CjUU/2MuFLt/jVMXl0D8nJhVb/cBXvdk=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 14 May 2025 03:25:03 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=3600, must-revalidate"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-36wZD+1SGz/CjUU/2MuFLt/jVMXl0D8nJhVb/cBXvdk="
         }
       ]
     },

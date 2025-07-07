@@ -702,24 +702,6 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\products\b024e42a-0969-424b-b8bf-3022a6c78fa8-8ba47de6-2bc4-42e4-aa73-ab04a5544dd7.png'))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\products\b024e42a-0969-424b-b8bf-3022a6c78fa8-b6d63425-6914-4567-9cdd-4785e5cbb5da.png'))">
-      <SourceType>Package</SourceType>
-      <SourceId>PBL3_HK4</SourceId>
-      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
-      <BasePath>_content/PBL3_HK4</BasePath>
-      <RelativePath>images/products/b024e42a-0969-424b-b8bf-3022a6c78fa8-b6d63425-6914-4567-9cdd-4785e5cbb5da.png</RelativePath>
-      <AssetKind>All</AssetKind>
-      <AssetMode>All</AssetMode>
-      <AssetRole>Primary</AssetRole>
-      <RelatedAsset></RelatedAsset>
-      <AssetTraitName></AssetTraitName>
-      <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>pa65sycm1f</Fingerprint>
-      <Integrity>36wZD+1SGz/CjUU/2MuFLt/jVMXl0D8nJhVb/cBXvdk=</Integrity>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\products\b024e42a-0969-424b-b8bf-3022a6c78fa8-b6d63425-6914-4567-9cdd-4785e5cbb5da.png'))</OriginalItemSpec>
-    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\products\b43e1d8d-b029-4760-81e4-0f2fb12f1a33-253ec962-4e81-4d14-8327-80d1ea63dbc8.png'))">
       <SourceType>Package</SourceType>
       <SourceId>PBL3_HK4</SourceId>
